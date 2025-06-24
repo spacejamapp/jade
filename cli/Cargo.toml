@@ -1,0 +1,6 @@
+[package]
+name = "cargo-jade"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

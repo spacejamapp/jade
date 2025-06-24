@@ -1,0 +1,37 @@
+[workspace]
+members = ["jade", "jadex", "cli"]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+
+[workspace.dependencies]
+anyhow = "1.0.93"
+async-graphql = "7.0.17"
+async-graphql-axum = "7.0.16"
+axum = "0.8.4"
+clap = "4.5.30"
+hex = "0.4.3"
+quote = "1.0.33"
+serde = { version = "1.0.215", features = ["derive"] }
+serde_json = "1.0.133"
+sqlx = "0.8.5"
+syn = "2.0.90"
+temp-dir = "0.1.16"
+time = "0.3.41"
+tiny-keccak = { version = "2.0.2", features = ["keccak"] }
+tokio = "1.42.0"
+tokio-stream = "0.1.17"
+toml = { version = "0.8.19", features = ["parse"] }
+tower = "0.5.1"
+tower-http = { version = "0.6.1", features = ["cors"] }
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
+
+# spacejam dependencies
+runtime = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-runtime" }
+codec = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "jamcodec" }
+network = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-network" }
+score = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-core" }
+spacejam = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main" }
