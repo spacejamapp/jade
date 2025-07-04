@@ -1,86 +1,73 @@
-//! SpaceJam node service
+//! Configuration for the spacejam with hook node
 
-use crate::Config;
+use crate::config::{Config, Node};
 use anyhow::Result;
 use network::Network;
-use runtime::{Runtime, Validator};
-use score::{
-    Block,
-    block::{self, Header, next_slot},
-    service::ServiceAccount,
-};
-use spacejam::{RuntimeSpec, chain, storage::Parity, validator::LocalValidator};
-use std::{collections::BTreeMap, fs, marker, sync::Arc, time::Duration};
+use spacejam::{Development, RuntimeSpec, SpaceJam, chain, spec, storage::Parity, validator::LocalValidator};
+use std::{fs, net::SocketAddr, path::PathBuf, sync::Arc};
 
-/// Start the node service
+pub struct JadexSpec<Hook: runtime::Hook>(std::marker::PhantomData<Hook>);
+
+impl<Hook: runtime::Hook + Send + Sync + 'static> runtime::Config for JadexSpec<Hook> {
+    type Validator = LocalValidator;
+    type Storage = Parity;
+    type Vm = ();
+    type Hook = Hook;
+}
+
+/// Start the spacejam node with custom hook
 pub async fn start<Hook: runtime::Hook + Send + Sync + 'static>(
     config: &Config,
     hook: Hook,
 ) -> Result<()> {
-    let (runtime, networkcfg) = self::runtime(config, hook).await?;
-    let network = Network::<JadexSpec<Hook>>::new(networkcfg, Arc::new(runtime)).await?;
-    network.spawn().await;
-    Ok(())
+    // TODO choose diff net
+
+    build::<Hook, JadexSpec<Hook>>(&config.node, hook)
+        .await?
+        .start()
+        .await
 }
 
-/// Start the development node service
-pub async fn dev<Hook: runtime::Hook + Send + Sync + 'static>(
-    config: &Config,
+async fn build<Hook: runtime::Hook + Send + Sync + 'static, C: RuntimeSpec<Hook = Hook>>(
+    node: &Node,
     hook: Hook,
-) -> Result<()> {
-    let (mut runtime, _) = self::runtime(config, hook).await?;
-    runtime.validator = <JadexSpec<Hook> as runtime::Config>::Validator::dev();
-    let author = runtime.author();
-
-    tracing::info!("Starting development spacejam node");
-    loop {
-        tokio::time::sleep(next_slot()).await;
-
-        let timeslot = block::timeslot();
-        let block = author.author(timeslot).await?;
-        tracing::trace!(
-            "block#{}@0x{}",
-            block.header.slot,
-            hex::encode(&block.header.hash()?[..3])
-        );
-
-        author.import(&block).await?;
-        author.finalize().await?;
-    }
-    Ok(())
-}
-
-/// Build the runtime from config
-async fn runtime<Hook: runtime::Hook + Send + Sync + 'static>(
-    config: &Config,
-    hook: Hook,
-) -> Result<(Runtime<JadexSpec<Hook>>, network::Config)> {
-    let chain = config.node.data.join("chain");
-    let genesis = if let Some(path) = config.node.spec.as_ref().map(|p| p.join("spec.json")) {
-        serde_json::from_slice(fs::read(&path)?.as_slice())?
+) -> Result<SpaceJam<C>> {
+    let genesis = if let Some(genesis) = &node.chain {
+        serde_json::from_slice(fs::read(genesis)?.as_slice())?
     } else {
         chain::Spec::dev()
     }
     .parse()?;
 
-    // build the network config
-    let networkcfg = network::Config {
-        address: config.node.quic,
-        peer_id: None, // TODO
-        bootnode: genesis.bootnodes.clone().pop(),
-        genesis: genesis.genesis_header.hash()?,
+    // apply config from the spec file
+    //
+    // TODO: handle bootnode and peer id
+    // node.network.genesis = genesis.genesis_header.hash()?;
+
+    // prepare the runtime
+    let data = {
+        let data = PathBuf::from(&node.data_path).join(genesis.id.to_string());
+        if !data.exists() {
+            fs::create_dir_all(&data)?;
+        }
+        data
     };
 
-    let runtime = JadexSpec::<Hook>::runtime_with_hook(None, chain, genesis, hook).await?;
-    Ok((runtime, networkcfg))
-}
+    let runtime = C::runtime_with_hook(node.validator.as_deref(), data, genesis, hook).await?;
+    if node.dev {
+        return Ok(SpaceJam::Dev(spec::Dev {
+            runtime,
+            rpc: node.rpc,
+        }));
+    }
 
-/// The Jadex runtime spec
-pub struct JadexSpec<Hook: runtime::Hook>(marker::PhantomData<Hook>);
+    let network = Network::new(node.network.clone(), Arc::new(runtime)).await?;
+    if node.light {
+        return Ok(SpaceJam::Light(spec::Light {
+            network,
+            rpc: node.rpc,
+        }));
+    }
 
-impl<Hook: runtime::Hook + Send + Sync + 'static> runtime::Config for JadexSpec<Hook> {
-    type Storage = Parity;
-    type Validator = LocalValidator;
-    type Vm = ();
-    type Hook = Hook;
+    Ok(SpaceJam::Validating(spec::Validating(network)))
 }
