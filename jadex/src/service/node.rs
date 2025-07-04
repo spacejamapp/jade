@@ -6,7 +6,7 @@ use network::Network;
 use runtime::{Runtime, Validator};
 use score::{
     Block,
-    block::{self, Header},
+    block::{self, Header, next_slot},
     service::ServiceAccount,
 };
 use spacejam::{RuntimeSpec, chain, storage::Parity, validator::LocalValidator};
@@ -34,9 +34,7 @@ pub async fn dev<Hook: runtime::Hook + Send + Sync + 'static>(
 
     tracing::info!("Starting development spacejam node");
     loop {
-        let now = block::now() as u64;
-        let duration = (score::SLOT_PERIOD as u64 - (now % score::SLOT_PERIOD as u64)) as u64;
-        tokio::time::sleep(Duration::from_secs(duration)).await;
+        tokio::time::sleep(next_slot()).await;
 
         let timeslot = block::timeslot();
         let block = author.author(timeslot).await?;
@@ -46,7 +44,8 @@ pub async fn dev<Hook: runtime::Hook + Send + Sync + 'static>(
             hex::encode(&block.header.hash()?[..3])
         );
 
-        author.finalize(block).await?;
+        author.import(&block).await?;
+        author.finalize().await?;
     }
     Ok(())
 }
@@ -67,7 +66,8 @@ async fn runtime<Hook: runtime::Hook + Send + Sync + 'static>(
     // build the network config
     let networkcfg = network::Config {
         address: config.node.quic,
-        bootnodes: genesis.bootnodes.clone(),
+        peer_id: None, // TODO
+        bootnode: genesis.bootnodes.clone().pop(),
         genesis: genesis.genesis_header.hash()?,
     };
 
