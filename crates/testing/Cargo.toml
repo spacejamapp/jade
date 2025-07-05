@@ -6,4 +6,14 @@ authors.workspace = true
 license.workspace = true
 repository.workspace = true
 
+[lib]
+name = "testing"
+path = "src/lib.rs"
+
 [dependencies]
+podec.workspace = true
+score.workspace = true
+jam-pvm-common.workspace = true
+
+[dev-dependencies]
+codec.workspace = true

@@ -2174,6 +2174,12 @@ dependencies = [
 [[package]]
 name = "jade-testing"
 version = "0.1.0"
+dependencies = [
+ "jam-codec",
+ "jam-pvm-common",
+ "jamcodec",
+ "spacejam-core",
+]
 
 [[package]]
 name = "jadex"

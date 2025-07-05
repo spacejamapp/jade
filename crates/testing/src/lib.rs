@@ -1,4 +1,4 @@
 //! JAM service testing utilities
 
-mod env;
+pub mod env;
 mod vm;

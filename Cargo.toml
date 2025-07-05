@@ -18,6 +18,9 @@ jam-program-blob = { version = "0.1.22", default-features = false }
 polkavm-linker = "0.24.0"
 polkavm-derive = "0.24.0"
 polkavm-common = "0.24.0"
+podec = { version = "0.1.0", package = "jam-codec", default-features = false, features = [
+    "derive",
+] }
 
 # crates.io
 anyhow = "1.0.93"
@@ -54,8 +57,12 @@ tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
 runtime = { path = "../spacejam/crates/runtime", package = "spacejam-runtime" }
 codec = { path = "../spacejam/crates/codec", package = "jamcodec" }
 network = { path = "../spacejam/crates/network", package = "spacejam-network" }
-score = { path = "../spacejam/crates/core", package = "spacejam-core" }
+score = { path = "../spacejam/crates/core", package = "spacejam-core", features = [
+    "crypto",
+] }
 spacejam = { path = "../spacejam/crates/spacejam" }
+pvm = { path = "../spacejam/crates/pvm" }
+pvmi = { path = "../spacejam/crates/pvm/pvmi" }
 
 [patch.crates-io]
 jam-types = { path = "crates/jam-types" }
