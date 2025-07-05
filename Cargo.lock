@@ -2172,6 +2172,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "jade-testing"
+version = "0.1.0"
+
+[[package]]
 name = "jadex"
 version = "0.1.0"
 dependencies = [
@@ -2244,6 +2248,15 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.104",
+]
+
+[[package]]
+name = "jam-null-authorizer"
+version = "0.1.0"
+dependencies = [
+ "jam-pvm-common",
+ "jam-types",
+ "polkavm-derive 0.24.0",
 ]
 
 [[package]]

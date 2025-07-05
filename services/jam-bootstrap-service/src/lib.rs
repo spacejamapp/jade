@@ -115,7 +115,7 @@ impl jam_pvm_common::Service for Service {
                                 info!(target = "boot", "Code provision resulted in {e:?}");
                             }
 
-                            info!(target = "boot", "Attemting transfer, gas={}", gas());
+                            info!(target = "boot", "Attempting transfer, gas={}", gas());
                             let e = transfer(id, endowment, min_memo_gas, &memo);
                             info!(
                                 target = "boot",
