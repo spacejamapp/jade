@@ -31,15 +31,8 @@ tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
 
 # spacejam dependencies
-# runtime = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-runtime" }
-# codec = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "jamcodec" }
-# network = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-network" }
-# score = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-core" }
-# spacejam = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main" }
-
-# local ev
-runtime = { path = "../spacejam/crates/runtime", package = "spacejam-runtime" }
-codec = { path = "../spacejam/crates/codec", package = "jamcodec" }
-network = { path = "../spacejam/crates/network", package = "spacejam-network" }
-score = { path = "../spacejam/crates/core", package = "spacejam-core" }
-spacejam = { path = "../spacejam/crates/spacejam" }
+runtime = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "spacejam-runtime" }
+codec = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "jamcodec" }
+network = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "spacejam-network" }
+score = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "spacejam-core" }
+spacejam = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook" }
