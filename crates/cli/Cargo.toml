@@ -1,0 +1,12 @@
+[package]
+name = "cargo-jam"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+clap = { workspace = true, features = ["derive"] }
+etc.workspace = true
+jam-pvm-builder.workspace = true
+jam-types.workspace = true
+serde_json.workspace = true

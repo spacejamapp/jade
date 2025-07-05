@@ -1,5 +1,11 @@
 [workspace]
-members = ["jade", "jadex", "crates/jam-types", "cli"]
+members = [
+    "jade",
+    "jadex",
+    "crates/cli",
+    "crates/jam-types",
+    "crates/jam-pvm-common",
+]
 resolver = "3"
 
 [workspace.package]
@@ -12,6 +18,7 @@ repository = "https://github.com/spacejamapp/jade"
 
 [workspace.dependencies]
 jam-types = { path = "crates/jam-types", version = "0.1.22", default-features = false }
+jam-pvm-builder = "0.1.22"
 
 # crates.io
 anyhow = "1.0.93"
@@ -19,6 +26,7 @@ async-graphql = "7.0.17"
 async-graphql-axum = "7.0.16"
 axum = "0.8.4"
 clap = "4.5.30"
+etc = "0.1.20"
 hex = "0.4.3"
 quote = "1.0.33"
 serde = { version = "1.0.215", features = ["derive"] }
@@ -42,3 +50,8 @@ codec = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", 
 network = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-network" }
 score = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-core" }
 spacejam = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main" }
+
+
+[patch.crates-io]
+jam-types = { path = "crates/jam-types" }
+jam-pvm-common = { path = "crates/jam-pvm-common" }
