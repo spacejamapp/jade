@@ -1,0 +1,23 @@
+[package]
+name = "jam-pvm-common"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+repository.workspace = true
+license.workspace = true
+publish = true
+description = "Common logic for JAM PVM crates including services and authorizers"
+
+[dependencies]
+jam-types = { workspace = true, default-features = false }
+polkavm-derive = "0.26.0"
+bounded-collections = "0.3.2"
+codec = { package = "jam-codec", version = "0.1.0" }
+
+[features]
+default = ["std"]
+tiny = ["jam-types/tiny"]
+std = ["jam-types/std"]
+authorizer = []
+service = []
+logging = []
