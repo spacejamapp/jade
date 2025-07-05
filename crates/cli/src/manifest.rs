@@ -1,8 +1,9 @@
 //! Cargo manifest related utilities
 
-use std::{path::Path, process::Command};
+use jam_program_blob::CrateInfo;
 
-use jam_pvm_builder::ProfileType;
+use crate::builder::ProfileType;
+use std::{fs, path::Path};
 
 #[derive(clap::ValueEnum, Clone, Debug)]
 #[value(rename_all = "lowercase")]
@@ -41,30 +42,40 @@ impl From<Profile> for ProfileType {
     }
 }
 
-/// Validate the input manifest
-pub fn validate(krate: &Path) -> anyhow::Result<()> {
-    let manifest = Command::new("cargo")
-        .current_dir(krate)
-        .arg("read-manifest")
-        .output()?
-        .stdout;
+/// Get the crate info from the Cargo.toml file
+pub fn crate_info(krate: &Path) -> anyhow::Result<CrateInfo> {
+    let manifest = krate.join("Cargo.toml");
+    let manifest = fs::read_to_string(manifest)?;
+    let man = toml::from_str::<toml::Value>(&manifest)?;
+    let pkg = man
+        .get("package")
+        .expect("could not find package in Cargo.toml");
+    let name = pkg
+        .get("name")
+        .expect("could not find package name in Cargo.toml")
+        .to_string();
 
-    let man = serde_json::from_slice::<serde_json::Value>(&manifest)?;
-    if man.get("name").is_none() {
-        anyhow::bail!("Crate name not found in Cargo.toml");
-    }
+    let version = pkg
+        .get("version")
+        .expect("could not find package version in Cargo.toml")
+        .to_string();
+    let license = pkg
+        .get("license")
+        .expect("could not find package license in Cargo.toml")
+        .to_string();
+    let authors = pkg
+        .get("authors")
+        .expect("could not find authors in Cargo.toml")
+        .as_array()
+        .expect("authors is not an array")
+        .iter()
+        .map(|x| x.as_str().expect("author is not a string").to_owned())
+        .collect::<Vec<String>>();
 
-    if man.get("version").is_none() {
-        anyhow::bail!("Crate version not found in Cargo.toml");
-    }
-
-    if man.get("license").is_none() {
-        anyhow::bail!("Crate license not found in Cargo.toml");
-    }
-
-    if man.get("authors").is_none() {
-        anyhow::bail!("Crate authors not found in Cargo.toml");
-    }
-
-    Ok(())
+    Ok(CrateInfo {
+        name,
+        version,
+        license,
+        authors,
+    })
 }

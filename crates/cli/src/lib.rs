@@ -2,5 +2,6 @@
 
 pub use manifest::{ModuleType, Profile};
 
+pub mod builder;
 pub mod cmd;
 pub mod manifest;

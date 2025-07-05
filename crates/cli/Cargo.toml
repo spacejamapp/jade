@@ -7,6 +7,14 @@ edition.workspace = true
 anyhow.workspace = true
 clap = { workspace = true, features = ["derive"] }
 etc.workspace = true
-jam-pvm-builder.workspace = true
-jam-types.workspace = true
 serde_json.workspace = true
+toml.workspace = true
+jobserver.workspace = true
+
+# jam deps
+codec = { package = "jam-codec", version = "0.1.0", default-features = false }
+jam-types.workspace = true
+jam-program-blob = { version = "0.1.22", default-features = false, features = [
+    "polkavm",
+] }
+polkavm-linker.workspace = true

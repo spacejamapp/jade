@@ -1,6 +1,9 @@
 //! `jam build` command
 
-use crate::manifest::{ModuleType, Profile};
+use crate::{
+    builder,
+    manifest::{ModuleType, Profile},
+};
 use clap::Parser;
 
 /// CLI utility for building PVM code blobs, particularly services and authorizers.
@@ -27,7 +30,6 @@ impl Build {
     pub fn run(&self) -> Result<(), anyhow::Error> {
         let cd = std::env::current_dir().expect("Unable to get current directory");
         let crate_dir = self.path.clone().unwrap_or_else(|| cd.clone());
-        crate::manifest::validate(&crate_dir)?;
         let blob_type = match self.module {
             ModuleType::Automatic => {
                 let filename = crate_dir
@@ -38,24 +40,24 @@ impl Build {
                 let con_auth = filename.contains("authorizer");
                 let con_corevm = filename.contains("corevm");
                 if filename.ends_with("-service") || (con_serv && !con_auth && !con_corevm) {
-                    jam_pvm_builder::BlobType::Service
+                    builder::BlobType::Service
                 } else if filename.ends_with("-authorizer")
                     || (!con_serv && con_auth && !con_corevm)
                 {
-                    jam_pvm_builder::BlobType::Authorizer
+                    builder::BlobType::Authorizer
                 } else if filename.ends_with("-guest") || (!con_serv && !con_auth && con_corevm) {
-                    jam_pvm_builder::BlobType::CoreVmGuest
+                    builder::BlobType::CoreVmGuest
                 } else {
                     panic!("Could not determine module type from crate name");
                 }
             }
-            ModuleType::Service => jam_pvm_builder::BlobType::Service,
-            ModuleType::Authorizer => jam_pvm_builder::BlobType::Authorizer,
-            ModuleType::CoreVmGuest => jam_pvm_builder::BlobType::CoreVmGuest,
+            ModuleType::Service => builder::BlobType::Service,
+            ModuleType::Authorizer => builder::BlobType::Authorizer,
+            ModuleType::CoreVmGuest => builder::BlobType::CoreVmGuest,
         };
 
         let out_dir = etc::find_up("target")?;
-        let (crate_name, pvm_path) = jam_pvm_builder::build_pvm_blob(
+        let (crate_name, pvm_path) = builder::build_pvm_blob(
             &crate_dir,
             blob_type,
             out_dir.as_path(),
@@ -65,7 +67,7 @@ impl Build {
         let output_file = self
             .output
             .clone()
-            .unwrap_or_else(|| cd.join(format!("{}.jam", crate_name)));
+            .unwrap_or_else(|| cd.join(format!("{crate_name}.jam")));
         std::fs::copy(pvm_path, &output_file).expect("Unable to write to output file");
 
         println!(

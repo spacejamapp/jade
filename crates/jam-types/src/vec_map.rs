@@ -366,7 +366,7 @@ mod tests {
 	#[test]
 	fn encode_decode_works() {
 		let v = VecMap::<u32, u32>::from_iter((0..100).map(|j| ((j * 97) % 101, j)));
-		println!("{}", v);
+		println!("{v}");
 		let e = v.encode();
 		let d = VecMap::<u32, u32>::decode(&mut &e[..]).unwrap();
 		assert_eq!(v, d);

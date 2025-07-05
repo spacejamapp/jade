@@ -1,7 +1,7 @@
 [package]
 name = "jam-pvm-common"
-version.workspace = true
-authors.workspace = true
+version = "0.1.22"
+authors = ["parity <admin@parity.io>"]
 edition.workspace = true
 repository.workspace = true
 license.workspace = true
@@ -10,9 +10,11 @@ description = "Common logic for JAM PVM crates including services and authorizer
 
 [dependencies]
 jam-types = { workspace = true, default-features = false }
-polkavm-derive = "0.26.0"
-bounded-collections = "0.3.2"
-codec = { package = "jam-codec", version = "0.1.0" }
+polkavm-derive.workspace = true
+bounded-collections = { workspace = true, default-features = false, features = [
+    "jam-codec",
+] }
+codec = { package = "jam-codec", version = "0.1.0", default-features = false }
 
 [features]
 default = ["std"]

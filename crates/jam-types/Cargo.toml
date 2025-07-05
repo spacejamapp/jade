@@ -9,12 +9,14 @@ publish = true
 description = "JAM protocol datatypes for interoperation between node internals, services and authorizers"
 
 [dependencies]
-codec = { package = "jam-codec", version = "0.1.0" }
-bounded-collections = "0.3.2"
+codec = { package = "jam-codec", version = "0.1.0", default-features = false }
+bounded-collections = { workspace = true, default-features = false, features = [
+    "jam-codec",
+] }
 macro_rules_attribute = "0.2"
 atomic-traits = "0.4"
-serde = { workspace = true, optional = true }
-serde-big-array = { version = "0.5.1", optional = true }
+serde = { workspace = true, optional = true, default-features = false }
+serde-big-array = { version = "0.5.1", optional = true, default-features = false }
 
 [features]
 default = ["std"]

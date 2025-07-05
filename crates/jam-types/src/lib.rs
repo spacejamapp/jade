@@ -1,19 +1,20 @@
 //! JAM types used within the PVM instances (service code and authorizer code).
 
 #![cfg_attr(not(feature = "std"), no_std)]
+#![allow(clippy::result_unit_err)]
 
 extern crate alloc;
 
 #[doc(hidden)]
 #[cfg(not(feature = "std"))]
 pub use core::{
-	clone::Clone,
-	cmp::{Eq, PartialEq},
-	fmt,
-	fmt::Debug,
-	option::Option,
-	prelude::rust_2021::derive,
-	result::Result,
+    clone::Clone,
+    cmp::{Eq, PartialEq},
+    fmt,
+    fmt::Debug,
+    option::Option,
+    prelude::rust_2021::derive,
+    result::Result,
 };
 
 #[doc(hidden)]
@@ -46,30 +47,30 @@ mod opaque;
 
 pub use fixed_vec::{BoundedMap, FixedVec};
 pub use simple::{
-	auth_queue_len, basic_piece_len, basic_piece_points, max_dependencies, max_exports,
-	max_extrinsics, max_imports, max_input, max_work_items, min_turnaround_period,
-	pieces_per_segment, segment_len, segment_slice_len, val_count, AuthConfig, AuthQueue,
-	AuthQueueLen, AuthTrace, Authorization, AuthorizerHash, Balance, CodeHash, CoreIndex,
-	ExtrinsicHash, Hash, HeaderHash, MaxImports, MaxWorkItems, Memo, OpaqueBandersnatchPublic,
-	OpaqueEd25519Public, OpaqueValidatorMetadata, Parameters, PayloadHash, Segment, SegmentHash,
-	SegmentLen, SegmentSliceLen, SegmentTreeRoot, ServiceId, SignedGas, Slot, ToAny, ValCount,
-	ValIndex, WorkOutput, WorkPackageHash, WorkPayload, GP_VERSION, JAM_COMMON_ERA, MEMO_LEN,
-	PAGE_SIZE, POINT_LEN, SEGMENT_LEN,
+    auth_queue_len, basic_piece_len, basic_piece_points, max_dependencies, max_exports,
+    max_extrinsics, max_imports, max_input, max_work_items, min_turnaround_period,
+    pieces_per_segment, segment_len, segment_slice_len, val_count, AuthConfig, AuthQueue,
+    AuthQueueLen, AuthTrace, Authorization, AuthorizerHash, Balance, CodeHash, CoreIndex,
+    ExtrinsicHash, Hash, HeaderHash, MaxImports, MaxWorkItems, Memo, OpaqueBandersnatchPublic,
+    OpaqueEd25519Public, OpaqueValidatorMetadata, Parameters, PayloadHash, Segment, SegmentHash,
+    SegmentLen, SegmentSliceLen, SegmentTreeRoot, ServiceId, SignedGas, Slot, ToAny, ValCount,
+    ValIndex, WorkOutput, WorkPackageHash, WorkPayload, GP_VERSION, JAM_COMMON_ERA, MEMO_LEN,
+    PAGE_SIZE, POINT_LEN, SEGMENT_LEN,
 };
 pub use vec_map::{MapLike, VecMap};
 pub use vec_set::{SetLike, VecSet};
 
 pub use types::{
-	AccumulateItem, Authorizer, ExtrinsicSpec, ImportSpec, OpaqueValKeyset, OpaqueValKeysets,
-	RefineContext, RootIdentifier, ServiceInfo, TransferRecord, WorkItem, WorkItemImportsVec,
-	WorkPackage,
+    AccumulateItem, Authorizer, ExtrinsicSpec, ImportSpec, OpaqueValKeyset, OpaqueValKeysets,
+    RefineContext, RootIdentifier, ServiceInfo, TransferRecord, WorkItem, WorkItemImportsVec,
+    WorkPackage,
 };
 
 #[doc(hidden)]
 pub use simple::{
-	AccumulateRootHash, AnyHash, AnyVec, Bundle, Code, DoubleBalance, DoubleGas, MerkleNodeHash,
-	MmrPeakHash, StateRootHash, UnsignedGas, ValSuperMajority, WorkReportHash,
-	MAX_PREIMAGE_BLOB_LEN, MAX_PREIMAGE_LEN,
+    AccumulateRootHash, AnyHash, AnyVec, Bundle, Code, DoubleBalance, DoubleGas, MerkleNodeHash,
+    MmrPeakHash, StateRootHash, UnsignedGas, ValSuperMajority, WorkReportHash,
+    MAX_PREIMAGE_BLOB_LEN, MAX_PREIMAGE_LEN,
 };
 
 // Internal use: here and `jam-node` crates.
@@ -84,8 +85,8 @@ pub use simple_result_code::{InvokeOutcomeCode, SimpleResult, SimpleResultCode, 
 // TODO: Anything only used in one or the other should be moved to the respective crate.
 #[doc(hidden)]
 pub use types::{
-	AccumulateParams, OnTransferParams, OnTransferParamsRef, RefineLoad, RefineParams,
-	RefineParamsRef, WorkDigest, WorkError, WorkItems,
+    AccumulateParams, OnTransferParams, OnTransferParamsRef, RefineLoad, RefineParams,
+    RefineParamsRef, WorkDigest, WorkError, WorkItems,
 };
 
 mod pvm;
@@ -94,14 +95,14 @@ pub use pvm::*;
 pub use bounded_collections::Get;
 
 pub trait ToAtomic {
-	type Atomic: atomic_traits::Atomic;
+    type Atomic: atomic_traits::Atomic;
 }
 macro_rules! impl_to_atomic {
-	($t:ty, $atomic:ty) => {
-		impl ToAtomic for $t {
-			type Atomic = $atomic;
-		}
-	};
+    ($t:ty, $atomic:ty) => {
+        impl ToAtomic for $t {
+            type Atomic = $atomic;
+        }
+    };
 }
 impl_to_atomic!(u8, core::sync::atomic::AtomicU8);
 impl_to_atomic!(u16, core::sync::atomic::AtomicU16);

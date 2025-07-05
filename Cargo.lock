@@ -810,6 +810,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "bounded-collections-next"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "efd2a9551c1e5966aed7e93d6d98add117687e65b01a4a2c6b26b1a982a74f4f"
+dependencies = [
+ "jam-codec",
+ "log",
+]
+
+[[package]]
 name = "bumpalo"
 version = "3.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -849,16 +859,20 @@ dependencies = [
  "anyhow",
  "clap",
  "etc",
- "jam-pvm-builder",
+ "jam-codec",
+ "jam-program-blob",
  "jam-types",
+ "jobserver",
+ "polkavm-linker",
  "serde_json",
+ "toml",
 ]
 
 [[package]]
 name = "cc"
-version = "1.2.27"
+version = "1.2.28"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d487aa071b5f64da6f19a3e848e3578944b726ee5a4854b82172f02aa876bfdc"
+checksum = "4ad45f4f74e4e20eaa392913b7b33a7091c87e59628f4dd27888205ad888843c"
 dependencies = [
  "jobserver",
  "libc",
@@ -1088,9 +1102,9 @@ checksum = "d0a5c400df2834b80a4c3327b3aad3a4c4cd4de0629063962b03235697506a28"
 
 [[package]]
 name = "crunchy"
-version = "0.2.3"
+version = "0.2.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "43da5946c66ffcc7745f48db692ffbb10a83bfe0afd96235c5c2a4fb23994929"
+checksum = "460fbee9c2c2f33933d720630a6a0bac33ba7053db5344fac858d4b8952d77d5"
 
 [[package]]
 name = "crypto-common"
@@ -1476,6 +1490,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "28dea519a9695b9977216879a3ebfddf92f1c08c05d984f8996aecd6ecdc811d"
 
 [[package]]
+name = "fixedbitset"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0ce7134b9999ecaf8bcd65542e436736ef32ddca1b3e06094cb6ec5755203b80"
+
+[[package]]
 name = "flume"
 version = "0.11.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1749,9 +1769,9 @@ dependencies = [
 
 [[package]]
 name = "h2"
-version = "0.4.10"
+version = "0.4.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a9421a676d1b147b16b82c9225157dc629087ef8ec4d5e2960f9437a90dac0a5"
+checksum = "17da50a276f1e01e0ba6c029e47b7100754904ee8a278f886546e98575380785"
 dependencies = [
  "atomic-waker",
  "bytes",
@@ -2085,13 +2105,24 @@ dependencies = [
 
 [[package]]
 name = "indexmap"
-version = "2.9.0"
+version = "2.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cea70ddb795996207ad57735b50c5982d8844f38ba9ee5f1aedcfb708a2aa11e"
+checksum = "fe4cd85333e22411419a0bcae1297d25e58c9443848b11dc6a86fefe8c78a661"
 dependencies = [
  "equivalent",
  "hashbrown 0.15.4",
  "serde",
+]
+
+[[package]]
+name = "io-uring"
+version = "0.7.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b86e202f00093dcba4275d4636b93ef9dd75d025ae560d2521b45ea28ab49013"
+dependencies = [
+ "bitflags",
+ "cfg-if",
+ "libc",
 ]
 
 [[package]]
@@ -2136,6 +2167,9 @@ checksum = "4a5f13b858c8d314ee3e8f639011f7ccefe71f97f96e50151fb991f267928e2c"
 [[package]]
 name = "jade"
 version = "0.1.0"
+dependencies = [
+ "jam-pvm-common",
+]
 
 [[package]]
 name = "jadex"
@@ -2158,6 +2192,30 @@ dependencies = [
  "tower 0.5.2",
  "tower-http",
  "tracing",
+]
+
+[[package]]
+name = "jam-bootstrap-service"
+version = "0.1.0"
+dependencies = [
+ "bounded-collections",
+ "jam-bootstrap-service-common",
+ "jam-codec",
+ "jam-pvm-common",
+ "jam-types",
+ "polkavm-derive 0.26.0",
+]
+
+[[package]]
+name = "jam-bootstrap-service-common"
+version = "0.1.22"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a8a5f9d338ca3992116adc51a2ca9ef0cc5adfb1aeb342e265afd05a861b2d03"
+dependencies = [
+ "bounded-collections-next",
+ "jam-codec",
+ "jam-types",
+ "rand 0.9.1",
 ]
 
 [[package]]
@@ -2199,28 +2257,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "jam-pvm-builder"
-version = "0.1.22"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e92220c7caf99dc9c9c90c22833e23377d8eea21a20e7a89f374ac83ed1144a6"
-dependencies = [
- "jam-codec",
- "jam-program-blob",
- "jobserver",
- "polkavm-linker",
- "serde",
- "serde_json",
- "toml",
-]
-
-[[package]]
 name = "jam-pvm-common"
-version = "0.1.0"
+version = "0.1.22"
 dependencies = [
  "bounded-collections",
  "jam-codec",
  "jam-types",
- "polkavm-derive",
+ "polkavm-derive 0.24.0",
 ]
 
 [[package]]
@@ -2238,7 +2281,6 @@ dependencies = [
 [[package]]
 name = "jamcodec"
 version = "0.0.0"
-source = "git+https://github.com/spacejamapp/spacejam.git?branch=main#ba464167d679738a9cbe22a414dcd9b428683624"
 dependencies = [
  "anyhow",
  "serde",
@@ -2505,9 +2547,9 @@ checksum = "f9fbbcab51052fe104eb5e5d351cf728d30a5be1fe14d9be8a3b097481fb97de"
 
 [[package]]
 name = "libredox"
-version = "0.1.3"
+version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c0ff37bd590ca25063e35af745c343cb7a0271906fb7b37e4813e8f79f00268d"
+checksum = "1580801010e535496706ba011c15f8532df6b42297d2e471fec38ceadd8c0638"
 dependencies = [
  "bitflags",
  "libc",
@@ -3091,11 +3133,32 @@ checksum = "49a5794b695626ba70d29e66e3f4f4835767452a6723f3a0bc20884b07088fe8"
 
 [[package]]
 name = "polkavm-derive"
+version = "0.24.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "176144f8661117ea95fa7cf868c9a62d6b143e8a2ebcb7582464c3faade8669a"
+dependencies = [
+ "polkavm-derive-impl-macro 0.24.0",
+]
+
+[[package]]
+name = "polkavm-derive"
 version = "0.26.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "95282a203ae1f6828a04ff334145c3f6dc718bba6d3959805d273358b45eab93"
 dependencies = [
- "polkavm-derive-impl-macro",
+ "polkavm-derive-impl-macro 0.26.0",
+]
+
+[[package]]
+name = "polkavm-derive-impl"
+version = "0.24.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c5a21844afdfcc10c92b9ef288ccb926211af27478d1730fcd55e4aec710179d"
+dependencies = [
+ "polkavm-common 0.24.0",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.104",
 ]
 
 [[package]]
@@ -3112,11 +3175,21 @@ dependencies = [
 
 [[package]]
 name = "polkavm-derive-impl-macro"
+version = "0.24.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ba0ef0f17ad81413ea1ca5b1b67553aedf5650c88269b673d3ba015c83bc2651"
+dependencies = [
+ "polkavm-derive-impl 0.24.0",
+ "syn 2.0.104",
+]
+
+[[package]]
+name = "polkavm-derive-impl-macro"
 version = "0.26.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "581d34cafec741dc5ffafbb341933c205b6457f3d76257a9d99fb56687219c91"
 dependencies = [
- "polkavm-derive-impl",
+ "polkavm-derive-impl 0.26.0",
  "syn 2.0.104",
 ]
 
@@ -3220,7 +3293,6 @@ dependencies = [
 [[package]]
 name = "pvm"
 version = "0.0.0"
-source = "git+https://github.com/spacejamapp/spacejam.git?branch=main#ba464167d679738a9cbe22a414dcd9b428683624"
 dependencies = [
  "anyhow",
  "hex",
@@ -3235,7 +3307,6 @@ dependencies = [
 [[package]]
 name = "pvm-parser"
 version = "0.0.0"
-source = "git+https://github.com/spacejamapp/spacejam.git?branch=main#ba464167d679738a9cbe22a414dcd9b428683624"
 dependencies = [
  "anyhow",
  "heck",
@@ -3420,6 +3491,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "readme-rustdocifier"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "08ad765b21a08b1a8e5cdce052719188a23772bcbefb3c439f0baaf62c56ceac"
+
+[[package]]
 name = "redox_syscall"
 version = "0.5.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3448,6 +3525,16 @@ dependencies = [
  "getrandom 0.2.16",
  "libredox",
  "thiserror 2.0.12",
+]
+
+[[package]]
+name = "reed-solomon-simd"
+version = "3.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ab6badd4f4b9c93832eb3707431e8e7bea282fae96801312f0990d48b030f8c5"
+dependencies = [
+ "fixedbitset",
+ "readme-rustdocifier",
 ]
 
 [[package]]
@@ -4002,7 +4089,6 @@ dependencies = [
 [[package]]
 name = "spacejam"
 version = "0.0.0"
-source = "git+https://github.com/spacejamapp/spacejam.git?branch=main#ba464167d679738a9cbe22a414dcd9b428683624"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -4030,7 +4116,6 @@ dependencies = [
 [[package]]
 name = "spacejam-core"
 version = "0.0.0"
-source = "git+https://github.com/spacejamapp/spacejam.git?branch=main#ba464167d679738a9cbe22a414dcd9b428683624"
 dependencies = [
  "anyhow",
  "hex",
@@ -4044,7 +4129,6 @@ dependencies = [
 [[package]]
 name = "spacejam-crypto"
 version = "0.0.0"
-source = "git+https://github.com/spacejamapp/spacejam.git?branch=main#ba464167d679738a9cbe22a414dcd9b428683624"
 dependencies = [
  "anyhow",
  "ark-ec 0.5.0",
@@ -4061,9 +4145,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "spacejam-erasure"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "reed-solomon-simd",
+ "tokio",
+]
+
+[[package]]
 name = "spacejam-metrics"
 version = "0.0.0"
-source = "git+https://github.com/spacejamapp/spacejam.git?branch=main#ba464167d679738a9cbe22a414dcd9b428683624"
 dependencies = [
  "anyhow",
  "prometheus-client",
@@ -4072,7 +4164,6 @@ dependencies = [
 [[package]]
 name = "spacejam-network"
 version = "0.0.0"
-source = "git+https://github.com/spacejamapp/spacejam.git?branch=main#ba464167d679738a9cbe22a414dcd9b428683624"
 dependencies = [
  "anyhow",
  "clap",
@@ -4086,7 +4177,6 @@ dependencies = [
  "serde_json",
  "spacejam-core",
  "spacejam-crypto",
- "spacejam-metrics",
  "spacejam-runtime",
  "spacejson",
  "tokio",
@@ -4097,7 +4187,6 @@ dependencies = [
 [[package]]
 name = "spacejam-offchain"
 version = "0.0.0"
-source = "git+https://github.com/spacejamapp/spacejam.git?branch=main#ba464167d679738a9cbe22a414dcd9b428683624"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -4114,8 +4203,7 @@ dependencies = [
 
 [[package]]
 name = "spacejam-rpc"
-version = "0.1.0"
-source = "git+https://github.com/spacejamapp/spacejam.git?branch=main#ba464167d679738a9cbe22a414dcd9b428683624"
+version = "0.0.0"
 dependencies = [
  "anyhow",
  "jsonrpsee",
@@ -4128,7 +4216,6 @@ dependencies = [
 [[package]]
 name = "spacejam-runtime"
 version = "0.0.0"
-source = "git+https://github.com/spacejamapp/spacejam.git?branch=main#ba464167d679738a9cbe22a414dcd9b428683624"
 dependencies = [
  "anyhow",
  "hex",
@@ -4138,6 +4225,7 @@ dependencies = [
  "serde_json",
  "spacejam-core",
  "spacejam-crypto",
+ "spacejam-erasure",
  "spacejson",
  "tokio",
  "tracing",
@@ -4146,7 +4234,6 @@ dependencies = [
 [[package]]
 name = "spacejson"
 version = "0.0.0"
-source = "git+https://github.com/spacejamapp/spacejam.git?branch=main#ba464167d679738a9cbe22a414dcd9b428683624"
 dependencies = [
  "anyhow",
  "hex",
@@ -4157,7 +4244,6 @@ dependencies = [
 [[package]]
 name = "spacejson-derive"
 version = "0.0.0"
-source = "git+https://github.com/spacejamapp/spacejam.git?branch=main#ba464167d679738a9cbe22a414dcd9b428683624"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -4610,16 +4696,18 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
 name = "tokio"
-version = "1.45.1"
+version = "1.46.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "75ef51a33ef1da925cea3e4eb122833cb377c61439ca401b770f54902b806779"
+checksum = "0cc3a2344dafbe23a245241fe8b09735b521110d30fcefbbd5feb1797ca35d17"
 dependencies = [
  "backtrace",
  "bytes",
+ "io-uring",
  "libc",
  "mio",
  "pin-project-lite",
  "signal-hook-registry",
+ "slab",
  "socket2",
  "tokio-macros",
  "windows-sys 0.52.0",

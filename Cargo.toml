@@ -1,24 +1,23 @@
 [workspace]
-members = [
-    "jade",
-    "jadex",
-    "crates/cli",
-    "crates/jam-types",
-    "crates/jam-pvm-common",
-]
-resolver = "3"
+members = ["jadex", "crates/*", "services/*"]
+resolver = "2"
 
 [workspace.package]
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 authors = ["clearloop <tianyi.gc@gmail.com>"]
 license = "GPL-3.0"
 repository = "https://github.com/spacejamapp/jade"
 
-
 [workspace.dependencies]
+bounded-collections = { version = "0.3.2", default-features = false }
 jam-types = { path = "crates/jam-types", version = "0.1.22", default-features = false }
 jam-pvm-builder = "0.1.22"
+jam-pvm-common = { path = "crates/jam-pvm-common", version = "0.1.22", default-features = false }
+jam-program-blob = { version = "0.1.22", default-features = false }
+polkavm-linker = "0.24.0"
+polkavm-derive = "0.24.0"
+polkavm-common = "0.24.0"
 
 # crates.io
 anyhow = "1.0.93"
@@ -28,8 +27,9 @@ axum = "0.8.4"
 clap = "4.5.30"
 etc = "0.1.20"
 hex = "0.4.3"
+jobserver = "0.1.33"
 quote = "1.0.33"
-serde = { version = "1.0.215", features = ["derive"] }
+serde = { version = "1.0.215", features = ["derive"], default-features = false }
 serde_json = "1.0.133"
 sqlx = "0.8.5"
 syn = "2.0.90"
@@ -45,12 +45,17 @@ tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
 
 # spacejam dependencies
-runtime = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-runtime" }
-codec = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "jamcodec" }
-network = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-network" }
-score = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-core" }
-spacejam = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main" }
+# runtime = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-runtime" }
+# codec = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "jamcodec" }
+# network = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-network" }
+# score = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-core" }
+# spacejam = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main" }
 
+runtime = { path = "../spacejam/crates/runtime", package = "spacejam-runtime" }
+codec = { path = "../spacejam/crates/codec", package = "jamcodec" }
+network = { path = "../spacejam/crates/network", package = "spacejam-network" }
+score = { path = "../spacejam/crates/core", package = "spacejam-core" }
+spacejam = { path = "../spacejam/crates/spacejam" }
 
 [patch.crates-io]
 jam-types = { path = "crates/jam-types" }

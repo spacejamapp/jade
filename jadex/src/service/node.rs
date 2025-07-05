@@ -34,7 +34,7 @@ pub async fn dev<Hook: runtime::Hook + Send + Sync + 'static>(
 
     tracing::info!("Starting development spacejam node");
     loop {
-        let now = block::now() as u64;
+        let now = block::timeslot() as u64;
         let duration = (score::SLOT_PERIOD as u64 - (now % score::SLOT_PERIOD as u64)) as u64;
         tokio::time::sleep(Duration::from_secs(duration)).await;
 
@@ -46,7 +46,7 @@ pub async fn dev<Hook: runtime::Hook + Send + Sync + 'static>(
             hex::encode(&block.header.hash()?[..3])
         );
 
-        author.finalize(block).await?;
+        author.import(&block).await?;
     }
     Ok(())
 }
@@ -67,8 +67,9 @@ async fn runtime<Hook: runtime::Hook + Send + Sync + 'static>(
     // build the network config
     let networkcfg = network::Config {
         address: config.node.quic,
-        bootnodes: genesis.bootnodes.clone(),
+        bootnode: Default::default(),
         genesis: genesis.genesis_header.hash()?,
+        peer_id: Default::default(),
     };
 
     let runtime = JadexSpec::<Hook>::runtime_with_hook(None, chain, genesis, hook).await?;
