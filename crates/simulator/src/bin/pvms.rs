@@ -1,0 +1,3 @@
+//! PVM simulator
+
+fn main() {}

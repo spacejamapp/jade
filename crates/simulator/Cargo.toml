@@ -1,5 +1,5 @@
 [package]
-name = "jade-testing"
+name = "simulator"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
@@ -7,13 +7,11 @@ license.workspace = true
 repository.workspace = true
 
 [lib]
-name = "testing"
 path = "src/lib.rs"
+name = "simulator"
 
 [dependencies]
-cjam.workspace = true
-codec.workspace = true
-podec.workspace = true
+pvm.workspace = true
+pvmi.workspace = true
 score.workspace = true
-jam-pvm-common.workspace = true
-anyhow.workspace = true
+testing.workspace = true

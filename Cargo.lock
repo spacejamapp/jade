@@ -1321,12 +1321,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1aaf95b3e5c8f23aa320147307562d361db0ae0d51242340f558153b4eb2439b"
 
 [[package]]
-name = "dtoa"
-version = "1.0.10"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d6add3b8cff394282be81f3fc1a0605db594ed69890078ca6e2cab1c408bcf04"
-
-[[package]]
 name = "dunce"
 version = "1.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2175,6 +2169,8 @@ dependencies = [
 name = "jade-testing"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
+ "cargo-jam",
  "jam-codec",
  "jam-pvm-common",
  "jamcodec",
@@ -3287,29 +3283,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "prometheus-client"
-version = "0.23.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cf41c1a7c32ed72abe5082fb19505b969095c12da9f5732a4bc9878757fd087c"
-dependencies = [
- "dtoa",
- "itoa",
- "parking_lot",
- "prometheus-client-derive-encode",
-]
-
-[[package]]
-name = "prometheus-client-derive-encode"
-version = "0.4.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "440f724eba9f6996b75d63681b0a92b06947f1457076d503a4d2e2c8f56442b8"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.104",
-]
-
-[[package]]
 name = "pvm"
 version = "0.0.0"
 dependencies = [
@@ -3335,6 +3308,16 @@ dependencies = [
  "serde",
  "syn 2.0.104",
  "toml",
+ "tracing",
+]
+
+[[package]]
+name = "pvmi"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "pvm",
+ "pvm-parser",
  "tracing",
 ]
 
@@ -4047,6 +4030,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "simulator"
+version = "0.1.0"
+dependencies = [
+ "jade-testing",
+ "pvm",
+ "pvmi",
+ "spacejam-core",
+]
+
+[[package]]
 name = "siphasher"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4173,14 +4166,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "spacejam-metrics"
-version = "0.0.0"
-dependencies = [
- "anyhow",
- "prometheus-client",
-]
-
-[[package]]
 name = "spacejam-network"
 version = "0.0.0"
 dependencies = [
@@ -4213,7 +4198,6 @@ dependencies = [
  "hyper-util",
  "jamcodec",
  "spacejam-core",
- "spacejam-metrics",
  "spacejam-rpc",
  "spacejam-runtime",
  "tokio",
