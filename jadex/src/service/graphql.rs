@@ -1,13 +1,13 @@
 //! GraphQL service for the Jadex runtime
 
 use crate::config::{Cors, Graphql};
-use async_graphql::{http::GraphiQLSource, ObjectType, Schema, SubscriptionType};
+use async_graphql::{ObjectType, Schema, SubscriptionType, http::GraphiQLSource};
 use async_graphql_axum::{GraphQL, GraphQLSubscription};
 use axum::{
-    http::{header, HeaderValue, Method},
+    Router,
+    http::{HeaderValue, Method, header},
     response::{self, IntoResponse},
     routing::get,
-    Router,
 };
 use std::{any::Any, net::SocketAddr, time::Duration};
 use tokio::net::TcpListener;
