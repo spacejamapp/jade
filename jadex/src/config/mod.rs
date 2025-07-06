@@ -4,11 +4,10 @@ use clap::Parser;
 use std::{net::SocketAddr, path::PathBuf};
 pub use {
     graphql::{Cors, Graphql},
-    node::Node,
+    spacejam::Builder as Node,
 };
 
 mod graphql;
-mod node;
 
 /// Config for the JAM index
 pub struct Config {

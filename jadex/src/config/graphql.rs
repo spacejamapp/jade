@@ -1,6 +1,6 @@
 //! GraphQL configs
 
-use axum::http::{header, HeaderValue, Method};
+use axum::http::{HeaderValue, Method, header};
 use std::{net::SocketAddr, time::Duration};
 use tower_http::cors::{Any, CorsLayer};
 
@@ -37,7 +37,9 @@ impl Cors {
     /// Build a CORS layer from configuration
     pub fn layer(&self) -> CorsLayer {
         if self.allow_all_origins {
-            tracing::warn!("Using permissive CORS configuration (allow all origins) - only suitable for development!");
+            tracing::warn!(
+                "Using permissive CORS configuration (allow all origins) - only suitable for development!"
+            );
             return self.permissive();
         }
 
