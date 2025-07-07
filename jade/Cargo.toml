@@ -1,6 +1,0 @@
-[package]
-name = "jade"
-edition.workspace = true
-version.workspace = true
-
-[dependencies]

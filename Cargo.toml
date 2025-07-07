@@ -1,21 +1,43 @@
 [workspace]
-members = ["jade", "jadex", "cli"]
-resolver = "3"
+members = ["jadex", "crates/*", "services/*"]
+resolver = "2"
 
 [workspace.package]
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+authors = ["clearloop <tianyi.gc@gmail.com>"]
+license = "GPL-3.0"
+repository = "https://github.com/spacejamapp/jade"
 
 [workspace.dependencies]
+cjam = { path = "crates/cli", package = "cargo-jam" }
+testing = { path = "crates/testing", package = "jade-testing" }
+
+# jam dependencies
+bounded-collections = { version = "0.3.2", default-features = false }
+jam-types = { path = "crates/jam-types", version = "0.1.22", default-features = false }
+jam-pvm-builder = "0.1.22"
+jam-pvm-common = { path = "crates/jam-pvm-common", version = "0.1.22", default-features = false }
+jam-program-blob = { version = "0.1.22", default-features = false }
+polkavm-linker = "0.24.0"
+polkavm-derive = "0.24.0"
+polkavm-common = "0.24.0"
+podec = { version = "0.1.0", package = "jam-codec", default-features = false, features = [
+    "derive",
+] }
+
+# crates.io
 anyhow = "1.0.93"
 async-graphql = "7.0.17"
 async-graphql-axum = "7.0.16"
 axum = "0.8.4"
 clap = "4.5.30"
+etc = "0.1.20"
 dirs = "6.0.0"
 hex = "0.4.3"
+jobserver = "0.1.33"
 quote = "1.0.33"
-serde = { version = "1.0.215", features = ["derive"] }
+serde = { version = "1.0.215", features = ["derive"], default-features = false }
 serde_json = "1.0.133"
 sqlx = "0.8.5"
 syn = "2.0.90"
@@ -36,3 +58,9 @@ codec = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-wi
 network = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "spacejam-network" }
 score = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "spacejam-core" }
 spacejam = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook" }
+pvm = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "pvm" }
+pvmi = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "pvmi" }
+
+[patch.crates-io]
+jam-types = { path = "crates/jam-types" }
+jam-pvm-common = { path = "crates/jam-pvm-common" }

@@ -1,7 +1,7 @@
 //! Configuration for the spacejam with hook node
 
 use crate::config::Config;
-use spacejam::{Builder, storage::Parity, validator::LocalValidator};
+use spacejam::{storage::Parity, validator::LocalValidator, Builder};
 
 pub struct JadexSpec<Hook: runtime::Hook>(std::marker::PhantomData<Hook>);
 

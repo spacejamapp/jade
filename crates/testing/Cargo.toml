@@ -1,0 +1,19 @@
+[package]
+name = "jade-testing"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lib]
+name = "testing"
+path = "src/lib.rs"
+
+[dependencies]
+cjam.workspace = true
+codec.workspace = true
+podec.workspace = true
+score.workspace = true
+jam-pvm-common.workspace = true
+anyhow.workspace = true

@@ -1,0 +1,31 @@
+[package]
+name = "jam-bootstrap-service"
+publish = true
+authors.workspace = true
+edition.workspace = true
+repository.workspace = true
+license.workspace = true
+version.workspace = true
+description = "The JAM Bootstrap Service, a simple swiss-army-knife service for JAM Genesis"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+bounded-collections = { workspace = true, default-features = false }
+codec = { package = "jam-codec", version = "0.1.0", default-features = false }
+polkavm-derive = "0.26.0"
+jam-types = { workspace = true, default-features = false }
+jam-pvm-common = { workspace = true, default-features = false, features = [
+    "service",
+    "logging",
+] }
+jam-bootstrap-service-common = { version = "0.1.22", default-features = false }
+
+[features]
+default = []
+tiny = [
+    "jam-types/tiny",
+    "jam-pvm-common/tiny",
+    "jam-bootstrap-service-common/tiny",
+]

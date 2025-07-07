@@ -1,0 +1,17 @@
+[package]
+name = "simulator"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lib]
+path = "src/lib.rs"
+name = "simulator"
+
+[dependencies]
+pvm.workspace = true
+pvmi.workspace = true
+score.workspace = true
+testing.workspace = true
