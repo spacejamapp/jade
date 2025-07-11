@@ -11,9 +11,11 @@ name = "testing"
 path = "src/lib.rs"
 
 [dependencies]
+anyhow.workspace = true
 cjam.workspace = true
 codec.workspace = true
+hex.workspace = true
+jam-pvm-common.workspace = true
+jam-types.workspace = true
 podec.workspace = true
 score.workspace = true
-jam-pvm-common.workspace = true
-anyhow.workspace = true

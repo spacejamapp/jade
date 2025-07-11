@@ -1,9 +1,11 @@
 //! Refine environment
 
 use crate::env::Account;
+use podec::{Decode, Encode};
 use std::collections::BTreeMap;
 
 /// Refine environment
+#[derive(Encode, Decode)]
 pub struct Refine {
     /// The timeslot of the refine
     pub timeslot: u32,

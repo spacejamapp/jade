@@ -1,5 +1,5 @@
 //! JAM service testing utilities
 
 pub mod env;
-mod simulator;
+pub mod simulator;
 mod vm;

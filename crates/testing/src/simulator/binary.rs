@@ -1,7 +1,8 @@
 //! PVM binary simulator
 
-use crate::env::Env;
+use crate::{env::Env, simulator::Execution};
 use anyhow::Result;
+use podec::{Decode, Encode};
 use std::process::{Command, Stdio};
 
 /// The PVM binary simulator
@@ -17,38 +18,45 @@ impl Simulator {
     }
 
     /// Run the is-authorized interface
-    pub fn is_authorized(&self, env: &Env) -> Result<()> {
-        Command::new(&self.command)
+    pub fn is_authorized(&self, env: &Env) -> Result<Execution> {
+        let encoded = hex::encode(env.encode());
+        let output = Command::new(&self.command)
             .arg("is-authorized")
-            .stdin(Stdio::piped())
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped());
-
-        Ok(())
-    }
-
-    /// Run the refine interface
-    pub fn refine(&self, env: &Env) -> Result<()> {
-        Command::new(&self.command)
-            .arg("refine")
+            .arg(encoded)
             .stdin(Stdio::piped())
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
-            .spawn()?
-            .wait()?;
+            .output()?;
 
-        Ok(())
+        Execution::decode(&mut output.stdout.as_slice()).map_err(Into::into)
+    }
+
+    /// Run the refine interface
+    pub fn refine(&self, env: &Env) -> Result<Execution> {
+        let encoded = hex::encode(env.encode());
+        let output = Command::new(&self.command)
+            .arg("refine")
+            .arg(encoded)
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
+            .output()?;
+
+        Execution::decode(&mut output.stdout.as_slice()).map_err(Into::into)
     }
 
     /// Run the accumulate interface
-    pub fn accumulate(&self, env: &Env) -> Result<()> {
-        Command::new(&self.command)
+    pub fn accumulate(&self, env: &Env) -> Result<Execution> {
+        let encoded = hex::encode(env.encode());
+        let output = Command::new(&self.command)
             .arg("accumulate")
+            .arg(encoded)
             .stdin(Stdio::piped())
             .stdout(Stdio::piped())
-            .stderr(Stdio::piped());
+            .stderr(Stdio::piped())
+            .output()?;
 
-        Ok(())
+        Execution::decode(&mut output.stdout.as_slice()).map_err(Into::into)
     }
 }
 

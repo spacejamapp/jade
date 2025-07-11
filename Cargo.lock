@@ -2171,8 +2171,10 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "cargo-jam",
+ "hex",
  "jam-codec",
  "jam-pvm-common",
+ "jam-types",
  "jamcodec",
  "spacejam-core",
 ]

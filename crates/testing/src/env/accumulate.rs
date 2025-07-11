@@ -2,9 +2,11 @@
 
 use crate::env::Account;
 use jam_pvm_common::jam_types::AccumulateItem;
+use podec::{Decode, Encode};
 use std::collections::BTreeMap;
 
 /// Accumulate environment
+#[derive(Encode, Decode)]
 pub struct Accumulate {
     /// (U) The context of the accumulate
     pub context: AccumulateContext,
@@ -26,6 +28,7 @@ pub struct Accumulate {
 }
 
 /// Accumulate context
+#[derive(Encode, Decode)]
 pub struct AccumulateContext {
     /// d (δ) The accounts
     pub accounts: BTreeMap<u32, Account>,
@@ -41,6 +44,7 @@ pub struct AccumulateContext {
 }
 
 /// The privileged service indices (χ)
+#[derive(Encode, Decode)]
 pub struct Privileges {
     /// The bless service id (χm)
     pub bless: u32,
@@ -56,6 +60,7 @@ pub struct Privileges {
 }
 
 /// The validator data
+#[derive(Encode, Decode)]
 pub struct ValidatorData {
     /// The bandersnatch public key
     pub bandersnatch: [u8; 32],
