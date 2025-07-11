@@ -53,13 +53,13 @@ tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
 
 # spacejam dependencies
-runtime = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "spacejam-runtime" }
-codec = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "jamcodec" }
-network = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "spacejam-network" }
-score = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "spacejam-core" }
-spacejam = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook" }
-pvm = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "pvm" }
-pvmi = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "pvmi" }
+runtime = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-runtime" }
+codec = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "jamcodec" }
+network = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-network" }
+score = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-core" }
+spacejam = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main" }
+pvm = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "pvm" }
+pvmi = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "pvmi" }
 
 [patch.crates-io]
 jam-types = { path = "crates/jam-types" }
