@@ -1,5 +1,5 @@
 [workspace]
-members = ["jadex", "crates/*", "services/*"]
+members = ["crates/*", "services/*"]
 resolver = "2"
 
 [workspace.package]
