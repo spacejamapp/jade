@@ -1,17 +1,18 @@
 [package]
-name = "simulator"
+name = "pvms"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
 repository.workspace = true
 
-[lib]
-path = "src/lib.rs"
-name = "simulator"
 
 [dependencies]
+anyhow.workspace = true
 clap.workspace = true
+codec.workspace = true
+hex.workspace = true
+podec.workspace = true
 pvm.workspace = true
 pvmi.workspace = true
 score.workspace = true

@@ -5,7 +5,7 @@ use podec::{Decode, Encode};
 use std::collections::BTreeMap;
 
 /// Refine environment
-#[derive(Encode, Decode)]
+#[derive(Encode, Decode, Clone)]
 pub struct Refine {
     /// The timeslot of the refine
     pub timeslot: u32,

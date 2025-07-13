@@ -17,20 +17,20 @@ mod package;
 mod refine;
 
 /// The execution environment
-#[derive(Encode, Decode)]
+#[derive(Encode, Decode, Clone)]
 pub struct Env {
     /// The accounts of the environment
-    accounts: BTreeMap<u32, Account>,
+    pub accounts: BTreeMap<u32, Account>,
 
     /// The code we are about to execute
-    code: Vec<u8>,
+    pub code: Vec<u8>,
 
     /// The accumulate environment
-    accumulate: Accumulate,
+    pub accumulate: Accumulate,
 
     /// The authorize environment
-    authorize: Authorize,
+    pub authorize: Authorize,
 
     /// The refine environment
-    refine: Refine,
+    pub refine: Refine,
 }

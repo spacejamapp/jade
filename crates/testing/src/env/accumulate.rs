@@ -6,7 +6,7 @@ use podec::{Decode, Encode};
 use std::collections::BTreeMap;
 
 /// Accumulate environment
-#[derive(Encode, Decode)]
+#[derive(Encode, Decode, Clone)]
 pub struct Accumulate {
     /// (U) The context of the accumulate
     pub context: AccumulateContext,
@@ -28,7 +28,7 @@ pub struct Accumulate {
 }
 
 /// Accumulate context
-#[derive(Encode, Decode)]
+#[derive(Encode, Decode, Clone)]
 pub struct AccumulateContext {
     /// d (δ) The accounts
     pub accounts: BTreeMap<u32, Account>,
@@ -44,7 +44,7 @@ pub struct AccumulateContext {
 }
 
 /// The privileged service indices (χ)
-#[derive(Encode, Decode)]
+#[derive(Encode, Decode, Clone)]
 pub struct Privileges {
     /// The bless service id (χm)
     pub bless: u32,
@@ -60,7 +60,7 @@ pub struct Privileges {
 }
 
 /// The validator data
-#[derive(Encode, Decode)]
+#[derive(Encode, Decode, Clone)]
 pub struct ValidatorData {
     /// The bandersnatch public key
     pub bandersnatch: [u8; 32],

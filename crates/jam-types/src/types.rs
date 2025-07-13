@@ -303,7 +303,7 @@ pub struct WorkDigest {
 
 /// The result and surrounding context of a single Refinement operation passed in to the
 /// Accumulation logic.
-#[derive(Debug, Encode, Decode)]
+#[derive(Debug, Encode, Decode, Clone)]
 pub struct AccumulateItem {
     /// The hash of the work-package in which the work-item which gave this result was placed.
     pub package: WorkPackageHash,
