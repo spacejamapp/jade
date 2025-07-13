@@ -1,6 +1,6 @@
 # Jade
 
-Rust framework for building JAM applications.
+JAM service libraries.
 
 ## License
 

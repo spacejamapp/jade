@@ -11,6 +11,7 @@ path = "src/lib.rs"
 name = "simulator"
 
 [dependencies]
+clap.workspace = true
 pvm.workspace = true
 pvmi.workspace = true
 score.workspace = true

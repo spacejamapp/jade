@@ -13,6 +13,7 @@ mod account;
 mod accumulate;
 mod authorize;
 mod loader;
+mod package;
 mod refine;
 
 /// The execution environment

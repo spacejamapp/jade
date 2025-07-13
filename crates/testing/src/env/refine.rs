@@ -25,6 +25,6 @@ pub struct Refine {
     /// (i) The segment imports of the refine
     pub imports: Vec<[u8; 4104]>,
 
-    // (ς) export segment offset
+    /// (ς) export segment offset
     pub offset: u16,
 }

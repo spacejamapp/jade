@@ -159,7 +159,7 @@ checksum = "7575182f7272186991736b70173b0ea045398f984bf5ebbb3804736ce1330c9d"
 
 [[package]]
 name = "cargo-jam"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -530,14 +530,14 @@ checksum = "4a5f13b858c8d314ee3e8f639011f7ccefe71f97f96e50151fb991f267928e2c"
 
 [[package]]
 name = "jade"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "jam-pvm-common",
 ]
 
 [[package]]
 name = "jade-testing"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "anyhow",
  "cargo-jam",
@@ -551,7 +551,7 @@ dependencies = [
 
 [[package]]
 name = "jam-bootstrap-service"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "bounded-collections",
  "jam-bootstrap-service-common",
@@ -603,7 +603,7 @@ dependencies = [
 
 [[package]]
 name = "jam-null-authorizer"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "jam-pvm-common",
  "jam-types",
@@ -1169,8 +1169,9 @@ dependencies = [
 
 [[package]]
 name = "simulator"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
+ "clap",
  "jade-testing",
  "pvm",
  "pvmi",
@@ -1188,6 +1189,14 @@ name = "smallvec"
 version = "1.15.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "67b1b7a3b5fe4f1376887184045fcf45c69e92af734b7aaddc05fb777b6fbd03"
+
+[[package]]
+name = "spacejam-builder"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "jam-types",
+]
 
 [[package]]
 name = "spacejam-core"
@@ -1213,6 +1222,10 @@ dependencies = [
  "ed25519-dalek",
  "tiny-keccak",
 ]
+
+[[package]]
+name = "spacejam-hook"
+version = "0.0.0"
 
 [[package]]
 name = "spacejson"
