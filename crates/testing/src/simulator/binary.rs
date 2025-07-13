@@ -28,7 +28,7 @@ impl Simulator {
             .stderr(Stdio::piped())
             .output()?;
 
-        Execution::decode(&mut output.stdout.as_slice()).map_err(Into::into)
+        Execution::decode(&mut output.stdout.as_slice()).map_err(|e| anyhow::anyhow!("{}", e))
     }
 
     /// Run the refine interface
@@ -42,7 +42,7 @@ impl Simulator {
             .stderr(Stdio::piped())
             .output()?;
 
-        Execution::decode(&mut output.stdout.as_slice()).map_err(Into::into)
+        Execution::decode(&mut output.stdout.as_slice()).map_err(|e| anyhow::anyhow!("{}", e))
     }
 
     /// Run the accumulate interface
@@ -56,7 +56,7 @@ impl Simulator {
             .stderr(Stdio::piped())
             .output()?;
 
-        Execution::decode(&mut output.stdout.as_slice()).map_err(Into::into)
+        Execution::decode(&mut output.stdout.as_slice()).map_err(|e| anyhow::anyhow!("{}", e))
     }
 }
 

@@ -1,5 +1,6 @@
 //! Environment for service testing
 
+use jam_types::WorkPackage;
 use podec::{Decode, Encode};
 use std::collections::BTreeMap;
 pub use {
@@ -25,12 +26,15 @@ pub struct Env {
     /// The code we are about to execute
     pub code: Vec<u8>,
 
-    /// The accumulate environment
-    pub accumulate: Accumulate,
+    /// The hash of the code we are about to execute
+    pub hash: [u8; 32],
+
+    /// The id of the service we are about to execute
+    pub id: u32,
+
+    /// The work package we are about to execute
+    pub package: WorkPackage,
 
     /// The authorize environment
     pub authorize: Authorize,
-
-    /// The refine environment
-    pub refine: Refine,
 }

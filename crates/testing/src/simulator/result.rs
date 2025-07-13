@@ -3,7 +3,6 @@
 use crate::env::Env;
 use jam_types::WorkError;
 use podec::{Decode, Encode};
-use score::Gas;
 
 /// Execution result
 #[derive(Encode, Decode)]
@@ -15,7 +14,7 @@ pub struct Execution {
     pub env: Env,
 
     /// The gas used by the execution
-    pub gas: Gas,
+    pub gas: u64,
 
     /// The output of the execution
     pub output: Result<Vec<u8>, WorkError>,
