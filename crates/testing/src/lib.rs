@@ -5,6 +5,7 @@ pub use {
     simulator::{Execution, Simulator},
 };
 
+pub mod crypto;
 pub mod env;
 pub mod simulator;
 mod vm;

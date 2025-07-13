@@ -9,7 +9,7 @@ impl Env {
     pub fn send(&mut self, payload: Vec<u8>) -> Result<()> {
         let item = WorkItem {
             service: self.id,
-            code_hash: self.hash.into(),
+            code_hash: self.accounts[&self.id].code.into(),
             payload: payload.into(),
             refine_gas_limit: 0,
             accumulate_gas_limit: 0,

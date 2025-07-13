@@ -1,8 +1,10 @@
 //! Environment for service testing
 
+use crate::crypto;
 use jam_types::WorkPackage;
 use podec::{Decode, Encode};
 use std::collections::BTreeMap;
+
 pub use {
     account::Account,
     accumulate::{Accumulate, AccumulateContext, Privileges, ValidatorData},
@@ -18,16 +20,10 @@ mod package;
 mod refine;
 
 /// The execution environment
-#[derive(Encode, Decode, Clone)]
+#[derive(Encode, Decode, Clone, Default)]
 pub struct Env {
     /// The accounts of the environment
     pub accounts: BTreeMap<u32, Account>,
-
-    /// The code we are about to execute
-    pub code: Vec<u8>,
-
-    /// The hash of the code we are about to execute
-    pub hash: [u8; 32],
 
     /// The id of the service we are about to execute
     pub id: u32,
@@ -37,4 +33,24 @@ pub struct Env {
 
     /// The authorize environment
     pub authorize: Authorize,
+}
+
+impl Env {
+    /// Add an account to the environment
+    pub fn add_account(&mut self, id: u32, code: Vec<u8>) -> u32 {
+        let hash = crypto::blake2b(&code);
+        let mut account = Account {
+            code: hash,
+            storage: BTreeMap::new(),
+            preimage: BTreeMap::new(),
+            lookup: BTreeMap::new(),
+            balance: 100_000_000,
+            accumulate_gas: 100_000,
+            transfer_gas: 100_000,
+            ..Default::default()
+        };
+        account.preimage.insert(hash, code);
+        self.accounts.insert(id, account);
+        id
+    }
 }

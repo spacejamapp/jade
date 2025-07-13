@@ -540,7 +540,9 @@ name = "jade-testing"
 version = "0.0.0"
 dependencies = [
  "anyhow",
+ "blake2",
  "cargo-jam",
+ "etc",
  "hex",
  "jam-codec",
  "jam-pvm-common",

@@ -12,9 +12,11 @@ path = "src/lib.rs"
 
 [dependencies]
 anyhow.workspace = true
+blake2.workspace = true
 builder.workspace = true
 cjam.workspace = true
 codec.workspace = true
+etc.workspace = true
 hex.workspace = true
 jam-pvm-common.workspace = true
 jam-types.workspace = true
