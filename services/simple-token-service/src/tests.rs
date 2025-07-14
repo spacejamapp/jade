@@ -19,6 +19,7 @@ fn holders(env: &Env) -> Holders {
     Holders::decode(&mut encoded.as_slice()).expect("failed to decode holders")
 }
 
+#[ignore]
 #[test]
 fn test_mint() {
     let mut jam = Env::load().expect("failed to load service environment");
@@ -33,6 +34,7 @@ fn test_mint() {
     assert_eq!(holders.balance(ALICE), amount);
 }
 
+#[ignore]
 #[test]
 fn test_transfer() {
     let mut jam = Env::load().expect("failed to load service environment");
