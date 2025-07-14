@@ -1,6 +1,7 @@
 //! Environment for service testing
 
-use crate::crypto;
+use crate::{crypto, Simulator};
+use anyhow::Result;
 use jam_types::WorkPackage;
 use podec::{Decode, Encode};
 use std::collections::BTreeMap;
@@ -8,6 +9,7 @@ pub use {
     account::Account,
     accumulate::{Accumulate, AccumulateContext, Privileges, ValidatorData},
     authorize::Authorize,
+    logs::Logs,
     refine::Refine,
     report::WorkResult,
 };
@@ -16,6 +18,7 @@ mod account;
 mod accumulate;
 mod authorize;
 mod loader;
+mod logs;
 mod package;
 mod refine;
 mod report;
@@ -44,6 +47,9 @@ pub struct Env {
 
     /// The validators of the environment
     pub validators: Vec<ValidatorData>,
+
+    /// The logs of the execution
+    pub logs: Logs,
 }
 
 impl Env {
@@ -62,5 +68,39 @@ impl Env {
         account.preimage.insert(hash, code);
         self.accounts.insert(id, account);
         id
+    }
+
+    /// Execute the is_authorized step
+    pub fn is_authorized(&mut self) -> Result<()> {
+        let simulator = Simulator::default();
+        let result = simulator.is_authorized(&self)?;
+        *self = result.env;
+        self.logs.is_authorized = result.logs;
+        Ok(())
+    }
+
+    /// Execute the refine step
+    pub fn refine(&mut self) -> Result<()> {
+        let simulator = Simulator::default();
+        let result = simulator.refine(&self)?;
+        *self = result.env;
+        self.logs.refine = result.logs;
+        Ok(())
+    }
+
+    /// Execute the accumulate step
+    pub fn accumulate(&mut self) -> Result<()> {
+        let simulator = Simulator::default();
+        let result = simulator.accumulate(&self)?;
+        *self = result.env;
+        self.logs.accumulate = result.logs;
+        Ok(())
+    }
+
+    /// Execute the work package
+    pub fn transact(&mut self) -> Result<()> {
+        self.is_authorized()?;
+        self.refine()?;
+        self.accumulate()
     }
 }

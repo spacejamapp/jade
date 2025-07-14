@@ -10,5 +10,6 @@ extern crate alloc;
 mod instruction;
 mod service;
 mod storage;
+mod tests;
 
 pub use {instruction::Instruction, service::Service, storage::Holders};

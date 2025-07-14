@@ -8,11 +8,10 @@ use std::fs;
 impl Env {
     /// Load the environment for the current working package
     pub fn load() -> Result<Env> {
-        let root = etc::find_up("Cargo.toml")?
+        let target = etc::find_up("target")?;
+        let root = target
             .parent()
-            .ok_or_else(|| anyhow::anyhow!("Failed to find the root of the current service"))?
-            .to_path_buf();
-        let target = root.join("target").join("jam");
+            .ok_or_else(|| anyhow::anyhow!("Failed to find the root of the current service"))?;
         let (_name, path) = builder::build_pvm_blob(
             &root,
             builder::BlobType::Service,

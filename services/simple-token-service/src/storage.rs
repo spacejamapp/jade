@@ -13,12 +13,17 @@ pub struct Holders {
 impl Holders {
     /// Get the holders map
     pub fn get() -> Self {
-        accumulate::get(b"holders").unwrap_or_default()
+        accumulate::get(Self::key()).unwrap_or_default()
     }
 
     /// Save the holders map
     pub fn save(&self) {
-        accumulate::set(b"holders", &self.encode()).expect("failed to encode holders");
+        accumulate::set(Self::key(), &self.encode()).expect("failed to encode holders");
+    }
+
+    /// Get the key of the holders map
+    pub const fn key() -> &'static [u8] {
+        b"holders"
     }
 
     /// Transfer tokens from one account to another

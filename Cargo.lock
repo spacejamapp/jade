@@ -1190,6 +1190,7 @@ name = "simple-token-service"
 version = "0.0.0"
 dependencies = [
  "bounded-collections",
+ "jade-testing",
  "jam-bootstrap-service-common",
  "jam-codec",
  "jam-pvm-common",
