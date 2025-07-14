@@ -21,6 +21,11 @@ impl Holders {
         accumulate::set(Self::key(), &self.encode()).expect("failed to encode holders");
     }
 
+    /// Get the balance of the given account
+    pub fn balance(&self, account: u32) -> u64 {
+        self.inner.get(&account).copied().unwrap_or(0)
+    }
+
     /// Get the key of the holders map
     pub const fn key() -> &'static [u8] {
         b"holders"

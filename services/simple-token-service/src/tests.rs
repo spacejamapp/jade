@@ -22,11 +22,34 @@ fn holders(env: &Env) -> Holders {
 #[test]
 fn test_mint() {
     let mut jam = Env::load().expect("failed to load service environment");
-    let mint = Instruction::Mint {
-        to: ALICE,
-        amount: 1000_000,
-    };
+    let amount = 100_000;
+    let mint = Instruction::Mint { to: ALICE, amount };
 
     jam.send(vec![mint].encode())
         .expect("failed to add work item");
+    jam.transact().expect("failed to transact changes");
+
+    let holders = self::holders(&jam);
+    assert_eq!(holders.balance(ALICE), amount);
+}
+
+#[test]
+fn test_transfer() {
+    let mut jam = Env::load().expect("failed to load service environment");
+    let amount = 100_000;
+    let half = amount / 2;
+    let mint = Instruction::Mint { to: ALICE, amount };
+    let transfer = Instruction::Transfer {
+        from: ALICE,
+        to: BOB,
+        amount: half,
+    };
+
+    jam.send(vec![mint, transfer].encode())
+        .expect("failed to add work item");
+    jam.transact().expect("failed to transact changes");
+
+    let holders = self::holders(&jam);
+    assert_eq!(holders.balance(ALICE), half);
+    assert_eq!(holders.balance(BOB), half);
 }
