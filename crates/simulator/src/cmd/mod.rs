@@ -29,9 +29,9 @@ impl App {
     pub fn run() -> Result<()> {
         let app = Self::parse();
         let decoded = hex::decode(app.env)?;
-        let mut env = Env::decode(&mut decoded.as_slice())?;
+        let env = Env::decode(&mut decoded.as_slice())?;
         let exec = match app.command {
-            Command::Refine => refine::run(&mut env),
+            Command::Refine => refine::run(&env),
             Command::Accumulate => accumulate::run(&env),
             Command::Authorize => authorize::run(&env),
         }?;

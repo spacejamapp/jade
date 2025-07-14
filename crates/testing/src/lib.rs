@@ -8,4 +8,3 @@ pub use {
 pub mod crypto;
 pub mod env;
 pub mod simulator;
-mod vm;

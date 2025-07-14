@@ -11,7 +11,7 @@ use testing::{Env, Execution};
 /// TODO: large decoding/encoding work here
 pub fn run(env: &Env) -> Result<Execution> {
     let state = ext::accumulate_state(env);
-    let executed = Interpreter::accumulate(
+    let _executed = Interpreter::accumulate(
         state,
         env.timeslot,
         env.id,
@@ -23,7 +23,5 @@ pub fn run(env: &Env) -> Result<Execution> {
     Ok(Execution {
         logs: vec![],
         env: env.clone(),
-        gas: executed.gas,
-        output: Ok(Default::default()),
     })
 }

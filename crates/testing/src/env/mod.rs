@@ -1,6 +1,6 @@
 //! Environment for service testing
 
-use crate::{crypto, env::report::WorkResult};
+use crate::crypto;
 use jam_types::WorkPackage;
 use podec::{Decode, Encode};
 use std::collections::BTreeMap;
@@ -9,6 +9,7 @@ pub use {
     accumulate::{Accumulate, AccumulateContext, Privileges, ValidatorData},
     authorize::Authorize,
     refine::Refine,
+    report::WorkResult,
 };
 
 mod account;
