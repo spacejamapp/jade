@@ -7,16 +7,17 @@ use pvmi::Interpreter;
 use testing::{Env, Execution};
 
 /// Run the accumulate command
-///
-/// TODO: large decoding/encoding work here
 pub fn run(env: &Env) -> Result<Execution> {
     let state = ext::accumulate_state(env);
+
+    // TODO: get operands from env.result
+    let operands = ext::operands(env);
     let _executed = Interpreter::accumulate(
         state,
         env.timeslot,
         env.id,
         Default::default(),
-        Default::default(),
+        operands,
         Default::default(),
     );
 

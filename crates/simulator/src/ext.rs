@@ -1,9 +1,10 @@
 //! Extended methods for the environment
 
+use podec::Encode;
 use score::{
     safrole::ValidatorData,
     service::{Authorizer, RefineContext, ServiceAccount, WorkItem, WorkPackage},
-    vm::AccumulateState,
+    vm::{AccumulateState, Operand},
 };
 use std::collections::BTreeMap;
 use testing::Env;
@@ -78,4 +79,24 @@ pub fn accumulate_state(env: &Env) -> AccumulateState<BTreeMap<u32, ServiceAccou
     }
 
     state
+}
+
+/// Get the operands from the environment
+pub fn operands(env: &Env) -> Vec<Operand> {
+    let mut operands = Vec::new();
+    for result in env.result.iter() {
+        let encoded = result.result.encode();
+
+        operands.push(Operand {
+            package: Default::default(),
+            exports_root: Default::default(),
+            authorizer_hash: Default::default(),
+            payload: result.payload_hash,
+            gas: result.accumulate_gas,
+            data: codec::decode(&encoded).expect("Failed to decode work result"),
+            auth_output: Default::default(),
+        });
+    }
+
+    operands
 }
