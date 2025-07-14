@@ -25,14 +25,17 @@ pub struct Env {
     /// The accounts of the environment
     pub accounts: BTreeMap<u32, Account>,
 
+    /// The authorize environment
+    pub authorize: Authorize,
+
     /// The id of the service we are about to execute
     pub id: u32,
 
     /// The work package we are about to execute
     pub package: WorkPackage,
 
-    /// The authorize environment
-    pub authorize: Authorize,
+    /// The timeslot we are about to execute
+    pub timeslot: u32,
 }
 
 impl Env {
@@ -47,7 +50,6 @@ impl Env {
             balance: 100_000_000,
             accumulate_gas: 100_000,
             transfer_gas: 100_000,
-            ..Default::default()
         };
         account.preimage.insert(hash, code);
         self.accounts.insert(id, account);
