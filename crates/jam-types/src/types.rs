@@ -147,7 +147,7 @@ pub struct WorkItem {
 pub type WorkItemImportsVec = BoundedVec<ImportSpec, MaxImports>;
 
 /// Various pieces of information helpful to contextualize the Refinement process.
-#[derive(Clone, Encode, Decode, Debug, Eq, PartialEq)]
+#[derive(Clone, Encode, Decode, Debug, Eq, PartialEq, Default)]
 pub struct RefineContext {
     /// The most recent header hash of the chain when building. This must be no more than
     /// `RECENT_BLOCKS` blocks old when reported.
@@ -175,7 +175,7 @@ pub struct RefineContext {
 /// A work-package, a collection of work-items together with authorization and contextual
 /// information. This is processed _in-core_ with Is-Authorized and Refine logic to produce a
 /// work-report.
-#[derive(Clone, Encode, Decode, Debug)]
+#[derive(Clone, Encode, Decode, Debug, Default)]
 pub struct WorkPackage {
     /// Authorization token.
     pub authorization: Authorization,
@@ -191,7 +191,7 @@ pub struct WorkPackage {
 
 /// The authorizer tuple which together identifies a means of determining whether a Work Package is
 /// acceptable to execute on a core.
-#[derive(Clone, Encode, Decode, Debug)]
+#[derive(Clone, Encode, Decode, Debug, Default)]
 pub struct Authorizer {
     /// Authorization code hash.
     pub code_hash: CodeHash,
@@ -303,7 +303,7 @@ pub struct WorkDigest {
 
 /// The result and surrounding context of a single Refinement operation passed in to the
 /// Accumulation logic.
-#[derive(Debug, Encode, Decode)]
+#[derive(Debug, Encode, Decode, Clone)]
 pub struct AccumulateItem {
     /// The hash of the work-package in which the work-item which gave this result was placed.
     pub package: WorkPackageHash,

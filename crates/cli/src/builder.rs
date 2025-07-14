@@ -288,7 +288,6 @@ pub fn build_pvm_blob(
     let input_root = &out_dir.join(target_name).join(profile.as_str());
     let input_path_bin = input_root.join(&info.name);
     let input_path_cdylib = input_root.join(format!("{}.elf", info.name.replace("-", "_")));
-
     let input_path = if input_path_cdylib.exists() {
         if input_path_bin.exists() {
             eprintln!(
@@ -310,8 +309,8 @@ pub fn build_pvm_blob(
         std::process::exit(1);
     };
 
-    let orig = fs::read(&input_path)
-        .unwrap_or_else(|e| panic!("Failed to read {input_path:?} :{e:?}"));
+    let orig =
+        fs::read(&input_path).unwrap_or_else(|e| panic!("Failed to read {input_path:?} :{e:?}"));
     let linked = polkavm_linker::program_from_elf(config, orig.as_ref())
         .expect("Failed to link pvm program:");
 

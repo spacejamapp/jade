@@ -1,15 +1,16 @@
 [workspace]
-members = ["jadex", "crates/*", "services/*"]
+members = ["crates/*", "services/*"]
 resolver = "2"
 
 [workspace.package]
-version = "0.1.0"
+version = "0.0.0"
 edition = "2021"
 authors = ["clearloop <tianyi.gc@gmail.com>"]
 license = "GPL-3.0"
 repository = "https://github.com/spacejamapp/jade"
 
 [workspace.dependencies]
+builder = { path = "crates/builder", package = "spacejam-builder" }
 cjam = { path = "crates/cli", package = "cargo-jam" }
 testing = { path = "crates/testing", package = "jade-testing" }
 
@@ -31,6 +32,7 @@ anyhow = "1.0.93"
 async-graphql = "7.0.17"
 async-graphql-axum = "7.0.16"
 axum = "0.8.4"
+blake2 = "0.10.6"
 clap = "4.5.30"
 etc = "0.1.20"
 dirs = "6.0.0"
@@ -53,13 +55,13 @@ tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
 
 # spacejam dependencies
-runtime = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "spacejam-runtime" }
-codec = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "jamcodec" }
-network = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "spacejam-network" }
-score = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "spacejam-core" }
-spacejam = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook" }
-pvm = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "pvm" }
-pvmi = { git = "https://github.com/spacejamapp/spacejam.git", branch = "node-with-hook", package = "pvmi" }
+runtime = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-runtime" }
+codec = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "jamcodec" }
+network = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-network" }
+score = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-core" }
+spacejam = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main" }
+pvm = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "pvm" }
+pvmi = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "pvmi" }
 
 [patch.crates-io]
 jam-types = { path = "crates/jam-types" }
