@@ -17,3 +17,4 @@ pvm.workspace = true
 pvmi.workspace = true
 score.workspace = true
 testing.workspace = true
+jam-pvm-common.workspace = true

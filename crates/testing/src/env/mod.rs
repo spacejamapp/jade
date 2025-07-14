@@ -73,7 +73,7 @@ impl Env {
     /// Execute the is_authorized step
     pub fn is_authorized(&mut self) -> Result<()> {
         let simulator = Simulator::default();
-        let result = simulator.is_authorized(&self)?;
+        let result = simulator.is_authorized(self)?;
         *self = result.env;
         self.logs.is_authorized = result.logs;
         Ok(())
@@ -82,7 +82,7 @@ impl Env {
     /// Execute the refine step
     pub fn refine(&mut self) -> Result<()> {
         let simulator = Simulator::default();
-        let result = simulator.refine(&self)?;
+        let result = simulator.refine(self)?;
         *self = result.env;
         self.logs.refine = result.logs;
         Ok(())
@@ -91,7 +91,7 @@ impl Env {
     /// Execute the accumulate step
     pub fn accumulate(&mut self) -> Result<()> {
         let simulator = Simulator::default();
-        let result = simulator.accumulate(&self)?;
+        let result = simulator.accumulate(self)?;
         *self = result.env;
         self.logs.accumulate = result.logs;
         Ok(())

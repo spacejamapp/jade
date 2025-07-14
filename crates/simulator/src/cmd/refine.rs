@@ -2,7 +2,6 @@
 
 use crate::ext;
 use anyhow::Result;
-use podec::Decode;
 use pvm::Invocation;
 use pvmi::Interpreter;
 use testing::{crypto, env::WorkResult, Env, Execution};
@@ -27,14 +26,13 @@ pub fn run(env: &Env) -> Result<Execution> {
             Default::default(),
         );
 
-        let res = codec::encode(&executed.executed.exec)?;
-
+        let result = ext::result(executed.executed.exec);
         env.result.push(WorkResult {
             service_id: env.id,
             code_hash: code,
             payload_hash: crypto::blake2b(&env.package.items[index].payload),
             accumulate_gas: 0,
-            result: Decode::decode(&mut res.as_slice())?,
+            result,
             refine_load: Default::default(),
         });
     }

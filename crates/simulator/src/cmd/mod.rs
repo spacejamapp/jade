@@ -20,8 +20,7 @@ pub struct App {
     command: Command,
 
     /// The environment to run the command on
-    #[clap(short, long)]
-    env: Vec<u8>,
+    env: String,
 }
 
 impl App {
@@ -29,14 +28,15 @@ impl App {
     pub fn run() -> Result<()> {
         let app = Self::parse();
         let decoded = hex::decode(app.env)?;
-        let env = Env::decode(&mut decoded.as_slice())?;
+        let env = Env::decode(&mut decoded.as_slice())
+            .map_err(|e| anyhow::anyhow!("failed to decode env: {e}"))?;
         let exec = match app.command {
             Command::Refine => refine::run(&env),
             Command::Accumulate => accumulate::run(&env),
             Command::Authorize => authorize::run(&env),
         }?;
 
-        io::stdout().write_all(&exec.encode())?;
+        io::stdout().write_all(hex::encode(exec.encode()).as_bytes())?;
         Ok(())
     }
 }

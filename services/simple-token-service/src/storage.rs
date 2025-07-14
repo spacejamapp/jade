@@ -18,7 +18,7 @@ impl Holders {
 
     /// Save the holders map
     pub fn save(&self) {
-        accumulate::set(Self::key(), &self.encode()).expect("failed to encode holders");
+        accumulate::set(Self::key(), self.encode()).expect("failed to encode holders");
     }
 
     /// Get the balance of the given account
@@ -41,24 +41,20 @@ impl Holders {
             return;
         }
 
-        if to_balance + amount > u64::MAX {
-            error!("balance overflow");
-            return;
-        }
-
-        self.inner.insert(from, from_balance - amount);
-        self.inner.insert(to, to_balance + amount);
+        self.inner.insert(
+            from,
+            from_balance.checked_sub(amount).expect("balance overflow"),
+        );
+        self.inner.insert(
+            to,
+            to_balance.checked_add(amount).expect("balance overflow"),
+        );
     }
 
     /// Mint the given amount of tokens to the given account
     pub fn mint(&mut self, to: u32, amount: u64) {
         let balance = self.inner.get(&to).copied().unwrap_or(0);
-
-        if balance + amount > u64::MAX {
-            error!("balance overflow");
-            return;
-        }
-
-        self.inner.insert(to, balance + amount);
+        self.inner
+            .insert(to, balance.checked_add(amount).expect("balance overflow"));
     }
 }

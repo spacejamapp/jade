@@ -1,9 +1,10 @@
 //! Extended methods for the environment
 
+use jam_pvm_common::jam_types::WorkError;
 use podec::Encode;
 use score::{
     safrole::ValidatorData,
-    service::{Authorizer, RefineContext, ServiceAccount, WorkItem, WorkPackage},
+    service::{Authorizer, RefineContext, ServiceAccount, WorkExecResult, WorkItem, WorkPackage},
     vm::{AccumulateState, Operand},
 };
 use std::collections::BTreeMap;
@@ -99,4 +100,15 @@ pub fn operands(env: &Env) -> Vec<Operand> {
     }
 
     operands
+}
+
+/// Convert the work exec result to a vector of bytes
+pub fn result(result: WorkExecResult) -> Result<Vec<u8>, WorkError> {
+    match result {
+        WorkExecResult::Ok(data) => Ok(data),
+        WorkExecResult::OutOfGas => Err(WorkError::OutOfGas),
+        WorkExecResult::Panic => Err(WorkError::Panic),
+        WorkExecResult::BadCode => Err(WorkError::BadCode),
+        WorkExecResult::CodeOversize => Err(WorkError::CodeOversize),
+    }
 }

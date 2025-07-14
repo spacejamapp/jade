@@ -9,9 +9,10 @@ impl Env {
     /// Load the environment for the current working package
     pub fn load() -> Result<Env> {
         let target = etc::find_up("target")?;
-        let root = target
+        let root = etc::find_up("Cargo.toml")?
             .parent()
-            .ok_or_else(|| anyhow::anyhow!("Failed to find the root of the current service"))?;
+            .expect("failed to find root")
+            .to_path_buf();
         let (_name, path) = builder::build_pvm_blob(
             &root,
             builder::BlobType::Service,

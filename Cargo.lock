@@ -976,6 +976,7 @@ dependencies = [
  "hex",
  "jade-testing",
  "jam-codec",
+ "jam-pvm-common",
  "jamcodec",
  "pvm",
  "pvmi",
