@@ -1186,6 +1186,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "simple-token-service"
+version = "0.0.0"
+dependencies = [
+ "bounded-collections",
+ "jam-bootstrap-service-common",
+ "jam-codec",
+ "jam-pvm-common",
+ "jam-types",
+ "polkavm-derive 0.26.0",
+]
+
+[[package]]
 name = "slice-group-by"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"

@@ -53,7 +53,8 @@ pub fn crate_info(krate: &Path) -> anyhow::Result<CrateInfo> {
     let name = pkg
         .get("name")
         .expect("could not find package name in Cargo.toml")
-        .to_string();
+        .to_string()
+        .replace('"', "");
 
     let version = pkg
         .get("version")
