@@ -69,10 +69,7 @@ pub struct ValidatorData {
     pub ed25519: [u8; 32],
 
     /// The bls public key
-    pub bls: [u8; 32],
-
-    /// The bls secret key
-    pub bls_secret: [u8; 144],
+    pub bls: [u8; 144],
 
     /// The metadata of the validator
     pub metadata: [u8; 128],

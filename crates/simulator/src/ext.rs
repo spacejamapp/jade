@@ -1,6 +1,10 @@
 //! Extended methods for the environment
 
-use score::service::{Authorizer, RefineContext, ServiceAccount, WorkItem, WorkPackage};
+use score::{
+    safrole::ValidatorData,
+    service::{Authorizer, RefineContext, ServiceAccount, WorkItem, WorkPackage},
+    vm::AccumulateState,
+};
 use std::collections::BTreeMap;
 use testing::Env;
 
@@ -52,4 +56,26 @@ pub fn package(env: &Env) -> WorkPackage {
         });
     }
     package
+}
+
+/// Get the accumulate state of the environment
+pub fn accumulate_state(env: &Env) -> AccumulateState<BTreeMap<u32, ServiceAccount>> {
+    let accounts = self::accounts(env);
+    let mut state = AccumulateState {
+        accounts,
+        validators: Default::default(),
+        authorization: Default::default(),
+        privileges: Default::default(),
+    };
+
+    for validator in env.validators.iter() {
+        state.validators.push(ValidatorData {
+            bandersnatch: validator.bandersnatch,
+            ed25519: validator.ed25519,
+            bls: validator.bls,
+            metadata: validator.metadata,
+        });
+    }
+
+    state
 }

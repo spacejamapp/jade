@@ -1,10 +1,9 @@
 //! Environment for service testing
 
-use crate::crypto;
+use crate::{crypto, env::report::WorkResult};
 use jam_types::WorkPackage;
 use podec::{Decode, Encode};
 use std::collections::BTreeMap;
-
 pub use {
     account::Account,
     accumulate::{Accumulate, AccumulateContext, Privileges, ValidatorData},
@@ -18,6 +17,7 @@ mod authorize;
 mod loader;
 mod package;
 mod refine;
+mod report;
 
 /// The execution environment
 #[derive(Encode, Decode, Clone, Default)]
@@ -34,8 +34,15 @@ pub struct Env {
     /// The work package we are about to execute
     pub package: WorkPackage,
 
+    /// The results of the work items which will be used
+    /// in the accumulation step.
+    pub result: Vec<WorkResult>,
+
     /// The timeslot we are about to execute
     pub timeslot: u32,
+
+    /// The validators of the environment
+    pub validators: Vec<ValidatorData>,
 }
 
 impl Env {
