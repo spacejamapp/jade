@@ -2,7 +2,7 @@
 
 use crate::{env::Env, simulator::Execution};
 use anyhow::Result;
-use podec::{Decode, Encode};
+use podec::Encode;
 use std::process::{Command, Stdio};
 
 /// The PVM binary simulator
@@ -35,9 +35,8 @@ impl Simulator {
             );
         }
 
-        let encoded = hex::decode(output.stdout)?;
-        Execution::decode(&mut encoded.as_slice())
-            .map_err(|e| anyhow::anyhow!("Failed to decode is-authorized result: {e}"))
+        let stdout = String::from_utf8_lossy(&output.stdout);
+        Execution::from_stdout(stdout)
     }
 
     /// Run the refine interface
@@ -58,9 +57,7 @@ impl Simulator {
             );
         }
 
-        let encoded = hex::decode(output.stdout)?;
-        Execution::decode(&mut encoded.as_slice())
-            .map_err(|e| anyhow::anyhow!("Failed to decode refine result: {e}"))
+        Execution::from_stdout(String::from_utf8_lossy(&output.stdout))
     }
 
     /// Run the accumulate interface
@@ -78,9 +75,7 @@ impl Simulator {
             anyhow::bail!("{}", String::from_utf8_lossy(&output.stderr));
         }
 
-        let encoded = hex::decode(output.stdout)?;
-        Execution::decode(&mut encoded.as_slice())
-            .map_err(|e| anyhow::anyhow!("Failed to decode accumulate result: {e}"))
+        Execution::from_stdout(String::from_utf8_lossy(&output.stdout))
     }
 }
 

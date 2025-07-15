@@ -5,6 +5,7 @@ use clap::Parser;
 use podec::{Decode, Encode};
 use std::io::{self, Write};
 use testing::Env;
+use tracing_subscriber::EnvFilter;
 
 mod accumulate;
 mod authorize;
@@ -26,16 +27,26 @@ pub struct App {
 impl App {
     /// Run the application
     pub fn run() -> Result<()> {
+        let filter = EnvFilter::try_from_default_env().unwrap_or(EnvFilter::new("trace"));
+        tracing_subscriber::fmt()
+            .with_env_filter(filter)
+            .with_ansi(false)
+            .without_time()
+            .with_target(false)
+            .init();
+
         let app = Self::parse();
         let decoded = hex::decode(app.env)?;
         let env = Env::decode(&mut decoded.as_slice())
             .map_err(|e| anyhow::anyhow!("failed to decode env: {e}"))?;
+
         let exec = match app.command {
             Command::Refine => refine::run(&env),
             Command::Accumulate => accumulate::run(&env),
             Command::Authorize => authorize::run(&env),
         }?;
 
+        io::stdout().write_all(b"--encoded--")?;
         io::stdout().write_all(hex::encode(exec.encode()).as_bytes())?;
         Ok(())
     }

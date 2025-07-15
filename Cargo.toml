@@ -66,3 +66,12 @@ pvmi = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", p
 [patch.crates-io]
 jam-types = { path = "crates/jam-types" }
 jam-pvm-common = { path = "crates/jam-pvm-common" }
+
+[patch."https://github.com/spacejamapp/spacejam.git"]
+# runtime = { path = "../spacejam/crates/runtime", package = "spacejam-runtime" }
+codec = { path = "../spacejam/crates/codec", package = "jamcodec" }
+# network = { path = "../spacejam/crates/network", package = "spacejam-network" }
+score = { path = "../spacejam/crates/core", package = "spacejam-core" }
+# spacejam = { path = "../spacejam/crates/spacejam" }
+pvm = { path = "../spacejam/crates/pvm" }
+pvmi = { path = "../spacejam/crates/pvm/interpreter", package = "pvmi" }

@@ -108,6 +108,7 @@ pub fn result(result: WorkExecResult) -> Result<Vec<u8>, WorkError> {
         WorkExecResult::Ok(data) => Ok(data),
         WorkExecResult::OutOfGas => Err(WorkError::OutOfGas),
         WorkExecResult::Panic => Err(WorkError::Panic),
+        WorkExecResult::BadExports => Err(WorkError::BadExports),
         WorkExecResult::BadCode => Err(WorkError::BadCode),
         WorkExecResult::CodeOversize => Err(WorkError::CodeOversize),
     }

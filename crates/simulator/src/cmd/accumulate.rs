@@ -4,10 +4,10 @@ use crate::ext;
 use anyhow::Result;
 use pvm::Invocation;
 use pvmi::Interpreter;
-use testing::{Env, Execution};
+use testing::Env;
 
 /// Run the accumulate command
-pub fn run(env: &Env) -> Result<Execution> {
+pub fn run(env: &Env) -> Result<Env> {
     let state = ext::accumulate_state(env);
 
     // TODO: get operands from env.result
@@ -21,8 +21,5 @@ pub fn run(env: &Env) -> Result<Execution> {
         Default::default(),
     );
 
-    Ok(Execution {
-        logs: vec![],
-        env: env.clone(),
-    })
+    Ok(env.clone())
 }

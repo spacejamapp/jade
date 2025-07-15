@@ -14,12 +14,11 @@ fn holders(env: &Env) -> Holders {
         .expect("failed to get account")
         .storage
         .get(Holders::key())
-        .expect("failed to get holders");
+        .expect("holders not initialized");
 
     Holders::decode(&mut encoded.as_slice()).expect("failed to decode holders")
 }
 
-#[ignore]
 #[test]
 fn test_mint() {
     let mut jam = Env::load().expect("failed to load service environment");

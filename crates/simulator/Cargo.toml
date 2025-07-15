@@ -18,3 +18,5 @@ pvmi.workspace = true
 score.workspace = true
 testing.workspace = true
 jam-pvm-common.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true

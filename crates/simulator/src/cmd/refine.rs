@@ -4,10 +4,10 @@ use crate::ext;
 use anyhow::Result;
 use pvm::Invocation;
 use pvmi::Interpreter;
-use testing::{crypto, env::WorkResult, Env, Execution};
+use testing::{crypto, env::WorkResult, Env};
 
 /// Run the refine command
-pub fn run(env: &Env) -> Result<Execution> {
+pub fn run(env: &Env) -> Result<Env> {
     let mut accounts = ext::accounts(env);
     let items = env.package.items.len();
     let mut env = env.clone();
@@ -37,5 +37,5 @@ pub fn run(env: &Env) -> Result<Execution> {
         });
     }
 
-    Ok(Execution { logs: vec![], env })
+    Ok(env)
 }
