@@ -20,6 +20,9 @@ pub struct App {
     #[clap(subcommand)]
     command: Command,
 
+    /// The target to filter the logs
+    target: String,
+
     /// The environment to run the command on
     env: String,
 }
@@ -27,15 +30,16 @@ pub struct App {
 impl App {
     /// Run the application
     pub fn run() -> Result<()> {
-        let filter = EnvFilter::try_from_default_env().unwrap_or(EnvFilter::new("trace"));
+        let app = Self::parse();
+        let filter = EnvFilter::try_from_default_env()
+            .unwrap_or(EnvFilter::new(format!("{}=trace", app.target)));
+
         tracing_subscriber::fmt()
             .with_env_filter(filter)
             .with_ansi(false)
             .without_time()
-            .with_target(false)
             .init();
 
-        let app = Self::parse();
         let decoded = hex::decode(app.env)?;
         let env = Env::decode(&mut decoded.as_slice())
             .map_err(|e| anyhow::anyhow!("failed to decode env: {e}"))?;

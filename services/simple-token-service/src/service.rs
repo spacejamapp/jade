@@ -17,7 +17,7 @@ impl jam_pvm_common::Service for Service {
         _auth_code_hash: CodeHash,
     ) -> WorkOutput {
         info!(
-            target = "stoken",
+            target = "simple-token-service",
             "instructions: {:?}",
             Vec::<Instruction>::decode(&mut payload.0.as_slice())
                 .expect("failed to decode instructions")
@@ -29,7 +29,7 @@ impl jam_pvm_common::Service for Service {
         let mut holders = Holders::get();
         for raw_instructions in results.into_iter().filter_map(|x| x.result.ok()) {
             for inst in Vec::<Instruction>::decode(&mut &raw_instructions[..]).unwrap() {
-                info!(target = "stoken", "instruction: {:?}", inst);
+                info!(target = "simple-token-service", "instruction: {:?}", inst);
                 match inst {
                     Instruction::Mint { to, amount } => {
                         holders.mint(to, amount);

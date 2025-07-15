@@ -50,6 +50,9 @@ pub struct Env {
 
     /// The logs of the execution
     pub logs: Logs,
+
+    /// The target to filter the logs
+    pub target: String,
 }
 
 impl Env {
@@ -100,6 +103,7 @@ impl Env {
     /// Execute the work package
     pub fn transact(&mut self) -> Result<()> {
         self.is_authorized()?;
+        println!("is_authorized: {:#?}", self.logs.is_authorized);
         self.refine()?;
         self.accumulate()
     }

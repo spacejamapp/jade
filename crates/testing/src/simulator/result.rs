@@ -1,11 +1,10 @@
 //! PVM execution result
 
-use std::borrow::Cow;
-
 use crate::env::Env;
 use anyhow::Result;
 use hex;
 use podec::{Decode, Encode};
+use std::borrow::Cow;
 
 /// Execution result
 #[derive(Encode, Decode)]

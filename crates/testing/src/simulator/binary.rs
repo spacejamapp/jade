@@ -21,6 +21,7 @@ impl Simulator {
     pub fn is_authorized(&self, env: &Env) -> Result<Execution> {
         let encoded = hex::encode(env.encode());
         let output = Command::new(&self.command)
+            .arg(env.target.clone())
             .arg(encoded)
             .arg("authorize")
             .stdin(Stdio::piped())
@@ -43,6 +44,7 @@ impl Simulator {
     pub fn refine(&self, env: &Env) -> Result<Execution> {
         let encoded = hex::encode(env.encode());
         let output = Command::new(&self.command)
+            .arg(env.target.clone())
             .arg(encoded)
             .arg("refine")
             .stdin(Stdio::piped())
@@ -64,6 +66,7 @@ impl Simulator {
     pub fn accumulate(&self, env: &Env) -> Result<Execution> {
         let encoded = hex::encode(env.encode());
         let output = Command::new(&self.command)
+            .arg(env.target.clone())
             .arg(encoded)
             .arg("accumulate")
             .stdin(Stdio::piped())

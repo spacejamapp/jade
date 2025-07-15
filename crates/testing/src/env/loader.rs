@@ -13,7 +13,7 @@ impl Env {
             .parent()
             .expect("failed to find root")
             .to_path_buf();
-        let (_name, path) = builder::build_pvm_blob(
+        let (name, path) = builder::build_pvm_blob(
             &root,
             builder::BlobType::Service,
             &target,
@@ -24,6 +24,7 @@ impl Env {
         let code = fs::read(path)?;
         let mut env = Env::default();
         env.id = env.add_account(257, code);
+        env.target = name;
         Ok(env)
     }
 }
