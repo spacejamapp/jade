@@ -30,11 +30,14 @@ macro_rules! declare_service {
         }
         #[polkavm_derive::polkavm_export]
         extern "C" fn accumulate_ext(ptr: u32, size: u32) -> (u64, u64) {
-            info!("decoding accumulate params");
             let $crate::jam_types::AccumulateParams { slot, id, results } =
                 $crate::mem::decode_buf(ptr, size);
-            info!("accumulate params decoded");
-            let maybe_hash = <$service_impl as $crate::Service>::accumulate(slot, id, results);
+            let encoded = $crate::refine::Fetch::Operands
+                .fetch()
+                .expect("failed to fetch operands");
+            let items = Vec::<AccumulateItem>::decode(&mut &encoded[..])
+                .expect("failed to decode accumulate items");
+            let maybe_hash = <$service_impl as $crate::Service>::accumulate(slot, id, items);
             if let Some(hash) = maybe_hash {
                 ((&hash).as_ptr() as u64, 32u64)
             } else {

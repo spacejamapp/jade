@@ -337,7 +337,8 @@ pub struct AccumulateParams {
     #[codec(compact)]
     pub id: ServiceId,
     /// A sequence of work-results to accumulate.
-    pub results: Vec<AccumulateItem>,
+    #[codec(compact)]
+    pub results: u32,
 }
 
 /// A single deferred transfer of balance and/or data, passed in to the invocation of On Transfer.

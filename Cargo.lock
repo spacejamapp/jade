@@ -563,18 +563,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "jam-bootstrap-service"
-version = "0.0.0"
-dependencies = [
- "bounded-collections",
- "jam-bootstrap-service-common",
- "jam-codec",
- "jam-pvm-common",
- "jam-types",
- "polkavm-derive 0.26.0",
-]
-
-[[package]]
 name = "jam-bootstrap-service-common"
 version = "0.1.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
