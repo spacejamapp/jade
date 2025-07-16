@@ -1,4 +1,6 @@
-> [!NOTE] This repo is still under heavy development
+> [!NOTE]
+>
+> This repo is still under heavy development
 >
 > The local testing simulator requires a binary of `pvms` which will be published soon!
 
