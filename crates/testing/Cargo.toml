@@ -21,6 +21,7 @@ hex.workspace = true
 jam-pvm-common.workspace = true
 jam-types.workspace = true
 podec.workspace = true
+tracing-subscriber.workspace = true
 
 [dev-dependencies]
-score.workspace = true
+score = { workspace = true, features = ["crypto"] }

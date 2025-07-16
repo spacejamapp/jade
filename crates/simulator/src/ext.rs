@@ -1,7 +1,6 @@
 //! Extended methods for the environment
 
 use jam_pvm_common::jam_types::WorkError;
-use podec::Encode;
 use score::{
     safrole::ValidatorData,
     service::{Authorizer, RefineContext, ServiceAccount, WorkExecResult, WorkItem, WorkPackage},
@@ -86,15 +85,22 @@ pub fn accumulate_state(env: &Env) -> AccumulateState<BTreeMap<u32, ServiceAccou
 pub fn operands(env: &Env) -> Vec<Operand> {
     let mut operands = Vec::new();
     for result in env.result.iter() {
-        let encoded = result.result.encode();
-
         operands.push(Operand {
             package: Default::default(),
             exports_root: Default::default(),
             authorizer_hash: Default::default(),
             payload: result.payload_hash,
             gas: result.accumulate_gas,
-            data: codec::decode(&encoded).expect("Failed to decode work result"),
+            data: match &result.result {
+                Ok(data) => WorkExecResult::Ok(data.clone()),
+                Err(e) => match e {
+                    WorkError::OutOfGas => WorkExecResult::OutOfGas,
+                    WorkError::Panic => WorkExecResult::Panic,
+                    WorkError::BadExports => WorkExecResult::BadExports,
+                    WorkError::BadCode => WorkExecResult::BadCode,
+                    WorkError::CodeOversize => WorkExecResult::CodeOversize,
+                },
+            },
             auth_output: Default::default(),
         });
     }
@@ -108,6 +114,7 @@ pub fn result(result: WorkExecResult) -> Result<Vec<u8>, WorkError> {
         WorkExecResult::Ok(data) => Ok(data),
         WorkExecResult::OutOfGas => Err(WorkError::OutOfGas),
         WorkExecResult::Panic => Err(WorkError::Panic),
+        WorkExecResult::BadExports => Err(WorkError::BadExports),
         WorkExecResult::BadCode => Err(WorkError::BadCode),
         WorkExecResult::CodeOversize => Err(WorkError::CodeOversize),
     }

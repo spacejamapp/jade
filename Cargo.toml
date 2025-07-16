@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/*", "services/*"]
+members = ["crates/*", "polkajam/*", "services/*"]
 resolver = "2"
 
 [workspace.package]
@@ -16,9 +16,9 @@ testing = { path = "crates/testing", package = "jade-testing" }
 
 # jam dependencies
 bounded-collections = { version = "0.3.2", default-features = false }
-jam-types = { path = "crates/jam-types", version = "0.1.22", default-features = false }
+jam-types = { path = "polkajam/jam-types", version = "0.1.22", default-features = false }
 jam-pvm-builder = "0.1.22"
-jam-pvm-common = { path = "crates/jam-pvm-common", version = "0.1.22", default-features = false }
+jam-pvm-common = { path = "polkajam/jam-pvm-common", version = "0.1.22", default-features = false }
 jam-program-blob = { version = "0.1.22", default-features = false }
 polkavm-linker = "0.24.0"
 polkavm-derive = "0.24.0"
@@ -55,14 +55,17 @@ tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
 
 # spacejam dependencies
-runtime = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-runtime" }
 codec = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "jamcodec" }
-network = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-network" }
 score = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-core" }
-spacejam = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main" }
 pvm = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "pvm" }
 pvmi = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "pvmi" }
 
 [patch.crates-io]
-jam-types = { path = "crates/jam-types" }
-jam-pvm-common = { path = "crates/jam-pvm-common" }
+jam-types = { path = "polkajam/jam-types" }
+jam-pvm-common = { path = "polkajam/jam-pvm-common" }
+
+[patch."https://github.com/spacejamapp/spacejam.git"]
+codec = { path = "../spacejam/crates/codec", package = "jamcodec" }
+score = { path = "../spacejam/crates/core", package = "spacejam-core" }
+pvm = { path = "../spacejam/crates/pvm" }
+pvmi = { path = "../spacejam/crates/pvm/interpreter", package = "pvmi" }

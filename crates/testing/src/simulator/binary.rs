@@ -2,7 +2,7 @@
 
 use crate::{env::Env, simulator::Execution};
 use anyhow::Result;
-use podec::{Decode, Encode};
+use podec::Encode;
 use std::process::{Command, Stdio};
 
 /// The PVM binary simulator
@@ -21,6 +21,7 @@ impl Simulator {
     pub fn is_authorized(&self, env: &Env) -> Result<Execution> {
         let encoded = hex::encode(env.encode());
         let output = Command::new(&self.command)
+            .arg(env.target.clone())
             .arg(encoded)
             .arg("authorize")
             .stdin(Stdio::piped())
@@ -35,15 +36,15 @@ impl Simulator {
             );
         }
 
-        let encoded = hex::decode(output.stdout)?;
-        Execution::decode(&mut encoded.as_slice())
-            .map_err(|e| anyhow::anyhow!("Failed to decode is-authorized result: {e}"))
+        let stdout = String::from_utf8_lossy(&output.stdout);
+        Execution::from_stdout(stdout)
     }
 
     /// Run the refine interface
     pub fn refine(&self, env: &Env) -> Result<Execution> {
         let encoded = hex::encode(env.encode());
         let output = Command::new(&self.command)
+            .arg(env.target.clone())
             .arg(encoded)
             .arg("refine")
             .stdin(Stdio::piped())
@@ -58,15 +59,14 @@ impl Simulator {
             );
         }
 
-        let encoded = hex::decode(output.stdout)?;
-        Execution::decode(&mut encoded.as_slice())
-            .map_err(|e| anyhow::anyhow!("Failed to decode refine result: {e}"))
+        Execution::from_stdout(String::from_utf8_lossy(&output.stdout))
     }
 
     /// Run the accumulate interface
     pub fn accumulate(&self, env: &Env) -> Result<Execution> {
         let encoded = hex::encode(env.encode());
         let output = Command::new(&self.command)
+            .arg(env.target.clone())
             .arg(encoded)
             .arg("accumulate")
             .stdin(Stdio::piped())
@@ -78,9 +78,7 @@ impl Simulator {
             anyhow::bail!("{}", String::from_utf8_lossy(&output.stderr));
         }
 
-        let encoded = hex::decode(output.stdout)?;
-        Execution::decode(&mut encoded.as_slice())
-            .map_err(|e| anyhow::anyhow!("Failed to decode accumulate result: {e}"))
+        Execution::from_stdout(String::from_utf8_lossy(&output.stdout))
     }
 }
 

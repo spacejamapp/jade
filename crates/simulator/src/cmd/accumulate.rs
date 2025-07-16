@@ -4,25 +4,41 @@ use crate::ext;
 use anyhow::Result;
 use pvm::Invocation;
 use pvmi::Interpreter;
-use testing::{Env, Execution};
+use testing::{env::Account, Env};
 
 /// Run the accumulate command
-pub fn run(env: &Env) -> Result<Execution> {
-    let state = ext::accumulate_state(env);
-
-    // TODO: get operands from env.result
+pub fn run(env: &Env) -> Result<Env> {
     let operands = ext::operands(env);
-    let _executed = Interpreter::accumulate(
+    let state = ext::accumulate_state(env);
+    let executed = Interpreter::accumulate(
         state,
         env.timeslot,
         env.id,
-        Default::default(),
+        1_000_000,
         operands,
         Default::default(),
     );
 
-    Ok(Execution {
-        logs: vec![],
-        env: env.clone(),
-    })
+    let mut env = env.clone();
+    println!("executed: {:?}", executed.context.accounts);
+    env.accounts = executed
+        .context
+        .accounts
+        .into_iter()
+        .map(|(k, v)| {
+            (
+                k,
+                Account {
+                    storage: v.storage,
+                    preimage: v.preimage,
+                    lookup: v.lookup,
+                    code: v.code,
+                    balance: v.balance,
+                    accumulate_gas: v.accumulate_gas,
+                    transfer_gas: v.transfer_gas,
+                },
+            )
+        })
+        .collect();
+    Ok(env)
 }

@@ -4,10 +4,10 @@ use crate::ext;
 use anyhow::Result;
 use pvm::Invocation;
 use pvmi::Interpreter;
-use testing::{crypto, env::WorkResult, Env, Execution};
+use testing::{crypto, env::WorkResult, Env};
 
 /// Run the refine command
-pub fn run(env: &Env) -> Result<Execution> {
+pub fn run(env: &Env) -> Result<Env> {
     let mut accounts = ext::accounts(env);
     let items = env.package.items.len();
     let mut env = env.clone();
@@ -31,11 +31,11 @@ pub fn run(env: &Env) -> Result<Execution> {
             service_id: env.id,
             code_hash: code,
             payload_hash: crypto::blake2b(&env.package.items[index].payload),
-            accumulate_gas: 0,
+            accumulate_gas: 1_000_000,
             result,
             refine_load: Default::default(),
         });
     }
 
-    Ok(Execution { logs: vec![], env })
+    Ok(env)
 }

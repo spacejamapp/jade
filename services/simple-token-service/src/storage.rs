@@ -49,6 +49,7 @@ impl Holders {
             to,
             to_balance.checked_add(amount).expect("balance overflow"),
         );
+        self.save();
     }
 
     /// Mint the given amount of tokens to the given account
@@ -56,5 +57,6 @@ impl Holders {
         let balance = self.inner.get(&to).copied().unwrap_or(0);
         self.inner
             .insert(to, balance.checked_add(amount).expect("balance overflow"));
+        self.save();
     }
 }

@@ -7,4 +7,5 @@ pub use {
 
 pub mod crypto;
 pub mod env;
+pub mod ext;
 pub mod simulator;
