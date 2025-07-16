@@ -32,7 +32,7 @@ impl Env {
     pub fn send(&mut self, payload: Vec<u8>) -> Result<()> {
         let item = WorkResult {
             service_id: self.id,
-            code_hash: self.accounts[&self.id].code.into(),
+            code_hash: self.accounts[&self.id].code,
             payload_hash: Default::default(),
             accumulate_gas: 1_000_000,
             result: Ok(payload),
