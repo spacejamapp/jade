@@ -65,9 +65,10 @@ impl Env {
             preimage: BTreeMap::new(),
             lookup: BTreeMap::new(),
             balance: 100_000_000,
-            accumulate_gas: 100_000,
-            transfer_gas: 100_000,
+            accumulate_gas: 1_000_000,
+            transfer_gas: 1_000_000,
         };
+        account.lookup.insert((hash, code.len() as u32), vec![0]);
         account.preimage.insert(hash, code);
         self.accounts.insert(id, account);
         id
@@ -102,9 +103,21 @@ impl Env {
 
     /// Execute the work package
     pub fn transact(&mut self) -> Result<()> {
-        self.is_authorized()?;
-        println!("is_authorized: {:#?}", self.logs.is_authorized);
-        self.refine()?;
-        self.accumulate()
+        // TODO: is_authorized
+        // self.is_authorized()?;
+
+        // TODO: refine
+        // self.refine()?;
+        // for work in self.result.iter() {
+        //     if let Err(e) = &work.result {
+        //         anyhow::bail!("failed to process refine: {e:?}");
+        //     }
+        // }
+
+        // handle accumulation only atm
+        self.accumulate()?;
+
+        println!("accumulate logs: {:#?}", self.logs.accumulate);
+        Ok(())
     }
 }

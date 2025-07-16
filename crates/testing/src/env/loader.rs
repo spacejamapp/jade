@@ -23,7 +23,8 @@ impl Env {
 
         let code = fs::read(path)?;
         let mut env = Env::default();
-        env.id = env.add_account(257, code);
+        env.id = 300;
+        env.id = env.add_account(env.id, code);
         env.target = name;
         Ok(env)
     }

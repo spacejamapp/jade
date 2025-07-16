@@ -32,7 +32,7 @@ impl App {
     pub fn run() -> Result<()> {
         let app = Self::parse();
         let filter = EnvFilter::try_from_default_env()
-            .unwrap_or(EnvFilter::new(format!("{}=trace", app.target)));
+            .unwrap_or(EnvFilter::new(format!("warn,{}=trace", app.target)));
 
         tracing_subscriber::fmt()
             .with_env_filter(filter)

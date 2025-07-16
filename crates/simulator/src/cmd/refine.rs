@@ -31,7 +31,7 @@ pub fn run(env: &Env) -> Result<Env> {
             service_id: env.id,
             code_hash: code,
             payload_hash: crypto::blake2b(&env.package.items[index].payload),
-            accumulate_gas: 0,
+            accumulate_gas: 1_000_000,
             result,
             refine_load: Default::default(),
         });

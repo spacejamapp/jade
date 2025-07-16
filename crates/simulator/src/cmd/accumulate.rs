@@ -8,15 +8,13 @@ use testing::Env;
 
 /// Run the accumulate command
 pub fn run(env: &Env) -> Result<Env> {
-    let state = ext::accumulate_state(env);
-
-    // TODO: get operands from env.result
     let operands = ext::operands(env);
+    let state = ext::accumulate_state(env);
     let _executed = Interpreter::accumulate(
         state,
         env.timeslot,
         env.id,
-        Default::default(),
+        1_000_000,
         operands,
         Default::default(),
     );
