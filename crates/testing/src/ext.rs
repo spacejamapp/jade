@@ -1,8 +1,8 @@
-//! tmp extentions for testing
+//! tmp extensions for testing
 
 use crate::crypto;
 
-/// Retrive the storage key from the given key
+/// Retrieve the storage key from the given key
 pub fn storage_key(service: u32, rkey: &[u8]) -> [u8; 31] {
     let mut input = service.to_le_bytes().to_vec();
     input.extend_from_slice(rkey);
