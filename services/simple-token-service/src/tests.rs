@@ -2,19 +2,21 @@
 
 use crate::{Holders, Instruction};
 use codec::{Decode, Encode};
-use testing::Env;
+use testing::{ext, Env};
 
 const ALICE: u32 = 300;
 const BOB: u32 = 301;
 
 fn holders(env: &Env) -> Holders {
+    let key = ext::storage_key(env.id, &Holders::key().encode());
     let encoded = env
         .accounts
         .get(&env.id)
         .expect("failed to get account")
         .storage
-        .get(Holders::key())
+        .get(&key.to_vec())
         .expect("holders not initialized");
+    let encoded = Vec::<u8>::decode(&mut encoded.as_slice()).expect("failed to decode encoded");
 
     Holders::decode(&mut encoded.as_slice()).expect("failed to decode holders")
 }
@@ -33,7 +35,6 @@ fn test_mint() {
     assert_eq!(holders.balance(ALICE), amount);
 }
 
-#[ignore]
 #[test]
 fn test_transfer() {
     let mut jam = Env::load().expect("failed to load service environment");
