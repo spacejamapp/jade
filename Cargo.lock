@@ -646,6 +646,7 @@ dependencies = [
 [[package]]
 name = "jamcodec"
 version = "0.0.0"
+source = "git+https://github.com/spacejamapp/spacejam.git?branch=main#207d1d4c88e01a076796d20899d740dbbe5672e1"
 dependencies = [
  "anyhow",
  "serde",
@@ -959,9 +960,9 @@ version = "0.0.0"
 dependencies = [
  "anyhow",
  "hex",
- "jamcodec",
  "log",
  "pvm-parser",
+ "serde-jam",
  "spacejam-core",
  "spacejam-crypto",
  "tracing",
@@ -973,10 +974,10 @@ version = "0.0.0"
 dependencies = [
  "anyhow",
  "heck",
- "jamcodec",
  "proc-macro2",
  "quote",
  "serde",
+ "serde-jam",
  "syn",
  "toml",
  "tracing",
@@ -1206,6 +1207,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "serde-jam"
+version = "0.0.3"
+dependencies = [
+ "anyhow",
+ "serde",
+]
+
+[[package]]
 name = "serde_derive"
 version = "1.0.219"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1305,8 +1314,8 @@ version = "0.0.0"
 dependencies = [
  "anyhow",
  "hex",
- "jamcodec",
  "serde",
+ "serde-jam",
  "serde_json",
  "spacejam-crypto",
  "spacejson",
@@ -1328,7 +1337,7 @@ version = "0.0.0"
 
 [[package]]
 name = "spacejson"
-version = "0.0.0"
+version = "0.0.3"
 dependencies = [
  "anyhow",
  "hex",
@@ -1338,7 +1347,7 @@ dependencies = [
 
 [[package]]
 name = "spacejson-derive"
-version = "0.0.0"
+version = "0.0.3"
 dependencies = [
  "proc-macro2",
  "quote",

@@ -65,7 +65,7 @@ jam-types = { path = "polkajam/jam-types" }
 jam-pvm-common = { path = "polkajam/jam-pvm-common" }
 
 [patch."https://github.com/spacejamapp/spacejam.git"]
-codec = { path = "../spacejam/crates/codec", package = "jamcodec" }
+codec = { path = "../spacejam/crates/codec", package = "serde-jam" }
 score = { path = "../spacejam/crates/core", package = "spacejam-core" }
 pvm = { path = "../spacejam/crates/pvm" }
 pvmi = { path = "../spacejam/crates/pvm/interpreter", package = "pvmi" }
