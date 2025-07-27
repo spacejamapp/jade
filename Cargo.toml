@@ -57,8 +57,6 @@ tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
 # spacejam dependencies
 codec = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "jamcodec" }
 score = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-core" }
-pvm = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "pvm" }
-pvmi = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "pvmi" }
 
 [patch.crates-io]
 jam-types = { path = "polkajam/jam-types" }
@@ -67,5 +65,3 @@ jam-pvm-common = { path = "polkajam/jam-pvm-common" }
 [patch."https://github.com/spacejamapp/spacejam.git"]
 codec = { path = "../spacejam/crates/codec", package = "jamcodec" }
 score = { path = "../spacejam/crates/core", package = "spacejam-core" }
-pvm = { path = "../spacejam/crates/pvm" }
-pvmi = { path = "../spacejam/crates/pvm/interpreter", package = "pvmi" }
