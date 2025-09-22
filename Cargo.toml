@@ -1,18 +1,16 @@
 [workspace]
-members = ["crates/*", "polkajam/*", "services/*"]
+members = ["crates/*", "polkajam/*"]
 resolver = "2"
 
 [workspace.package]
 version = "0.0.0"
-edition = "2021"
+edition = "2024"
 authors = ["clearloop <tianyi.gc@gmail.com>"]
 license = "GPL-3.0"
 repository = "https://github.com/spacejamapp/jade"
 
 [workspace.dependencies]
-builder = { path = "crates/builder", package = "spacejam-builder" }
-cjam = { path = "crates/cli", package = "cargo-jam" }
-testing = { path = "crates/testing", package = "jade-testing" }
+sys = { path = "crates/sys" }
 
 # jam dependencies
 bounded-collections = { version = "0.3.2", default-features = false }
@@ -29,9 +27,6 @@ podec = { version = "0.1.0", package = "jam-codec", default-features = false, fe
 
 # crates.io
 anyhow = "1.0.93"
-async-graphql = "7.0.17"
-async-graphql-axum = "7.0.16"
-axum = "0.8.4"
 blake2 = "0.10.6"
 clap = "4.5.30"
 etc = "0.1.20"
@@ -41,7 +36,6 @@ jobserver = "0.1.33"
 quote = "1.0.33"
 serde = { version = "1.0.215", features = ["derive"], default-features = false }
 serde_json = "1.0.133"
-sqlx = "0.8.5"
 syn = "2.0.90"
 temp-dir = "0.1.16"
 time = "0.3.41"
@@ -49,23 +43,10 @@ tiny-keccak = { version = "2.0.2", features = ["keccak"] }
 tokio = "1.42.0"
 tokio-stream = "0.1.17"
 toml = { version = "0.8.19", features = ["parse"] }
-tower = "0.5.1"
-tower-http = { version = "0.6.1", features = ["cors"] }
 tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
 
-# spacejam dependencies
-codec = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "jamcodec" }
-score = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "spacejam-core" }
-pvm = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "pvm" }
-pvmi = { git = "https://github.com/spacejamapp/spacejam.git", branch = "main", package = "pvmi" }
 
 [patch.crates-io]
 jam-types = { path = "polkajam/jam-types" }
 jam-pvm-common = { path = "polkajam/jam-pvm-common" }
-
-[patch."https://github.com/spacejamapp/spacejam.git"]
-codec = { path = "../spacejam/crates/codec", package = "jamcodec" }
-score = { path = "../spacejam/crates/core", package = "spacejam-core" }
-pvm = { path = "../spacejam/crates/pvm" }
-pvmi = { path = "../spacejam/crates/pvm/interpreter", package = "pvmi" }
