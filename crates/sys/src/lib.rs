@@ -1,14 +1,71 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+//! SpaceVM system interface
+
+use crate::abi::Buffer;
+use anyhow::Result;
+use service::{
+    api::{AccumulateArgs, Accumulated, AuthorizeArgs, RefineArgs},
+    service::result::{Executed, Refined},
+};
+
+/// Run the accumulate invocation
+pub fn authorize(args: AuthorizeArgs) -> Result<Executed> {
+    let encoded = codec::encode(&args)?;
+    let input = Buffer {
+        ptr: encoded.as_ptr(),
+        len: encoded.len(),
+    };
+
+    let output = unsafe { abi::authorize(input) };
+    codec::decode(output.as_slice()).map_err(Into::into)
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+/// Run the refine invocation
+pub fn refine(args: RefineArgs) -> Result<Refined> {
+    let encoded = codec::encode(&args)?;
+    let input = Buffer {
+        ptr: encoded.as_ptr(),
+        len: encoded.len(),
+    };
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    let output = unsafe { abi::refine(input) };
+    codec::decode(output.as_slice()).map_err(Into::into)
+}
+
+/// Run the accumulate invocation
+pub fn accumulate(args: AccumulateArgs) -> Result<Accumulated> {
+    let encoded = codec::encode(&args)?;
+    let input = Buffer {
+        ptr: encoded.as_ptr(),
+        len: encoded.len(),
+    };
+
+    let output = unsafe { abi::accumulate(input) };
+    codec::decode(output.as_slice()).map_err(Into::into)
+}
+
+mod abi {
+    #[repr(C)]
+    #[derive(Copy, Clone)]
+    pub struct Buffer {
+        pub ptr: *const u8,
+        pub len: usize,
+    }
+
+    impl Buffer {
+        /// Get the buffer as a byte slice
+        pub fn as_slice(&self) -> &[u8] {
+            unsafe { std::slice::from_raw_parts(self.ptr, self.len) }
+        }
+    }
+
+    unsafe extern "C" {
+        /// Run accumulate invocation
+        pub fn accumulate(args: Buffer) -> Buffer;
+
+        /// Run the refine invocation
+        pub fn refine(args: Buffer) -> Buffer;
+
+        /// Run the is_authorized invocation
+        pub fn authorize(args: Buffer) -> Buffer;
     }
 }

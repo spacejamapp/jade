@@ -1,9 +1,16 @@
 [package]
-name = "sys"
+name = "spacevm-sys"
 version.workspace = true
 edition.workspace = true
-authors.workspace = true
 license.workspace = true
+homepage.workspace = true
 repository.workspace = true
+description = "SpaceVM system interfaces"
+documentation = "https://docs.rs/spacevm-sys"
+categories = ["embedded", "api-bindings"]
+keywords = ["pvm", "spacejam", "vm"]
 
 [dependencies]
+anyhow.workspace = true
+codec.workspace = true
+service.workspace = true
