@@ -12,5 +12,5 @@ keywords = ["pvm", "spacejam", "vm"]
 
 [dependencies]
 anyhow.workspace = true
-codec.workspace = true
-service.workspace = true
+serde-jam.workspace = true
+spacejam-service.workspace = true

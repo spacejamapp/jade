@@ -7,12 +7,16 @@ version = "0.0.0"
 edition = "2024"
 authors = ["clearloop <tianyi.gc@gmail.com>"]
 license = "GPL-3.0"
+homepage = "https://github.com/spacejamapp/spacejam"
 repository = "https://github.com/spacejamapp/jade"
 
 [workspace.dependencies]
 sys = { path = "crates/sys" }
 
 # jam dependencies
+serde-jam = "0.0.12"
+spacejam-service = "0.0.12"
+
 bounded-collections = { version = "0.3.2", default-features = false }
 jam-types = { path = "polkajam/jam-types", version = "0.1.22", default-features = false }
 jam-pvm-builder = "0.1.22"
