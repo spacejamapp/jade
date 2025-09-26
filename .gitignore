@@ -1,2 +1,3 @@
 target
 **/*.jam
+crates/sys/lib
