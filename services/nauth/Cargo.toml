@@ -1,0 +1,16 @@
+[package]
+name = "null-authorizer"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
+publish = true
+description = "A JAM authorizer which always authorizes"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+jade.workspace = true
+service.workspace = true

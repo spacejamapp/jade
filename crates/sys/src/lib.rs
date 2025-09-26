@@ -2,45 +2,45 @@
 
 use crate::abi::Buffer;
 use anyhow::Result;
-use spacejam_service::{
+use service::{
     api::{AccumulateArgs, Accumulated, AuthorizeArgs, RefineArgs},
     service::result::{Executed, Refined},
 };
 
 /// Run the accumulate invocation
 pub fn authorize(args: AuthorizeArgs) -> Result<Executed> {
-    let encoded = serde_jam::encode(&args)?;
+    let encoded = codec::encode(&args)?;
     let input = Buffer {
         ptr: encoded.as_ptr(),
         len: encoded.len(),
     };
 
     let output = unsafe { abi::authorize(input) };
-    serde_jam::decode(output.as_slice()).map_err(Into::into)
+    codec::decode(output.as_slice()).map_err(Into::into)
 }
 
 /// Run the refine invocation
 pub fn refine(args: RefineArgs) -> Result<Refined> {
-    let encoded = serde_jam::encode(&args)?;
+    let encoded = codec::encode(&args)?;
     let input = Buffer {
         ptr: encoded.as_ptr(),
         len: encoded.len(),
     };
 
     let output = unsafe { abi::refine(input) };
-    serde_jam::decode(output.as_slice()).map_err(Into::into)
+    codec::decode(output.as_slice()).map_err(Into::into)
 }
 
 /// Run the accumulate invocation
 pub fn accumulate(args: AccumulateArgs) -> Result<Accumulated> {
-    let encoded = serde_jam::encode(&args)?;
+    let encoded = codec::encode(&args)?;
     let input = Buffer {
         ptr: encoded.as_ptr(),
         len: encoded.len(),
     };
 
     let output = unsafe { abi::accumulate(input) };
-    serde_jam::decode(output.as_slice()).map_err(Into::into)
+    codec::decode(output.as_slice()).map_err(Into::into)
 }
 
 mod abi {
