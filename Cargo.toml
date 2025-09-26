@@ -3,7 +3,7 @@ members = ["crates/*", "polkajam/*"]
 resolver = "2"
 
 [workspace.package]
-version = "0.0.0"
+version = "0.0.12-patch-1"
 edition = "2024"
 authors = ["clearloop <tianyi.gc@gmail.com>"]
 license = "GPL-3.0"

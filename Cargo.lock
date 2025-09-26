@@ -537,7 +537,7 @@ dependencies = [
 
 [[package]]
 name = "spacevm-sys"
-version = "0.0.0"
+version = "0.0.12-patch-1"
 dependencies = [
  "anyhow",
  "serde-jam",
