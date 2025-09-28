@@ -35,7 +35,6 @@ version = "0.0.12-patch-1"
 dependencies = [
  "polkavm-derive-impl",
  "proc-macro2",
- "quote",
  "syn",
 ]
 
