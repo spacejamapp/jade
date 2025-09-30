@@ -1,7 +1,7 @@
 //! Re-export the prelude types
 
 pub use codec;
-pub use service::service::WorkPackage;
+pub use service::{OpaqueHash, service::WorkPackage};
 
 #[cfg(feature = "std")]
 pub use std::{string::String, vec, vec::Vec};

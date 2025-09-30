@@ -1,0 +1,15 @@
+[package]
+name = "stoken"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+jade.workspace = true
+service.workspace = true

@@ -16,12 +16,12 @@ pub fn is_authorized(args: TokenStream, input: TokenStream) -> TokenStream {
 
 /// Export the refine interface
 #[proc_macro_attribute]
-pub fn refine(_args: TokenStream, input: TokenStream) -> TokenStream {
-    input
+pub fn refine(args: TokenStream, input: TokenStream) -> TokenStream {
+    refine::refine(args, input)
 }
 
 /// Export the accumulate interface
 #[proc_macro_attribute]
-pub fn accumulate(_args: TokenStream, input: TokenStream) -> TokenStream {
-    input
+pub fn accumulate(args: TokenStream, input: TokenStream) -> TokenStream {
+    accumulate::accumulate(args, input)
 }

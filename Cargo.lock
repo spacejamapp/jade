@@ -194,6 +194,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "stoken"
+version = "0.0.12-patch-1"
+dependencies = [
+ "jade",
+ "spacejam-service",
+]
+
+[[package]]
 name = "syn"
 version = "2.0.106"
 source = "registry+https://github.com/rust-lang/crates.io-index"
