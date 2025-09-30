@@ -1,6 +1,6 @@
 //! cargo-jam command line interface
 
-use cargo_jam::cmd::App;
+use cjam::cmd::App;
 use clap::Parser;
 
 fn main() {

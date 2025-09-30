@@ -19,7 +19,7 @@ pub struct Build {
     output: Option<std::path::PathBuf>,
     /// Module type to build.
     #[arg(short, long, value_enum, default_value_t = ModuleType::Automatic)]
-    module: ModuleType,
+    pub module: ModuleType,
     /// Install rustc dependencies if missing.
     #[arg(long)]
     auto_install: bool,

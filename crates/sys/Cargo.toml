@@ -15,3 +15,8 @@ include = ["lib", "src", "build.rs", "Cargo.toml", "README.md"]
 anyhow.workspace = true
 codec.workspace = true
 service.workspace = true
+
+[features]
+default = []
+tiny = []
+std = ["anyhow/std", "codec/std", "service/std"]

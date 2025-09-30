@@ -10,8 +10,15 @@ repository.workspace = true
 [lib]
 crate-type = ["cdylib"]
 
+[features]
+default = []
+tiny = []
+std = ["codec/std"]
+
 [dependencies]
 codec.workspace = true
-serde.workspace = true
+# serde = { workspace = true, features = ["alloc"] }
 jade.workspace = true
-service.workspace = true
+
+# [build-dependencies]
+# cjam.workspace = true

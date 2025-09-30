@@ -1,5 +1,5 @@
 [package]
-name = "cargo-jam"
+name = "cjam"
 version.workspace = true
 edition.workspace = true
 

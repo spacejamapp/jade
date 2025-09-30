@@ -11,7 +11,8 @@ homepage = "https://github.com/spacejamapp/spacejam"
 repository = "https://github.com/spacejamapp/jade"
 
 [workspace.dependencies]
-jade = { path = "crates/jade" }
+cjam = { path = "crates/cli" }
+jade = { path = "crates/jade", default-features = false }
 jade-derive = { path = "crates/jade/derive" }
 sys = { path = "crates/sys" }
 
@@ -20,12 +21,12 @@ codec = { package = "serde-jam", version = "0.0.12", default-features = false }
 service = { package = "spacejam-service", version = "0.0.12", default-features = false }
 
 # crates.io
-anyhow = "1.0.93"
+anyhow = { version = "1.0.93", default-features = false }
 blake2 = "0.10.6"
 clap = "4.5.30"
 etc = "0.1.20"
 dirs = "6.0.0"
-hex = "0.4.3"
+hex = { version = "0.4.3", default-features = false }
 jam-codec = "0.1.1"
 jam-program-blob = { version = "0.1.22", default-features = false }
 jobserver = "0.1.33"
@@ -38,11 +39,11 @@ quote = "1.0.33"
 serde = { version = "1.0.215", features = ["derive"], default-features = false }
 serde_json = "1.0.133"
 syn = "2.0.106"
-temp-dir = "0.1.16"
-time = "0.3.41"
 tiny-keccak = { version = "2.0.2", features = ["keccak"] }
-tokio = "1.42.0"
-tokio-stream = "0.1.17"
 toml = { version = "0.8.19", features = ["parse"] }
 tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
+
+[patch.crates-io]
+serde-jam = { path = "../spacejam/crates/codec/" }
+spacejam-service = { path = "../spacejam/crates/core/service" }

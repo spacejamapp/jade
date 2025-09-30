@@ -1,5 +1,6 @@
 //! Utility functions for the PVM CLI
 
+use crate::ModuleType;
 use anyhow::Result;
 use std::{
     env, fs,
@@ -10,7 +11,7 @@ use std::{
 /// Build the PVM blob
 ///
 /// NOTE: this is used for the build script of services
-pub fn build(package: &str, path: Option<String>) -> Result<()> {
+pub fn build(package: &str, module: Option<ModuleType>, path: Option<String>) -> Result<()> {
     let target = env::var("TARGET")?;
     if target.contains("polkavm") {
         return Ok(());
@@ -32,6 +33,9 @@ pub fn build(package: &str, path: Option<String>) -> Result<()> {
 
     if rebuild {
         let mut build = crate::cmd::Build::default();
+        if let Some(module) = module {
+            build.module = module;
+        }
         build.target = Some(jam.join(package));
         build.run()?;
     }

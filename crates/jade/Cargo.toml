@@ -14,4 +14,5 @@ codec.workspace = true
 
 [features]
 default = []
-std = []
+std = ["codec/std", "service/std"]
+tiny = []
