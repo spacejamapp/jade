@@ -2,6 +2,8 @@
 
 use jade::prelude::OpaqueHash;
 
+pub mod instruction;
+
 #[jade::accumulate]
 fn accumulate(_slot: u32, _id: u32, _results: u32) -> Option<OpaqueHash> {
     unimplemented!()

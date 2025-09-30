@@ -11,5 +11,7 @@ repository.workspace = true
 crate-type = ["cdylib"]
 
 [dependencies]
+codec.workspace = true
+serde.workspace = true
 jade.workspace = true
 service.workspace = true

@@ -1,0 +1,17 @@
+[package]
+name = "cargo-jam"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+clap = { workspace = true, features = ["derive"] }
+etc.workspace = true
+serde_json.workspace = true
+toml.workspace = true
+jobserver.workspace = true
+
+# jam deps
+jam-codec.workspace = true
+jam-program-blob = { workspace = true, features = ["polkavm"] }
+polkavm-linker.workspace = true

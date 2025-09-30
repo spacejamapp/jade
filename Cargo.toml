@@ -26,6 +26,8 @@ clap = "4.5.30"
 etc = "0.1.20"
 dirs = "6.0.0"
 hex = "0.4.3"
+jam-codec = "0.1.1"
+jam-program-blob = { version = "0.1.22", default-features = false }
 jobserver = "0.1.33"
 polkavm-linker = "0.29.0"
 polkavm-derive = "0.29.0"
