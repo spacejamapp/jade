@@ -7,10 +7,9 @@ const AUTHORIZER_ID: u32 = 500;
 const SERVICE_ID: u32 = 501;
 const ALICE: u32 = 0;
 
-#[ignore]
 #[test]
 fn test_mint() {
-    testing::util::init_logger();
+    jade::testing::util::init_logger();
 
     // Set up JAM with authorization using the null authorizer service
     let mut jam = Jam::default().with_auth(AUTHORIZER_ID, nauth::SERVICE.to_vec());
@@ -22,7 +21,7 @@ fn test_mint() {
     let amount = 100;
     let instr = vec![Instruction::Mint { to: ALICE, amount }];
     let info = jam
-        .execute(SERVICE_ID, instr.encode())
+        .execute(SERVICE_ID, codec::encode(&instr).unwrap())
         .expect("failed to execute work item");
 
     // 2. check the balance

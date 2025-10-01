@@ -395,6 +395,7 @@ version = "0.0.13-pre.1"
 dependencies = [
  "anyhow",
  "jade-derive",
+ "jade-testing",
  "polkavm-derive",
  "serde",
  "serde-jam",

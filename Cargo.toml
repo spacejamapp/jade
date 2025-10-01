@@ -15,7 +15,7 @@ cjam = { path = "crates/cli" }
 jade = { path = "crates/jade", default-features = false }
 jade-derive = { path = "crates/jade/derive" }
 spacevm = { path = "crates/sys", package = "spacevm-sys" }
-testing = { path = "crates/testing" }
+testing = { path = "crates/testing", package = "jade-testing" }
 
 # services
 nauth = { path = "services/nauth" }

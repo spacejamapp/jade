@@ -8,7 +8,7 @@ homepage.workspace = true
 repository.workspace = true
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["rlib", "cdylib"]
 
 [features]
 default = []
@@ -22,7 +22,6 @@ jade = { workspace = true, features = ["logging"] }
 
 [dev-dependencies]
 nauth.workspace = true
-jade = { workspace = true, features = ["testing"] }
 
 [build-dependencies]
 cjam.workspace = true

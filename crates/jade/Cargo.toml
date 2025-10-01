@@ -14,6 +14,8 @@ jade-derive.workspace = true
 serde.workspace = true
 service.workspace = true
 polkavm-derive.workspace = true
+
+[target.'cfg(not(any(target_arch = "riscv32", target_arch = "riscv64")))'.dependencies]
 testing.workspace = true
 
 [features]

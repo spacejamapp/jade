@@ -9,7 +9,10 @@ publish = true
 description = "A JAM authorizer which always authorizes"
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["rlib", "cdylib"]
+
+[features]
+tiny = []
 
 [dependencies]
 jade.workspace = true
