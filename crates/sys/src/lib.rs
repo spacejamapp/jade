@@ -68,12 +68,15 @@ mod abi {
 
     unsafe extern "C" {
         /// Run the authorize invocation
+        #[cfg(not(feature = "interp"))]
         pub fn comp_authorize(args: Buffer) -> Buffer;
 
         /// Run the refine invocation
+        #[cfg(not(feature = "interp"))]
         pub fn comp_refine(args: Buffer) -> Buffer;
 
         /// Run the accumulate invocation
+        #[cfg(not(feature = "interp"))]
         pub fn comp_accumulate(args: Buffer) -> Buffer;
 
         /// Run the is_authorized invocation
