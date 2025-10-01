@@ -4,7 +4,7 @@
 #[cfg(not(feature = "std"))]
 extern crate alloc;
 
-pub use {codec, jade_derive::*, polkavm_derive};
+pub use {codec, jade_derive::*, polkavm_derive, service};
 
 pub mod prelude;
 

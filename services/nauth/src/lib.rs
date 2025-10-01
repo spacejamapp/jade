@@ -4,5 +4,5 @@ use jade::prelude::{AuthConfig, AuthTrace, CoreIndex, WorkPackage};
 
 #[jade::is_authorized]
 fn is_authorized(_param: AuthConfig, _package: WorkPackage, _core_index: CoreIndex) -> AuthTrace {
-    unimplemented!()
+    Default::default()
 }

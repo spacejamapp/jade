@@ -20,7 +20,7 @@ pub fn refine(_args: TokenStream, input: TokenStream) -> TokenStream {
             #fun
 
             let buf = unsafe { core::slice::from_raw_parts(ptr as *const u8, size as usize) };
-            let (core, index, id, payload, package): (u16, u16, u32, Vec<u8>, OpaqueHash) =
+            let jade::service::vm::RefineParams {core, index, id, payload, package} =
                 jade::codec::decode(buf).expect("failed to decode refine parameters");
             let result = #funame(core, index, id, payload, package);
             ((&result).as_ptr() as u64, result.len() as u64)

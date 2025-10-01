@@ -20,7 +20,7 @@ pub fn accumulate(_args: TokenStream, input: TokenStream) -> TokenStream {
             #fun
 
             let buf = unsafe { core::slice::from_raw_parts(ptr as *const u8, size as usize) };
-            let (slot, id, results): (u32, u32, u32) =
+            let jade::service::vm::AccumulateParams {slot, id, results} =
                 jade::codec::decode(buf).expect("failed to decode accumulate parameters");
             if let Some(result) = #funame(slot, id, results) {
                 ((&result).as_ptr() as u64, result.len() as u64)
