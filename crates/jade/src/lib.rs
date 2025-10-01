@@ -10,7 +10,7 @@ pub mod host;
 pub mod logging;
 pub mod prelude;
 
-#[cfg(not(any(target_arch = "riscv32", target_arch = "riscv64")))]
+#[cfg(feature = "testing")]
 pub use testing;
 
 #[cfg(any(target_arch = "riscv32", target_arch = "riscv64"))]

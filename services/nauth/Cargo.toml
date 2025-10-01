@@ -9,13 +9,16 @@ publish = true
 description = "A JAM authorizer which always authorizes"
 
 [lib]
-crate-type = ["rlib", "cdylib"]
+crate-type = ["cdylib", "rlib"]
 
 [features]
 tiny = []
 
 [dependencies]
 jade.workspace = true
+
+[dev-dependencies]
+jade = { workspace = true, features = ["testing"] }
 
 [build-dependencies]
 cjam.workspace = true

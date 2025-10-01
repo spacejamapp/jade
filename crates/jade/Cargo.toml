@@ -14,12 +14,11 @@ jade-derive.workspace = true
 serde.workspace = true
 service.workspace = true
 polkavm-derive.workspace = true
-
-[target.'cfg(not(any(target_arch = "riscv32", target_arch = "riscv64")))'.dependencies]
-testing.workspace = true
+testing = { workspace = true, optional = true }
 
 [features]
 default = []
 logging = []
+testing = ["dep:testing"]
 std = ["anyhow/std", "codec/std", "serde/std", "service/std"]
 tiny = []
