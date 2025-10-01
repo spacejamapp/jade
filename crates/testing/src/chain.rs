@@ -36,7 +36,6 @@ pub struct Chain {
 impl Chain {
     /// Find a service code
     pub fn service(&self, service: ServiceId) -> Result<OpaqueHash> {
-        tracing::info!("service: {:?}", service);
         self.accounts
             .get(&service)
             .map(|account| account.info.code)

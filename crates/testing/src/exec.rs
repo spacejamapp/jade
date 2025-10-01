@@ -68,7 +68,13 @@ impl Jam {
     }
 
     /// Authorize the work package
+    #[tracing::instrument(name = "authorize", skip_all)]
     pub fn authorize(&mut self, work: &WorkPackage, core_idx: u16) -> Result<Executed> {
+        tracing::debug!(
+            "service={}, code=0x{}",
+            work.auth_code_host,
+            hex::encode(work.auth_code_hash)
+        );
         spacevm::authorize(AuthorizeArgs {
             package: work.clone(),
             core_idx: core_idx,

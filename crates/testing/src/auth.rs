@@ -42,13 +42,22 @@ impl Auth {
 
 impl Jam {
     /// Set the authorization
-    pub fn with_auth(mut self, service: ServiceId, _code: Vec<u8>) -> Self {
+    pub fn with_auth(mut self, service: ServiceId, code: Vec<u8>) -> Self {
         let mut auth = ServiceAccount::default();
         auth.info.balance = 1000;
-        // let hash = auth.add_preimage(code, self.chain.finalized.slot);
-        self.auth.host = service;
-        // self.auth.code_hash = hash;
+        auth.info.creation = self.chain.best.slot;
+
+        // register the service account
         self.add_account(service, auth);
+        let hash = self.add_preimage(service, code);
+
+        // set the code hash
+        if let Some(account) = self.chain.accounts.get_mut(&service) {
+            account.info.code = hash;
+        }
+
+        self.auth.code_hash = hash;
+        self.auth.host = service;
         self
     }
 

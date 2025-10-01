@@ -419,6 +419,7 @@ dependencies = [
  "anyhow",
  "cjam",
  "etc",
+ "hex",
  "serde",
  "serde-jam",
  "spacejam-service",

@@ -17,10 +17,15 @@ impl Jam {
     }
 
     /// Add a preimage to the service account
-    pub fn add_preimage(&mut self, service: ServiceId, _preimage: Vec<u8>) -> OpaqueHash {
-        let _account = self.chain.accounts.entry(service).or_default();
-        // account.add_preimage(preimage, self.chain.finalized.slot)
-        unimplemented!("abccb");
+    pub fn add_preimage(&mut self, service: ServiceId, preimage: Vec<u8>) -> OpaqueHash {
+        let account = self.chain.accounts.entry(service).or_default();
+        let hash = service::blake2b(preimage.as_slice());
+        let len = preimage.len() as u32;
+        account.preimage.insert(hash, preimage);
+        account
+            .lookup
+            .insert((hash, len), vec![self.chain.best.slot]);
+        hash
     }
 
     /// Get a storage of an account
