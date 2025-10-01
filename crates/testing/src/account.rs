@@ -1,6 +1,6 @@
 //! Service account builder
 
-use crate::Jam;
+use crate::{Jam, key};
 use service::{OpaqueHash, ServiceId, service::ServiceAccount};
 
 impl Jam {
@@ -26,14 +26,14 @@ impl Jam {
     /// Get a storage of an account
     pub fn get_storage<V: serde::de::DeserializeOwned>(
         &self,
-        _service: ServiceId,
-        _key: &[u8],
+        service: ServiceId,
+        key: &[u8],
     ) -> Option<V> {
-        /* let account = self.chain.accounts.get(&service)?;
-        let key = account::storage(service, key);
+        let account = self.chain.accounts.get(&service)?;
+        let vkey = key.to_vec();
+        let key = key::storage(service, &codec::encode(&vkey).ok()?);
         let encoded = account.storage.get(key.as_ref())?;
-        V::decode(&mut &encoded[..]).ok() */
-        None
+        codec::decode(&mut &encoded[..]).ok()
     }
 
     /// Set the code of the service account

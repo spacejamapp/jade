@@ -1,11 +1,17 @@
 //! Execution API of JAM VM
 
-use crate::Jam;
+use crate::{Jam, key};
 use anyhow::Result;
 use service::{
     ServiceId,
-    api::{AccumulateArgs, AccumulateState, Accumulated, AuthorizeArgs, Reason, ValidatorData},
-    service::{Privileges, ServiceAccount, WorkPackage, WorkResult, result::Executed},
+    api::{
+        AccumulateArgs, AccumulateState, Accumulated, AuthorizeArgs, Reason, RefineArgs,
+        ValidatorData,
+    },
+    service::{
+        Privileges, RefineLoad, ServiceAccount, WorkExecResult, WorkPackage, WorkResult,
+        result::Executed,
+    },
     vm::Operand,
 };
 use std::collections::BTreeMap;
@@ -40,14 +46,14 @@ impl ExecutionInfo {
     /// Get a storage of an account
     pub fn get_storage<V: serde::de::DeserializeOwned>(
         &self,
-        _service: ServiceId,
-        _key: &[u8],
+        service: ServiceId,
+        key: &[u8],
     ) -> Option<V> {
-        /* let account = self.accounts.get(&service)?;
-        let key = account::storage(service, &key.encode());
+        let account = self.accounts.get(&service)?;
+        let vkey = key.to_vec();
+        let key = key::storage(service, &codec::encode(&vkey).ok()?);
         let encoded = account.storage.get(key.as_ref())?;
-        V::decode(&mut &encoded[..]).ok() */
-        None
+        codec::decode(&mut &encoded[..]).ok()
     }
 }
 
@@ -55,11 +61,10 @@ impl Jam {
     /// Execute a work item directly
     ///
     /// TODO: introduce better execution result
-    pub fn execute(&mut self, _service: ServiceId, _payload: Vec<u8>) -> Result<ExecutionInfo> {
-        /* let package = self.send(service, payload)?;
-        let report = self.refine(&package)?;
-        Ok(ExecutionInfo::new(self.accumulate(&report)?)) */
-        unimplemented!("abccb");
+    pub fn execute(&mut self, service: ServiceId, payload: Vec<u8>) -> Result<ExecutionInfo> {
+        let package = self.send(service, payload)?;
+        let result = self.refine(&package)?;
+        Ok(ExecutionInfo::new(self.accumulate(result)?))
     }
 
     /// Authorize the work package
@@ -72,32 +77,59 @@ impl Jam {
         })
     }
 
-    /*   /// Refine the work package
+    /// Refine the work package
     ///
     /// NOTE: run refine for all work items
-    pub fn refine(&mut self, work: &WorkPackage) -> Result<WorkReport> {
-        let guarantor = InMemoryDataLake::default();
-        let (report, _) =
-            guarantor.compute_sync::<_, Interpreter>(0, vec![], work, &mut self.chain.accounts)?;
+    pub fn refine(&mut self, work: &WorkPackage) -> Result<Vec<WorkResult>> {
+        if work.items.is_empty() {
+            anyhow::bail!("no work items");
+        }
 
-        // verify the work results
-        for (index, result) in report.results.iter().enumerate() {
-            if !matches!(result.result, WorkExecResult::Ok(_)) {
+        let mut result = Vec::new();
+        for (index, item) in work.items.iter().enumerate() {
+            let refined = spacevm::refine(RefineArgs {
+                accounts: self.chain.accounts.clone(),
+                core: 0,
+                index: 0,
+                package: work.clone(),
+                export_offset: 0,
+                timeslot: self.chain.best.slot,
+                auth_output: Default::default(),
+                all_imports: Default::default(),
+            })?;
+
+            if !matches!(refined.executed.exec, WorkExecResult::Ok(_)) {
                 return Err(anyhow::anyhow!(
                     "work item {index} refine failed: {:?}",
-                    result.result
+                    refined.executed.exec
                 ));
             }
+
+            result.push(WorkResult {
+                service_id: item.service,
+                code_hash: item.code_hash,
+                payload_hash: Default::default(),
+                accumulate_gas: Default::default(),
+                result: refined.executed.exec,
+                refine_load: RefineLoad {
+                    gas_used: refined.executed.gas,
+                    imports: Default::default(),
+                    extrinsic_count: Default::default(),
+                    extrinsic_size: Default::default(),
+                    exports: Default::default(),
+                },
+            });
         }
-        Ok(report)
-    } */
+
+        Ok(result)
+    }
 
     /// Accumulate the work package
     ///
     /// 1. convert work package to work report
     /// 2. run accumulate for all work items
     /// 3. return the accumulated result
-    pub fn accumulate(&mut self, results: Vec<WorkResult>) -> Result<Accumulated> {
+    pub fn accumulate(&mut self, results: Vec<WorkResult>) -> Result<Vec<Accumulated>> {
         if results.is_empty() {
             anyhow::bail!("no results");
         }
@@ -138,7 +170,7 @@ impl Jam {
             context: state,
             timeslot: self.chain.best.slot,
             service,
-            gas: 0,
+            gas: 1_000_000_000,
             operands,
         })?;
 
@@ -147,6 +179,6 @@ impl Jam {
         }
         state = accumulated.context.clone();
         self.chain.accounts = state.accounts;
-        Ok(accumulated)
+        Ok(vec![accumulated])
     }
 }

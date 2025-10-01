@@ -417,6 +417,7 @@ dependencies = [
  "cjam",
  "etc",
  "serde",
+ "serde-jam",
  "spacejam-service",
  "spacevm-sys",
  "tracing",

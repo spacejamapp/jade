@@ -10,6 +10,7 @@ mod builder;
 mod chain;
 mod exec;
 mod extrinsic;
+pub mod key;
 pub mod util;
 
 /// JAM environment
