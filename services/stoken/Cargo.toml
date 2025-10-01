@@ -20,5 +20,5 @@ codec.workspace = true
 # serde = { workspace = true, features = ["alloc"] }
 jade.workspace = true
 
-# [build-dependencies]
-# cjam.workspace = true
+[build-dependencies]
+cjam.workspace = true
