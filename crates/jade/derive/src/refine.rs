@@ -15,7 +15,7 @@ pub fn refine(_args: TokenStream, input: TokenStream) -> TokenStream {
     //
     // TODO: introduce params check
     quote::quote! {
-        #[polkavm_derive::polkavm_export]
+        #[jade::polkavm_derive::polkavm_export(abi = jade::polkavm_derive::default_abi)]
         extern "C" fn jade_refine(ptr: u32, size: u32) -> (u64, u64) {
             #fun
 

@@ -385,6 +385,7 @@ name = "jade"
 version = "0.0.12-patch-1"
 dependencies = [
  "jade-derive",
+ "polkavm-derive",
  "serde-jam",
  "spacejam-service",
 ]
@@ -813,7 +814,6 @@ name = "stoken"
 version = "0.0.12-patch-1"
 dependencies = [
  "jade",
- "polkavm-derive",
  "serde-jam",
 ]
 

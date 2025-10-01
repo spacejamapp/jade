@@ -11,7 +11,7 @@ repository.workspace = true
 codec.workspace = true
 jade-derive.workspace = true
 service.workspace = true
-# polkavm-derive.workspace = true
+polkavm-derive.workspace = true
 
 [features]
 default = []
