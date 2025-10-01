@@ -75,6 +75,7 @@ impl Jam {
             work.auth_code_host,
             hex::encode(work.auth_code_hash)
         );
+
         spacevm::authorize(AuthorizeArgs {
             package: work.clone(),
             core_idx: core_idx,

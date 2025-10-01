@@ -15,5 +15,5 @@ fn test_nauth() {
         .expect("failed to send work item");
 
     let result = jam.authorize(&package, 0).expect("failed to authorize");
-    assert!(result.is_ok());
+    assert!(result.is_ok(), "{:?}", result);
 }

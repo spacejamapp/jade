@@ -15,8 +15,8 @@ pub fn authorize(args: AuthorizeArgs) -> Result<Executed> {
         len: encoded.len(),
     };
 
-    let output = unsafe { abi::authorize(input) };
-    codec::decode(output.as_slice()).map_err(Into::into)
+    let output: Buffer = unsafe { abi::authorize(input) };
+    codec::decode(&output.to_vec()).map_err(Into::into)
 }
 
 /// Run the refine invocation
@@ -28,7 +28,7 @@ pub fn refine(args: RefineArgs) -> Result<Refined> {
     };
 
     let output = unsafe { abi::refine(input) };
-    codec::decode(output.as_slice()).map_err(Into::into)
+    codec::decode(&output.to_vec()).map_err(Into::into)
 }
 
 /// Run the accumulate invocation
@@ -40,7 +40,7 @@ pub fn accumulate(args: AccumulateArgs) -> Result<Accumulated> {
     };
 
     let output = unsafe { abi::accumulate(input) };
-    codec::decode(output.as_slice()).map_err(Into::into)
+    codec::decode(&output.to_vec()).map_err(Into::into)
 }
 
 mod abi {
@@ -53,7 +53,7 @@ mod abi {
     pub use {comp_accumulate as accumulate, comp_authorize as authorize, comp_refine as refine};
 
     #[repr(C)]
-    #[derive(Copy, Clone)]
+    #[derive(Copy, Clone, Debug)]
     pub struct Buffer {
         pub ptr: *const u8,
         pub len: usize,
@@ -61,8 +61,13 @@ mod abi {
 
     impl Buffer {
         /// Get the buffer as a byte slice
-        pub fn as_slice(&self) -> &[u8] {
-            unsafe { std::slice::from_raw_parts(self.ptr, self.len) }
+        pub fn to_vec(&self) -> Vec<u8> {
+            let result = unsafe { core::slice::from_raw_parts(self.ptr, self.len).to_vec() };
+            unsafe {
+                let layout = std::alloc::Layout::from_size_align(self.len, 1).unwrap();
+                std::alloc::dealloc(self.ptr as *mut _, layout);
+            }
+            result
         }
     }
 
