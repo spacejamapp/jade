@@ -151,7 +151,7 @@ pub fn build_pvm_blob(
         .current_dir(crate_dir)
         .env_clear()
         .env("PATH", std::env::var("PATH").unwrap())
-        .env("RUSTFLAGS", "-C panic=abort --crate-type=cdylib")
+        .env("RUSTFLAGS", "-C panic=abort")
         .env("CARGO_TARGET_DIR", out_dir)
         // Support building on stable. (required for `-Zbuild-std`)
         .env("RUSTC_BOOTSTRAP", "1");
@@ -161,7 +161,7 @@ pub fn build_pvm_blob(
     }
 
     child
-        .args(["build", "-Z", "build-std=core,alloc"])
+        .args(["rustc", "-Z", "build-std=core,alloc"])
         .arg(profile.to_arg())
         .arg("--target")
         .arg(target_json_path)
@@ -170,7 +170,9 @@ pub fn build_pvm_blob(
             "tiny"
         } else {
             ""
-        }) // Disable stripping for LLVM 19 compatibility
+        })
+        .arg("--lib")
+        .arg("--crate-type=cdylib")
         .env(
             "RUSTFLAGS",
             format!(

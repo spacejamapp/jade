@@ -44,6 +44,14 @@ pub fn accumulate(args: AccumulateArgs) -> Result<Accumulated> {
 }
 
 mod abi {
+    #[cfg(feature = "interp")]
+    pub use {
+        interp_accumulate as accumulate, interp_authorize as authorize, interp_refine as refine,
+    };
+
+    #[cfg(not(feature = "interp"))]
+    pub use {comp_accumulate as accumulate, comp_authorize as authorize, comp_refine as refine};
+
     #[repr(C)]
     #[derive(Copy, Clone)]
     pub struct Buffer {
@@ -59,13 +67,25 @@ mod abi {
     }
 
     unsafe extern "C" {
-        /// Run accumulate invocation
-        pub fn accumulate(args: Buffer) -> Buffer;
+        /// Run the authorize invocation
+        pub fn comp_authorize(args: Buffer) -> Buffer;
 
         /// Run the refine invocation
-        pub fn refine(args: Buffer) -> Buffer;
+        pub fn comp_refine(args: Buffer) -> Buffer;
+
+        /// Run the accumulate invocation
+        pub fn comp_accumulate(args: Buffer) -> Buffer;
 
         /// Run the is_authorized invocation
-        pub fn authorize(args: Buffer) -> Buffer;
+        #[cfg(feature = "interp")]
+        pub fn interp_authorize(args: Buffer) -> Buffer;
+
+        /// Run the refine invocation
+        #[cfg(feature = "interp")]
+        pub fn interp_refine(args: Buffer) -> Buffer;
+
+        /// Run accumulate invocation
+        #[cfg(feature = "interp")]
+        pub fn interp_accumulate(args: Buffer) -> Buffer;
     }
 }

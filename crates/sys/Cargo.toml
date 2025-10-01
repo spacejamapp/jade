@@ -19,4 +19,5 @@ service.workspace = true
 [features]
 default = []
 tiny = []
+interp = []
 std = ["anyhow/std", "codec/std", "service/std"]
