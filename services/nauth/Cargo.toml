@@ -8,9 +8,6 @@ license.workspace = true
 publish = true
 description = "A JAM authorizer which always authorizes"
 
-[lib]
-crate-type = ["cdylib", "rlib"]
-
 [features]
 tiny = []
 

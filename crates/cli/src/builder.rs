@@ -151,7 +151,7 @@ pub fn build_pvm_blob(
         .current_dir(crate_dir)
         .env_clear()
         .env("PATH", std::env::var("PATH").unwrap())
-        .env("RUSTFLAGS", "-C panic=abort")
+        .env("RUSTFLAGS", "-C panic=abort --crate-type=cdylib")
         .env("CARGO_TARGET_DIR", out_dir)
         // Support building on stable. (required for `-Zbuild-std`)
         .env("RUSTC_BOOTSTRAP", "1");
