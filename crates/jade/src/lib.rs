@@ -7,8 +7,11 @@ extern crate alloc;
 pub use {codec, jade_derive::*, polkavm_derive, service};
 
 pub mod host;
-mod log;
+pub mod logging;
 pub mod prelude;
+
+#[cfg(not(any(target_arch = "riscv32", target_arch = "riscv64")))]
+pub use testing;
 
 #[cfg(any(target_arch = "riscv32", target_arch = "riscv64"))]
 #[global_allocator]

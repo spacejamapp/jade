@@ -17,6 +17,10 @@ jade-derive = { path = "crates/jade/derive" }
 spacevm = { path = "crates/sys", package = "spacevm-sys" }
 testing = { path = "crates/testing" }
 
+# services
+nauth = { path = "services/nauth" }
+stoken = { path = "services/stoken" }
+
 # spacejam dependencies
 codec = { package = "serde-jam", version = "0.0.13-pre.1", default-features = false }
 service = { package = "spacejam-service", version = "0.0.13-pre.1", default-features = false }

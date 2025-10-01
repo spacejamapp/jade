@@ -1,5 +1,5 @@
 [package]
-name = "null-authorizer"
+name = "nauth"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
@@ -13,5 +13,6 @@ crate-type = ["cdylib"]
 
 [dependencies]
 jade.workspace = true
-service.workspace = true
-polkavm-derive.workspace = true
+
+[build-dependencies]
+cjam.workspace = true

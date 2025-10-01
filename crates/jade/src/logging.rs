@@ -2,14 +2,15 @@
 
 #[cfg(any(feature = "logging", doc))]
 pub mod stuff {
+
     /// Log a message with the `error` level. Regular formatting may be used.
     #[macro_export]
     macro_rules! error {
 		(target=$target:expr,$($arg:tt)*) => {
-			$crate::logging::stuff::log_target(0, $target, &alloc::format!($($arg)*));
+			$crate::logging::stuff::log_target(0, $target, &$crate::prelude::format!($($arg)*));
 		};
 		($($arg:tt)*) => {
-			$crate::logging::stuff::log(0, &alloc::format!($($arg)*));
+			$crate::logging::stuff::log(0, &$crate::prelude::format!($($arg)*));
 		};
 	}
 
@@ -17,10 +18,10 @@ pub mod stuff {
     #[macro_export]
     macro_rules! warn {
 		(target=$target:expr,$($arg:tt)*) => {
-			$crate::logging::stuff::log_target(1, $target, &alloc::format!($($arg)*));
+			$crate::logging::stuff::log_target(1, $target, &$crate::prelude::format!($($arg)*));
 		};
 		($($arg:tt)*) => {
-			$crate::logging::stuff::log(1, &alloc::format!($($arg)*));
+			$crate::logging::stuff::log(1, &$crate::prelude::format!($($arg)*));
 		};
 	}
 
@@ -28,10 +29,10 @@ pub mod stuff {
     #[macro_export]
     macro_rules! info {
 		(target=$target:expr,$($arg:tt)*) => {
-			$crate::logging::stuff::log_target(2, $target, &alloc::format!($($arg)*));
+			$crate::logging::stuff::log_target(2, $target, &$crate::prelude::format!($($arg)*));
 		};
 		($($arg:tt)*) => {
-			$crate::logging::stuff::log(2, &alloc::format!($($arg)*));
+			$crate::logging::stuff::log(2, &$crate::prelude::format!($($arg)*));
 		};
 	}
 
@@ -39,10 +40,10 @@ pub mod stuff {
     #[macro_export]
     macro_rules! debug {
 		(target=$target:expr,$($arg:tt)*) => {
-			$crate::logging::stuff::log_target(3, $target, &alloc::format!($($arg)*));
+			$crate::logging::stuff::log_target(3, $target, &$crate::prelude::format!($($arg)*));
 		};
 		($($arg:tt)*) => {
-			$crate::logging::stuff::log(3, &alloc::format!($($arg)*));
+			$crate::logging::stuff::log(3, &$crate::prelude::format!($($arg)*));
 		};
 	}
 
@@ -50,10 +51,10 @@ pub mod stuff {
     #[macro_export]
     macro_rules! trace {
 		(target=$target:expr,$($arg:tt)*) => {
-			$crate::logging::stuff::log_target(4, $target, &alloc::format!($($arg)*));
+			$crate::logging::stuff::log_target(4, $target, &$crate::prelude::format!($($arg)*));
 		};
 		($($arg:tt)*) => {
-			$crate::logging::stuff::log(4, &alloc::format!($($arg)*));
+			$crate::logging::stuff::log(4, &$crate::prelude::format!($($arg)*));
 		};
 	}
 
