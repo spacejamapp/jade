@@ -395,6 +395,7 @@ version = "0.0.12-patch-1"
 dependencies = [
  "polkavm-derive-impl",
  "proc-macro2",
+ "quote",
  "syn",
 ]
 
@@ -479,6 +480,7 @@ name = "null-authorizer"
 version = "0.0.12-patch-1"
 dependencies = [
  "jade",
+ "polkavm-derive",
  "spacejam-service",
 ]
 
@@ -548,6 +550,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f634b46a6a47a5de381f56d1d8cced9f8640d063b2b1a44b0da6dbef91bbd400"
 
 [[package]]
+name = "polkavm-derive"
+version = "0.29.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "37ba6256c003853b6adb5dc8394e0e1882a9545ee3bec4e4ce533e7e4f488825"
+dependencies = [
+ "polkavm-derive-impl-macro",
+]
+
+[[package]]
 name = "polkavm-derive-impl"
 version = "0.29.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -556,6 +567,16 @@ dependencies = [
  "polkavm-common 0.29.0",
  "proc-macro2",
  "quote",
+ "syn",
+]
+
+[[package]]
+name = "polkavm-derive-impl-macro"
+version = "0.29.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "10e463de593b485c8685d42737aae81c24005dba967deaaaccbb6f3e936d8596"
+dependencies = [
+ "polkavm-derive-impl",
  "syn",
 ]
 
@@ -792,6 +813,7 @@ name = "stoken"
 version = "0.0.12-patch-1"
 dependencies = [
  "jade",
+ "polkavm-derive",
  "serde-jam",
 ]
 

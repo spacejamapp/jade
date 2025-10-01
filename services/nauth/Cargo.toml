@@ -14,3 +14,4 @@ crate-type = ["cdylib"]
 [dependencies]
 jade.workspace = true
 service.workspace = true
+polkavm-derive.workspace = true

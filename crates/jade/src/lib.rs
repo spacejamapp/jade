@@ -1,8 +1,7 @@
 #![doc = include_str!("../README.md")]
 #![cfg_attr(not(feature = "std"), no_std)]
 
-pub use codec;
-pub use jade_derive::*;
+pub use {codec, jade_derive::*};
 
 pub mod prelude;
 

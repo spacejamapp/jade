@@ -8,9 +8,10 @@ homepage.workspace = true
 repository.workspace = true
 
 [dependencies]
+codec.workspace = true
 jade-derive.workspace = true
 service.workspace = true
-codec.workspace = true
+# polkavm-derive.workspace = true
 
 [features]
 default = []

@@ -19,6 +19,7 @@ std = ["codec/std"]
 codec.workspace = true
 # serde = { workspace = true, features = ["alloc"] }
 jade.workspace = true
+polkavm-derive.workspace = true
 
 # [build-dependencies]
 # cjam.workspace = true
