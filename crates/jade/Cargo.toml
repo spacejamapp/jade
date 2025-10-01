@@ -17,5 +17,6 @@ polkavm-derive.workspace = true
 
 [features]
 default = []
+logging = []
 std = ["anyhow/std", "codec/std", "serde/std", "service/std"]
 tiny = []

@@ -17,7 +17,7 @@ std = ["codec/std"]
 
 [dependencies]
 codec.workspace = true
-# serde = { workspace = true, features = ["alloc"] }
+serde = { workspace = true, features = ["alloc"] }
 jade.workspace = true
 
 [build-dependencies]

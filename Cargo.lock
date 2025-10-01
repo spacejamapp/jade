@@ -905,6 +905,7 @@ version = "0.0.13-pre.1"
 dependencies = [
  "cjam",
  "jade",
+ "serde",
  "serde-jam",
 ]
 
