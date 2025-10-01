@@ -1,0 +1,24 @@
+[package]
+name = "stoken"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+
+[lib]
+crate-type = ["cdylib"]
+
+[features]
+default = []
+tiny = []
+std = ["codec/std"]
+
+[dependencies]
+codec.workspace = true
+# serde = { workspace = true, features = ["alloc"] }
+jade.workspace = true
+
+[build-dependencies]
+cjam.workspace = true

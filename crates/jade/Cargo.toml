@@ -1,0 +1,19 @@
+[package]
+name = "jade"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+
+[dependencies]
+codec.workspace = true
+jade-derive.workspace = true
+service.workspace = true
+polkavm-derive.workspace = true
+
+[features]
+default = []
+std = ["codec/std", "service/std"]
+tiny = []

@@ -13,5 +13,10 @@ include = ["lib", "src", "build.rs", "Cargo.toml", "README.md"]
 
 [dependencies]
 anyhow.workspace = true
-serde-jam.workspace = true
-spacejam-service.workspace = true
+codec.workspace = true
+service.workspace = true
+
+[features]
+default = []
+tiny = []
+std = ["anyhow/std", "codec/std", "service/std"]
