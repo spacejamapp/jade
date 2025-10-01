@@ -8,6 +8,22 @@ pub fn gas() -> u64 {
     unsafe { import::gas() }
 }
 
+/// Fetch operations
+pub mod fetch {
+    use super::*;
+    use crate::prelude::Vec;
+    use anyhow::Result;
+    use service::vm::Operand;
+
+    /// Fetch a value from the storage
+    pub fn operands() -> Result<Vec<Operand>> {
+        let mut target = Vec::new();
+        let len = unsafe { import::fetch(target.as_mut_ptr(), 0, 0, 14, 0, 0) };
+        let _ = unsafe { import::fetch(target.as_mut_ptr(), 0, len as u64, 14, 0, 0) };
+        codec::decode(target.as_slice()).map_err(Into::into)
+    }
+}
+
 /// Storage operations
 pub mod storage {
     use super::*;
