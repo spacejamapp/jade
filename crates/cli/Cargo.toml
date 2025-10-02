@@ -2,6 +2,13 @@
 name = "cjam"
 version.workspace = true
 edition.workspace = true
+authors.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+documentation = "https://docs.rs/cjam"
+description = "Jam service builder"
+keywords = ["pvm", "spacejam", "jam"]
 
 [dependencies]
 anyhow.workspace = true

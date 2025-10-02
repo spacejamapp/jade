@@ -1,4 +1,5 @@
-//! SpaceVM system interface
+#![doc = include_str!("../README.md")]
+#![deny(missing_docs)]
 
 use crate::abi::Buffer;
 pub use abi::init_logger;

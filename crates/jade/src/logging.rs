@@ -59,7 +59,7 @@ macro_rules! trace {
 
 #[cfg(any(feature = "logging", doc))]
 mod api {
-    // CAUTION: Not public API. DO NOT USE.
+    /// CAUTION: Not public API. DO NOT USE.
     pub fn log_target(level: u64, target: &str, msg: &str) {
         let t = target.as_bytes();
         let m = msg.as_bytes();
@@ -74,7 +74,7 @@ mod api {
         }
     }
 
-    // CAUTION: Not public API. DO NOT USE.
+    /// CAUTION: Not public API. DO NOT USE.
     pub fn log(level: u64, msg: &str) {
         let m = msg.as_bytes();
         unsafe {
@@ -85,12 +85,12 @@ mod api {
 
 #[cfg(not(any(feature = "logging", doc)))]
 mod api {
-    // CAUTION: Not public API. DO NOT USE.
+    /// CAUTION: Not public API. DO NOT USE.
     pub fn log_target(level: u64, target: &str, msg: &str) {
         let _ = (level, target, msg);
     }
 
-    // CAUTION: Not public API. DO NOT USE.
+    /// CAUTION: Not public API. DO NOT USE.
     pub fn log(level: u64, msg: &str) {
         let _ = (level, msg);
     }

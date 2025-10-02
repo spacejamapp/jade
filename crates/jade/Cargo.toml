@@ -6,6 +6,9 @@ authors.workspace = true
 license.workspace = true
 homepage.workspace = true
 repository.workspace = true
+documentation = "https://docs.rs/jade"
+description = "Jade framework for building JAM services"
+keywords = ["pvm", "spacejam", "jam"]
 
 [[bin]]
 name = "jade"

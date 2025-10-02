@@ -18,9 +18,13 @@ use std::{
     process::Command,
 };
 
+/// Type of blob to build
 pub enum BlobType {
+    /// Service blob
     Service,
+    /// Authorizer blob
     Authorizer,
+    /// CoreVM guest blob
     CoreVmGuest,
 }
 impl Display for BlobType {
@@ -34,6 +38,7 @@ impl Display for BlobType {
 }
 
 impl BlobType {
+    /// Get the dispatch table for the blob type
     pub fn dispatch_table(&self) -> Vec<Vec<u8>> {
         match self {
             Self::Service => vec![b"jade_refine".into(), b"jade_accumulate".into()],
@@ -51,9 +56,13 @@ impl BlobType {
     }
 }
 
+/// Type of profile to build
 pub enum ProfileType {
+    /// Debug profile
     Debug,
+    /// Release profile
     Release,
+    /// Other profile
     Other(&'static str),
 }
 impl ProfileType {
@@ -252,6 +261,7 @@ pub fn build_pvm_blob(
     (name, output_file)
 }
 
+/// Macro to include the PVM binary
 #[macro_export]
 macro_rules! pvm_binary {
     ($name:literal) => {

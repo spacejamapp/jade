@@ -28,8 +28,10 @@ impl App {
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]
 pub enum Command {
+    /// Build a JAM PVM blob
     #[command(about = "Build a JAM PVM blob")]
     Build(Build),
+    /// Create a new JAM service
     #[command(about = "Create a new JAM service")]
     New(New),
 }

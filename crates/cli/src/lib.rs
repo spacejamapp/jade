@@ -1,4 +1,5 @@
-//! Command line interface for JAM services
+#![doc = include_str!("../README.md")]
+#![deny(missing_docs)]
 
 pub use {
     clap,

@@ -1,4 +1,4 @@
-## Jade
+# Jade
 
 Jade framework for building JAM services by [SpaceJam](https://spacejam.app).
 

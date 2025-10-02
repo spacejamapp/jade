@@ -4,6 +4,7 @@ use crate::builder::ProfileType;
 use jam_program_blob::CrateInfo;
 use std::{path::Path, process::Command};
 
+/// Type of module to build
 #[derive(clap::ValueEnum, Clone, Debug, Default)]
 #[value(rename_all = "lowercase")]
 pub enum ModuleType {
@@ -22,6 +23,7 @@ pub enum ModuleType {
     CoreVmGuest,
 }
 
+/// Type of profile to build
 #[derive(clap::ValueEnum, Clone, Debug, Default)]
 #[value(rename_all = "lowercase")]
 pub enum Profile {

@@ -1,4 +1,5 @@
-//! Testing library for the PVM
+#![doc = include_str!("../README.md")]
+#![deny(missing_docs)]
 
 pub use service::service::ServiceAccount as Account;
 use service::service::WorkItem;

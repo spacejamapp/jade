@@ -3,19 +3,19 @@ members = ["crates/*", "crates/jade/derive", "services/*"]
 resolver = "2"
 
 [workspace.package]
-version = "0.0.13"
+version = "0.0.13-pre.1"
 edition = "2024"
 authors = ["clearloop <tianyi.gc@gmail.com>"]
 license = "GPL-3.0"
-homepage = "https://github.com/spacejamapp/spacejam"
+homepage = "https://spacejam.app"
 repository = "https://github.com/spacejamapp/jade"
 
 [workspace.dependencies]
-cjam = { path = "crates/cli" }
-jade = { path = "crates/jade", default-features = false }
-jade-derive = { path = "crates/jade/derive" }
-spacevm = { path = "crates/sys", package = "spacevm-sys" }
-testing = { path = "crates/testing", package = "jade-testing" }
+cjam = { path = "crates/cli", version = "0.0.13-pre.1" }
+jade = { path = "crates/jade", default-features = false, version = "0.0.13-pre.1" }
+jade-derive = { path = "crates/jade/derive", version = "0.0.13-pre.1" }
+spacevm = { path = "crates/sys", package = "spacevm-sys", version = "0.0.13-pre.1" }
+testing = { path = "crates/testing", package = "jade-testing", version = "0.0.13-pre.1" }
 
 # services
 nauth = { path = "services/nauth" }
@@ -48,3 +48,6 @@ tiny-keccak = { version = "2.0.2", features = ["keccak"] }
 toml = { version = "0.8.19", features = ["parse"] }
 tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
+
+[workspace.metadata.conta]
+packages = ["cjam", "spacevm", "testing", "jade-derive", "jade"]
