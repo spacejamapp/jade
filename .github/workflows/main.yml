@@ -35,6 +35,9 @@ jobs:
           toolchain: 1.90.0
           components: rust-src
       - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: [clippy, rustfmt]
+      - uses: crate-ci/typos@v1.24.5
       - uses: taiki-e/install-action@sccache
       - name: Format
         run: cargo fmt --check
