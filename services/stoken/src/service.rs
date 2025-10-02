@@ -26,9 +26,8 @@ fn refine(
 
     info!(
         target = "simple-token-service",
-        "instructions: {:?}", instructions
+        "decoded payload as instructions: {:?}", instructions
     );
-    info!("payload: {:?}", payload);
     payload
 }
 

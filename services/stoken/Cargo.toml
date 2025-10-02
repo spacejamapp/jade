@@ -7,14 +7,9 @@ license.workspace = true
 homepage.workspace = true
 repository.workspace = true
 
-[features]
-default = []
-tiny = []
-std = ["codec/std"]
-
 [dependencies]
 codec.workspace = true
-jade.workspace = true
+jade = { workspace = true, features = ["logging"] }
 serde.workspace = true
 
 [dev-dependencies]
@@ -22,3 +17,8 @@ nauth.workspace = true
 
 [build-dependencies]
 cjam.workspace = true
+
+[features]
+default = []
+tiny = ["jade/tiny"]
+std = ["codec/std"]

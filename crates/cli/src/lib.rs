@@ -3,6 +3,7 @@
 pub use {
     clap,
     manifest::{ModuleType, Profile},
+    util::build,
 };
 
 pub mod builder;

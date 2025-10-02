@@ -1,8 +1,11 @@
 //! jade command line interface
 
-use cjam::{clap, cmd::App};
-
+#[cfg(not(target_arch = "riscv64"))]
 fn main() {
+    use cjam::{clap::Parser, cmd::App};
     let app = App::parse();
     app.run().unwrap()
 }
+
+#[cfg(target_arch = "riscv64")]
+fn main() {}

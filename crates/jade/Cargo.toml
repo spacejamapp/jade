@@ -10,7 +10,6 @@ repository.workspace = true
 [[bin]]
 name = "jade"
 path = "bin/jade.rs"
-required-features = ["cli"]
 
 [dependencies]
 anyhow.workspace = true
@@ -21,12 +20,11 @@ service.workspace = true
 polkavm-derive.workspace = true
 
 [target.'cfg(not(target_arch = "riscv64"))'.dependencies]
-cjam = { workspace = true, optional = true }
+cjam.workspace = true
 testing.workspace = true
 
 [features]
 default = []
-cli = ["dep:cjam"]
 logging = []
 std = ["anyhow/std", "codec/std", "serde/std", "service/std"]
 tiny = []
