@@ -1,7 +1,7 @@
 //! Command registry
 
-pub use build::Build;
 use clap::{Parser, command};
+pub use {build::Build, new::New};
 
 mod build;
 mod new;
@@ -19,6 +19,7 @@ impl App {
     pub fn run(&self) -> Result<(), anyhow::Error> {
         match &self.command {
             Command::Build(build) => build.run(),
+            Command::New(new) => new.run(),
         }
     }
 }
@@ -29,4 +30,6 @@ impl App {
 pub enum Command {
     #[command(about = "Build a JAM PVM blob")]
     Build(Build),
+    #[command(about = "Create a new JAM service")]
+    New(New),
 }

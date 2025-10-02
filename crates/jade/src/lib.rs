@@ -11,7 +11,7 @@ pub mod logging;
 pub mod prelude;
 
 #[cfg(not(target_arch = "riscv64"))]
-pub use testing;
+pub use {cjam, testing};
 
 #[cfg(target_arch = "riscv64")]
 #[global_allocator]
