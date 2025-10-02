@@ -27,6 +27,6 @@ testing.workspace = true
 [features]
 default = []
 cli = ["dep:cjam"]
-std = ["anyhow/std", "codec/std", "serde/std", "service/std"]
 logging = []
+std = ["anyhow/std", "codec/std", "serde/std", "service/std"]
 tiny = []

@@ -14,8 +14,8 @@ std = ["codec/std"]
 
 [dependencies]
 codec.workspace = true
-serde = { workspace = true, features = ["alloc"] }
-jade = { workspace = true, features = ["logging"] }
+jade.workspace = true
+serde.workspace = true
 
 [dev-dependencies]
 nauth.workspace = true
