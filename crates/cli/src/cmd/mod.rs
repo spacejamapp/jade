@@ -1,11 +1,12 @@
 //! Command registry
 
-pub use build::Build;
 use clap::{Parser, command};
+pub use {build::Build, new::New};
 
 mod build;
+mod new;
 
-/// jam service command line interfaces
+/// Jam service command line interface
 #[derive(Debug, Parser)]
 #[command(version, about, long_about = None)]
 pub struct App {
@@ -18,6 +19,7 @@ impl App {
     pub fn run(&self) -> Result<(), anyhow::Error> {
         match &self.command {
             Command::Build(build) => build.run(),
+            Command::New(new) => new.run(),
         }
     }
 }
@@ -26,6 +28,10 @@ impl App {
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]
 pub enum Command {
+    /// Build a JAM PVM blob
     #[command(about = "Build a JAM PVM blob")]
     Build(Build),
+    /// Create a new JAM service
+    #[command(about = "Create a new JAM service")]
+    New(New),
 }

@@ -26,8 +26,8 @@ pub fn load_service(package: &str) -> Result<Vec<u8>> {
 }
 
 /// Build the service
-pub fn build_service(package: &str, module: Option<ModuleType>, path: Option<String>) {
-    cjam::util::build(package, module, path).expect("Failed to build service");
+pub fn build_service(package: &str, module: Option<ModuleType>) {
+    cjam::util::build(package, module).expect("Failed to build service");
 }
 
 /// Load the current service

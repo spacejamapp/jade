@@ -1,6 +1,11 @@
-//! Command line interface for JAM services
+#![doc = include_str!("../README.md")]
+#![deny(missing_docs)]
 
-pub use manifest::{ModuleType, Profile};
+pub use {
+    clap,
+    manifest::{ModuleType, Profile},
+    util::build,
+};
 
 pub mod builder;
 pub mod cmd;

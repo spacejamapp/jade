@@ -16,7 +16,7 @@ fn refine(
     _package_hash: OpaqueHash,
 ) -> Vec<u8> {
     info!("entering refine logic ...");
-    let Ok(instructions) = codec::decode::<Vec<Instruction>>(&mut payload.as_slice()) else {
+    let Ok(instructions) = codec::decode::<Vec<Instruction>>(payload.as_slice()) else {
         error!(
             target = "simple-token-service",
             "failed to decode instructions"
@@ -26,9 +26,8 @@ fn refine(
 
     info!(
         target = "simple-token-service",
-        "instructions: {:?}", instructions
+        "decoded payload as instructions: {:?}", instructions
     );
-    info!("payload: {:?}", payload);
     payload
 }
 
@@ -43,7 +42,7 @@ fn accumulate(_now: u32, _id: u32, results: Vec<Operand>) -> Option<OpaqueHash> 
             None
         }
     }) {
-        let instructions = codec::decode::<Vec<Instruction>>(&mut &raw_instructions[..]).unwrap();
+        let instructions = codec::decode::<Vec<Instruction>>(&raw_instructions).unwrap();
         jade::info!("instructions: {:?}", instructions);
         for inst in instructions {
             match inst {

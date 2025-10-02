@@ -53,7 +53,7 @@ impl ExecutionInfo {
         let vkey = key.to_vec();
         let key = key::storage(service, &vkey);
         let encoded = account.storage.get(key.as_ref())?;
-        codec::decode(&mut &encoded[..]).ok()
+        codec::decode(encoded).ok()
     }
 }
 
@@ -78,7 +78,7 @@ impl Jam {
 
         spacevm::authorize(AuthorizeArgs {
             package: work.clone(),
-            core_idx: core_idx,
+            core_idx,
             accounts: self.chain.accounts.clone(),
             timeslot: self.chain.best.slot,
         })

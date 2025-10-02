@@ -6,6 +6,13 @@ authors.workspace = true
 license.workspace = true
 homepage.workspace = true
 repository.workspace = true
+documentation = "https://docs.rs/jade"
+description = "Jade framework for building JAM services"
+keywords = ["pvm", "spacejam", "jam"]
+
+[[bin]]
+name = "jade"
+path = "bin/jade.rs"
 
 [dependencies]
 anyhow.workspace = true
@@ -14,11 +21,13 @@ jade-derive.workspace = true
 serde.workspace = true
 service.workspace = true
 polkavm-derive.workspace = true
-testing = { workspace = true, optional = true }
+
+[target.'cfg(not(target_arch = "riscv64"))'.dependencies]
+cjam.workspace = true
+testing.workspace = true
 
 [features]
 default = []
 logging = []
-testing = ["dep:testing"]
 std = ["anyhow/std", "codec/std", "serde/std", "service/std"]
 tiny = []

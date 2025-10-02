@@ -42,9 +42,7 @@ pub mod storage {
             )
         };
 
-        if len == u64::MAX {
-            return None;
-        } else if len == 0 {
+        if len == u64::MAX || len == 0 {
             return None;
         }
 

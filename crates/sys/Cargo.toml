@@ -8,7 +8,7 @@ repository.workspace = true
 description = "SpaceVM system interfaces"
 documentation = "https://docs.rs/spacevm-sys"
 categories = ["embedded", "api-bindings"]
-keywords = ["pvm", "spacejam", "vm"]
+keywords = ["pvm", "spacejam", "vm", "jam"]
 include = ["lib", "src", "build.rs", "Cargo.toml", "README.md"]
 
 [dependencies]

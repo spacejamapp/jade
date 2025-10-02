@@ -12,10 +12,7 @@ description = "A JAM authorizer which always authorizes"
 tiny = []
 
 [dependencies]
-jade = { workspace = true, features = ["logging"] }
-
-[dev-dependencies]
-jade = { workspace = true, features = ["testing"] }
+jade = { workspace = true }
 
 [build-dependencies]
 cjam.workspace = true
