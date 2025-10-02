@@ -5,7 +5,7 @@ use clap::{Parser, command};
 
 mod build;
 
-/// jam service command line interfaces
+/// Jam service command line interface
 #[derive(Debug, Parser)]
 #[command(version, about, long_about = None)]
 pub struct App {

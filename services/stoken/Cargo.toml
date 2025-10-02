@@ -19,7 +19,6 @@ jade = { workspace = true, features = ["logging"] }
 
 [dev-dependencies]
 nauth.workspace = true
-jade = { workspace = true, features = ["testing"] }
 
 [build-dependencies]
 cjam.workspace = true

@@ -10,14 +10,14 @@ pub mod host;
 pub mod logging;
 pub mod prelude;
 
-#[cfg(feature = "testing")]
+#[cfg(not(target_arch = "riscv64"))]
 pub use testing;
 
-#[cfg(any(target_arch = "riscv32", target_arch = "riscv64"))]
+#[cfg(target_arch = "riscv64")]
 #[global_allocator]
 static ALLOCATOR: polkavm_derive::LeakingAllocator = polkavm_derive::LeakingAllocator;
 
-#[cfg(any(target_arch = "riscv32", target_arch = "riscv64"))]
+#[cfg(target_arch = "riscv64")]
 #[panic_handler]
 fn panic(_info: &core::panic::PanicInfo) -> ! {
     unsafe {

@@ -14,8 +14,5 @@ tiny = []
 [dependencies]
 jade = { workspace = true, features = ["logging"] }
 
-[dev-dependencies]
-jade = { workspace = true, features = ["testing"] }
-
 [build-dependencies]
 cjam.workspace = true
