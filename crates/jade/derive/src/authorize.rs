@@ -17,8 +17,6 @@ pub fn is_authorized(_args: TokenStream, input: TokenStream) -> TokenStream {
     quote::quote! {
         #[jade::polkavm_derive::polkavm_export(abi = jade::polkavm_derive::default_abi)]
         extern "C" fn jade_is_authorized(ptr: u32, size: u32) -> (u64, u64) {
-            jade::info!("is_authorized");
-
             #fun
 
             let buf = unsafe { core::slice::from_raw_parts(ptr as *const u8, size as usize) };

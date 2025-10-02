@@ -44,6 +44,7 @@ fn accumulate(_now: u32, _id: u32, results: Vec<Operand>) -> Option<OpaqueHash> 
         }
     }) {
         let instructions = codec::decode::<Vec<Instruction>>(&mut &raw_instructions[..]).unwrap();
+        jade::info!("instructions: {:?}", instructions);
         for inst in instructions {
             match inst {
                 Instruction::Mint { to, amount } => {

@@ -13,8 +13,6 @@ fn test_mint() {
 
     // Set up JAM with authorization using the null authorizer service
     let mut jam = Jam::default().with_auth(AUTHORIZER_ID, nauth::SERVICE.to_vec());
-
-    // Add the token service
     jam.add_service(SERVICE_ID, SERVICE.to_vec());
 
     // 1. send a mint instruction

@@ -51,7 +51,7 @@ impl ExecutionInfo {
     ) -> Option<V> {
         let account = self.accounts.get(&service)?;
         let vkey = key.to_vec();
-        let key = key::storage(service, &codec::encode(&vkey).ok()?);
+        let key = key::storage(service, &vkey);
         let encoded = account.storage.get(key.as_ref())?;
         codec::decode(&mut &encoded[..]).ok()
     }
@@ -87,7 +87,9 @@ impl Jam {
     /// Refine the work package
     ///
     /// NOTE: run refine for all work items
+    #[tracing::instrument(name = "refine", skip_all)]
     pub fn refine(&mut self, work: &WorkPackage) -> Result<Vec<WorkResult>> {
+        tracing::debug!("package: items={}", work.items.len());
         if work.items.is_empty() {
             anyhow::bail!("no work items");
         }
@@ -136,7 +138,9 @@ impl Jam {
     /// 1. convert work package to work report
     /// 2. run accumulate for all work items
     /// 3. return the accumulated result
+    #[tracing::instrument(name = "accumulate", skip_all)]
     pub fn accumulate(&mut self, results: Vec<WorkResult>) -> Result<Vec<Accumulated>> {
+        tracing::debug!("work: items={}", results.len());
         if results.is_empty() {
             anyhow::bail!("no results");
         }
@@ -181,7 +185,7 @@ impl Jam {
             operands,
         })?;
 
-        if matches!(accumulated.reason, Reason::Halt) {
+        if !matches!(accumulated.reason, Reason::Halt) {
             anyhow::bail!("accumulate failed: {:?}", accumulated.reason);
         }
         state = accumulated.context.clone();

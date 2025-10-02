@@ -11,14 +11,14 @@ pub fn gas() -> u64 {
 /// Fetch operations
 pub mod fetch {
     use super::*;
-    use crate::prelude::Vec;
+    use crate::prelude::{Vec, vec};
     use anyhow::Result;
     use service::vm::Operand;
 
     /// Fetch a value from the storage
     pub fn operands() -> Result<Vec<Operand>> {
-        let mut target = Vec::new();
-        let len = unsafe { import::fetch(target.as_mut_ptr(), 0, 0, 14, 0, 0) };
+        let len = unsafe { import::fetch(core::ptr::null_mut(), 0, 0, 14, 0, 0) };
+        let mut target = vec![0; len as usize];
         let _ = unsafe { import::fetch(target.as_mut_ptr(), 0, len as u64, 14, 0, 0) };
         codec::decode(target.as_slice()).map_err(Into::into)
     }
@@ -30,7 +30,7 @@ pub mod storage {
     use anyhow::Result;
 
     /// Read a value from the storage
-    pub fn read<R: serde::de::DeserializeOwned>(key: impl AsRef<[u8]>) -> Result<R> {
+    pub fn read<R: serde::de::DeserializeOwned>(key: impl AsRef<[u8]>) -> Option<R> {
         let len = unsafe {
             import::read(
                 u64::MAX as _,
@@ -41,6 +41,12 @@ pub mod storage {
                 0,
             )
         };
+
+        if len == u64::MAX {
+            return None;
+        } else if len == 0 {
+            return None;
+        }
 
         let ptr = unsafe {
             import::read(
@@ -54,7 +60,7 @@ pub mod storage {
         };
 
         let value = unsafe { core::slice::from_raw_parts(ptr as _, len as usize) };
-        codec::decode(value).map_err(Into::into)
+        codec::decode(value).ok()
     }
 
     /// Write a value to the storage

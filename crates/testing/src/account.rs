@@ -5,7 +5,8 @@ use service::{OpaqueHash, ServiceId, service::ServiceAccount};
 
 impl Jam {
     /// Add a service account
-    pub fn add_account(&mut self, service: ServiceId, account: ServiceAccount) {
+    pub fn add_account(&mut self, service: ServiceId, mut account: ServiceAccount) {
+        account.index = service;
         self.chain.accounts.insert(service, account);
     }
 
@@ -21,6 +22,7 @@ impl Jam {
         let account = self.chain.accounts.entry(service).or_default();
         let hash = service::blake2b(preimage.as_slice());
         let len = preimage.len() as u32;
+        account.index = service;
         account.preimage.insert(hash, preimage);
         account
             .lookup
