@@ -40,7 +40,7 @@ impl Jam {
         let vkey = key.to_vec();
         let key = key::storage(service, &codec::encode(&vkey).ok()?);
         let encoded = account.storage.get(key.as_ref())?;
-        codec::decode(&mut &encoded[..]).ok()
+        codec::decode(&encoded[..]).ok()
     }
 
     /// Set the code of the service account

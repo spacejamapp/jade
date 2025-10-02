@@ -62,7 +62,7 @@ mod abi {
 
     impl Buffer {
         /// Get the buffer as a byte slice
-        pub fn to_vec(&self) -> Vec<u8> {
+        pub fn to_vec(self) -> Vec<u8> {
             let result = unsafe { core::slice::from_raw_parts(self.ptr, self.len).to_vec() };
             unsafe {
                 let layout = std::alloc::Layout::from_size_align(self.len, 1).unwrap();

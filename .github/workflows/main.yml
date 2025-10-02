@@ -20,7 +20,6 @@ jobs:
           rustup toolchain install 1.90.0
           rustup component add rust-src --toolchain 1.90.0
           rustup update stable && rustup default stable
-          rustup component add clippy rustfmt
       - uses: taiki-e/install-action@sccache
       - uses: taiki-e/install-action@nextest
       - name: Run Tests
