@@ -7,9 +7,6 @@ license.workspace = true
 homepage.workspace = true
 repository.workspace = true
 
-[lib]
-crate-type = ["cdylib"]
-
 [features]
 default = []
 tiny = []
@@ -17,8 +14,12 @@ std = ["codec/std"]
 
 [dependencies]
 codec.workspace = true
-# serde = { workspace = true, features = ["alloc"] }
-jade.workspace = true
+serde = { workspace = true, features = ["alloc"] }
+jade = { workspace = true, features = ["logging"] }
+
+[dev-dependencies]
+nauth.workspace = true
+jade = { workspace = true, features = ["testing"] }
 
 [build-dependencies]
 cjam.workspace = true

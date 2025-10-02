@@ -1,10 +1,10 @@
 //! Build the service
 
 fn main() {
-    cjam::util::build(
+    let _ = cjam::util::build(
         env!("CARGO_PKG_NAME"),
         Some(cjam::ModuleType::Service),
         None,
     )
-    .expect("Failed to build service");
+    .ok();
 }

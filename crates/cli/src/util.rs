@@ -19,11 +19,10 @@ pub fn build(package: &str, module: Option<ModuleType>, path: Option<String>) ->
 
     // Build the service
     let target = etc::find_up("target")?;
-    let jam = target.join("jam");
     let current = path
         .map(PathBuf::from)
         .unwrap_or_else(|| env::current_dir().expect("Unable to get current directory"));
-    let binary = jam.join(package).join(format!("{package}.jam"));
+    let binary = target.join("jam").join(format!("{package}.jam"));
     let rebuild = if !binary.exists() {
         true
     } else {
@@ -36,7 +35,7 @@ pub fn build(package: &str, module: Option<ModuleType>, path: Option<String>) ->
         if let Some(module) = module {
             build.module = module;
         }
-        build.target = Some(jam.join(package));
+        build.target = Some(target);
         build.run()?;
     }
 

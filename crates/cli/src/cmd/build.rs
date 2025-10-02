@@ -1,12 +1,11 @@
 //! `jam build` command
 
-use std::path::PathBuf;
-
 use crate::{
     builder,
     manifest::{ModuleType, Profile},
 };
 use clap::Parser;
+use std::path::PathBuf;
 
 /// CLI utility for building PVM code blobs, particularly services and authorizers.
 #[derive(Parser, Debug, Default)]

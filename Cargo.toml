@@ -14,7 +14,12 @@ repository = "https://github.com/spacejamapp/jade"
 cjam = { path = "crates/cli" }
 jade = { path = "crates/jade", default-features = false }
 jade-derive = { path = "crates/jade/derive" }
-sys = { path = "crates/sys" }
+spacevm = { path = "crates/sys", package = "spacevm-sys" }
+testing = { path = "crates/testing", package = "jade-testing" }
+
+# services
+nauth = { path = "services/nauth" }
+stoken = { path = "services/stoken" }
 
 # spacejam dependencies
 codec = { package = "serde-jam", version = "0.0.13-pre.1", default-features = false }

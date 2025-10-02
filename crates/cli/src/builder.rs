@@ -161,7 +161,7 @@ pub fn build_pvm_blob(
     }
 
     child
-        .args(["build", "-Z", "build-std=core,alloc"])
+        .args(["rustc", "-Z", "build-std=core,alloc"])
         .arg(profile.to_arg())
         .arg("--target")
         .arg(target_json_path)
@@ -170,7 +170,9 @@ pub fn build_pvm_blob(
             "tiny"
         } else {
             ""
-        }) // Disable stripping for LLVM 19 compatibility
+        })
+        .arg("--lib")
+        .arg("--crate-type=cdylib")
         .env(
             "RUSTFLAGS",
             format!(
@@ -223,12 +225,13 @@ pub fn build_pvm_blob(
         .expect("Failed to link pvm program:");
 
     // Write out a full `.pvm` blob for debugging/inspection.
-    fs::create_dir_all(out_dir).expect("Failed to create jam directory");
-    let output_path_pvm = out_dir.join(format!("{}.pvm", &info.name));
+    let jam_out = out_dir.join("jam");
+    fs::create_dir_all(&jam_out).expect("Failed to create jam directory");
+    let output_path_pvm = jam_out.join(format!("{}.pvm", &info.name));
     fs::write(output_path_pvm, &linked).expect("Error writing resulting binary");
     let name = info.name.clone();
     let metadata = ConventionalMetadata::Info(info).encode().into();
-    let output_file = blob_type.output_file(out_dir, &name);
+    let output_file = blob_type.output_file(&jam_out, &name);
     if !matches!(blob_type, BlobType::CoreVmGuest) {
         let parts = polkavm_linker::ProgramParts::from_bytes(linked.into())
             .expect("failed to deserialize linked PolkaVM program");
