@@ -6,6 +6,10 @@ use tracing_subscriber::EnvFilter;
 
 /// Initialize the logger
 pub fn init_logger() {
+    unsafe {
+        spacevm::init_logger(true, true);
+    }
+
     let _ = tracing_subscriber::fmt()
         .with_env_filter(EnvFilter::from_default_env())
         .try_init();

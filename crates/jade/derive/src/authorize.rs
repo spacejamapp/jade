@@ -17,12 +17,15 @@ pub fn is_authorized(_args: TokenStream, input: TokenStream) -> TokenStream {
     quote::quote! {
         #[jade::polkavm_derive::polkavm_export(abi = jade::polkavm_derive::default_abi)]
         extern "C" fn jade_is_authorized(ptr: u32, size: u32) -> (u64, u64) {
+            jade::info!("is_authorized");
+
             #fun
 
             let buf = unsafe { core::slice::from_raw_parts(ptr as *const u8, size as usize) };
-            let (param, package, core_index): (AuthConfig, WorkPackage, CoreIndex) =
-                jade::codec::decode(buf).expect("failed to decode is_authorized parameters");
-            let result = #funame(param, package, core_index);
+            let core_index: CoreIndex =
+                 jade::codec::decode(buf).inspect_err(|e| jade::error!("decoded is_authorized parameters: {:?}", e))
+                     .expect("failed to decode is_authorized parameters");
+            let result = #funame(core_index);
             ((&result).as_ptr() as u64, result.len() as u64)
         }
     }

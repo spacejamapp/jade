@@ -10,7 +10,7 @@ pub use std::{collections::BTreeMap, format, string::String, vec, vec::Vec};
 pub use alloc::{collections::BTreeMap, format, string::String, vec, vec::Vec};
 
 /// Type to represent the index of a compute core.
-pub type CoreIndex = u32;
+pub type CoreIndex = u16;
 
 /// Type to represent the authorizer configuration.
 pub type AuthConfig = Vec<u8>;

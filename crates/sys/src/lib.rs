@@ -1,6 +1,7 @@
 //! SpaceVM system interface
 
 use crate::abi::Buffer;
+pub use abi::init_logger;
 use anyhow::Result;
 use service::{
     api::{AccumulateArgs, Accumulated, AuthorizeArgs, RefineArgs},
@@ -72,6 +73,9 @@ mod abi {
     }
 
     unsafe extern "C" {
+        /// Initialize the logger
+        pub fn init_logger(ansi: bool, timer: bool);
+
         /// Run the authorize invocation
         #[cfg(not(feature = "interp"))]
         pub fn comp_authorize(args: Buffer) -> Buffer;
