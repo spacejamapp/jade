@@ -135,7 +135,7 @@ checksum = "2fd1289c04a9ea8cb22300a459a72a385d7c73d3259e2ed7dcb2af674838cfa9"
 
 [[package]]
 name = "cjam"
-version = "0.0.13-pre.1"
+version = "0.0.13"
 dependencies = [
  "anyhow",
  "clap",
@@ -391,7 +391,7 @@ checksum = "4a5f13b858c8d314ee3e8f639011f7ccefe71f97f96e50151fb991f267928e2c"
 
 [[package]]
 name = "jade"
-version = "0.0.13-pre.1"
+version = "0.0.13"
 dependencies = [
  "anyhow",
  "cjam",
@@ -405,7 +405,7 @@ dependencies = [
 
 [[package]]
 name = "jade-derive"
-version = "0.0.13-pre.1"
+version = "0.0.13"
 dependencies = [
  "polkavm-derive-impl",
  "proc-macro2",
@@ -415,7 +415,7 @@ dependencies = [
 
 [[package]]
 name = "jade-testing"
-version = "0.0.13-pre.1"
+version = "0.0.13"
 dependencies = [
  "anyhow",
  "cjam",
@@ -522,7 +522,7 @@ checksum = "32a282da65faaf38286cf3be983213fcf1d2e2a58700e808f83f4ea9a4804bc0"
 
 [[package]]
 name = "nauth"
-version = "0.0.13-pre.1"
+version = "0.0.13"
 dependencies = [
  "cjam",
  "jade",
@@ -888,7 +888,7 @@ dependencies = [
 
 [[package]]
 name = "spacevm-sys"
-version = "0.0.13-pre.1"
+version = "0.0.13"
 dependencies = [
  "anyhow",
  "serde-jam",
@@ -903,7 +903,7 @@ checksum = "a8f112729512f8e442d81f95a8a7ddf2b7c6b8a1a6f509a95864142b30cab2d3"
 
 [[package]]
 name = "stoken"
-version = "0.0.13-pre.1"
+version = "0.0.13"
 dependencies = [
  "cjam",
  "jade",
