@@ -19,17 +19,21 @@ pub fn build(package: &str, module: Option<ModuleType>) -> Result<()> {
 
     // Build the service
     let target = etc::find_up("target")?;
-    let binary = target.join("jam").join(format!("{package}.jam"));
+    let jam = target.join("jam");
+    let parget = jam.join(package);
     let mut build = crate::cmd::Build::default();
     if let Some(module) = module {
         build.module = module;
     }
-    build.target = Some(target);
+    build.target = Some(parget.clone());
     build.run()?;
 
     // copy service to OUT_DIR
+    let name = format!("{package}.jam");
+    let binary = parget.join("jam").join(&name);
     let service = PathBuf::from(env::var("OUT_DIR")?).join("service.jam");
     println!("Copying service to OUT_DIR: {}", service.display());
     fs::copy(&binary, &service)?;
+    fs::copy(&binary, jam.join(name))?;
     Ok(())
 }

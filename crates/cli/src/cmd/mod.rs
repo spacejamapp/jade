@@ -4,6 +4,7 @@ pub use build::Build;
 use clap::{Parser, command};
 
 mod build;
+mod new;
 
 /// Jam service command line interface
 #[derive(Debug, Parser)]
