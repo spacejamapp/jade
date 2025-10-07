@@ -12,10 +12,11 @@ Jade framework for building JAM services by [SpaceJam](https://spacejam.app).
 ## Quick Start
 
 ```
-cargo install jade
+cargo install jade --git https://github.com/spacejamapp/jade
 jade new my-service
 cd my-service
-jade build
+cargo build
+cargo test
 ```
 
 See also our template at [service-template](https://github.com/spacejamapp/service-template).

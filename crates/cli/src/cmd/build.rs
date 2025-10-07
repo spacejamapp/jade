@@ -5,7 +5,7 @@ use crate::{
     manifest::{ModuleType, Profile},
 };
 use clap::Parser;
-use std::path::PathBuf;
+use std::{fs, path::PathBuf};
 
 /// CLI utility for building PVM code blobs, particularly services and authorizers.
 #[derive(Parser, Debug, Default)]
@@ -23,7 +23,7 @@ pub struct Build {
     #[arg(long)]
     auto_install: bool,
     /// The build profile to use.
-    #[arg(short, long, value_enum, default_value_t = Profile::Release)]
+    #[arg(long, value_enum, default_value_t = Profile::Release)]
     profile: Profile,
     /// The target directory to build to.
     #[arg(short, long)]
@@ -61,7 +61,14 @@ impl Build {
             ModuleType::CoreVmGuest => builder::BlobType::CoreVmGuest,
         };
 
-        let target = etc::find_up("target")?;
+        let target = etc::find_up("Cargo.toml")?
+            .parent()
+            .expect("Could not find the workspace root")
+            .join("target");
+        if !target.exists() {
+            fs::create_dir_all(&target)?;
+        }
+
         let out_dir = self.target.clone().unwrap_or(target);
         let (crate_name, pvm_path) = builder::build_pvm_blob(
             &crate_dir,
