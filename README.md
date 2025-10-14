@@ -11,7 +11,7 @@ Jade framework for building JAM services by [SpaceJam](https://spacejam.app).
 
 ## Quick Start
 
-```ignore
+```bash
 cargo install jade
 jade new my-service
 cd my-service
