@@ -12,10 +12,7 @@ concurrency:
 jobs:
   build:
     name: Build
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Install Toolchain
@@ -24,7 +21,6 @@ jobs:
           rustup component add rust-src --toolchain 1.90.0
           rustup update stable && rustup default stable
       - uses: taiki-e/install-action@sccache
-      - uses: taiki-e/install-action@nextest
       - uses: taiki-e/install-action@nextest
       - name: Run Tests
         run: cargo nextest run --no-fail-fast --release
@@ -48,3 +44,23 @@ jobs:
         run: cargo fmt --check
       - name: Clippy
         run: cargo clippy --all -- -D warnings
+
+  template:
+    name: Template
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Toolchain
+        run: rustup update stable && rustup default stable
+      - uses: taiki-e/install-action@sccache
+      - name: Test template service
+        run: |
+          cargo install --path crates/jade
+          jade new my-service
+          cd my-service
+          cargo build
+          cargo test
+          ls target/jam

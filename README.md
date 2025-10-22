@@ -19,8 +19,12 @@ cargo build
 cargo test
 ```
 
-See also our template at [service-template](https://github.com/spacejamapp/service-template).
+- See [the scripts in the CI][CI_TPL] for a working example
+- For the template service generated via `jade new`, check [service-template][template]
 
 ## License
 
 GPL-3.0
+
+[CI_TPL]: https://github.com/spacejamapp/service-template/blob/main/.github/workflows/main.yml#L62-L66
+[template]: https://github.com/spacejamapp/service-template
