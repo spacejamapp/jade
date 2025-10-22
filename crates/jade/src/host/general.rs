@@ -13,10 +13,10 @@ pub mod fetch {
     use super::*;
     use crate::prelude::{Vec, vec};
     use anyhow::Result;
-    use service::vm::Operand;
+    use service::vm::AccumulateItem;
 
     /// Fetch a value from the storage
-    pub fn operands() -> Result<Vec<Operand>> {
+    pub fn items() -> Result<Vec<AccumulateItem>> {
         let len = unsafe { import::fetch(core::ptr::null_mut(), 0, 0, 14, 0, 0) };
         let mut target = vec![0; len as usize];
         let _ = unsafe { import::fetch(target.as_mut_ptr(), 0, len as u64, 14, 0, 0) };
