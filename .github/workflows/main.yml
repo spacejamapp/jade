@@ -58,7 +58,7 @@ jobs:
       - uses: taiki-e/install-action@sccache
       - name: Test template service
         run: |
-          cargo install --path crates/jade
+          cargo install --path crates/jade && cd
           jade new my-service
           cd my-service
           cargo build
