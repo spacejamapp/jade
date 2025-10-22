@@ -89,7 +89,6 @@ pub fn build_pvm_blob(
     crate_dir: &Path,
     blob_type: BlobType,
     out_dir: &Path,
-    install_rustc: bool,
     profile: ProfileType,
 ) -> (String, PathBuf) {
     let (target_name, target_json_path) = (
@@ -117,28 +116,24 @@ pub fn build_pvm_blob(
                 .split(|x| *x == b'\n')
                 .any(|x| x[..] == b"rust-src"[..])
         {
-            if install_rustc {
-                println!("Installing rustc dependencies...");
-                let mut child = Command::new("rustup")
-                    .args(["toolchain", "install", TOOLCHAIN, "-c", "rust-src"])
-                    .stdout(std::process::Stdio::inherit())
-                    .stderr(std::process::Stdio::inherit())
-                    .spawn()
-                    .unwrap_or_else(|_| {
-                        panic!(
-						"Failed to execute `rustup toolchain install {TOOLCHAIN} -c rust-src`.\n\
+            println!("Installing rustc dependencies...");
+            let mut child = Command::new("rustup")
+                .args(["toolchain", "install", TOOLCHAIN, "-c", "rust-src"])
+                .stdout(std::process::Stdio::inherit())
+                .stderr(std::process::Stdio::inherit())
+                .spawn()
+                .unwrap_or_else(|_| {
+                    panic!(
+                        "Failed to execute `rustup toolchain install {TOOLCHAIN} -c rust-src`.\n\
 				Please install `rustup` to continue."
-					)
-                    });
-                if !child
-                    .wait()
-                    .expect("Failed to execute rustup process")
-                    .success()
-                {
-                    panic!("Failed to install `rust-src` component of {TOOLCHAIN}.");
-                }
-            } else {
-                panic!("`rust-src` component of {TOOLCHAIN} is required to build the PVM binary.",);
+                    )
+                });
+            if !child
+                .wait()
+                .expect("Failed to execute rustup process")
+                .success()
+            {
+                panic!("Failed to install `rust-src` component of {TOOLCHAIN}.");
             }
         }
         println!("ℹ️ `rustup` and toolchain installed. Continuing build process...");

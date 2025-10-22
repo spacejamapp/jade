@@ -19,9 +19,6 @@ pub struct Build {
     /// Module type to build.
     #[arg(short, long, value_enum, default_value_t = ModuleType::Automatic)]
     pub module: ModuleType,
-    /// Install rustc dependencies if missing.
-    #[arg(long)]
-    auto_install: bool,
     /// The build profile to use.
     #[arg(long, value_enum, default_value_t = Profile::Release)]
     profile: Profile,
@@ -74,7 +71,6 @@ impl Build {
             &crate_dir,
             blob_type,
             out_dir.as_path(),
-            self.auto_install,
             self.profile.clone().into(),
         );
 
