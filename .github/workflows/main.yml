@@ -12,7 +12,10 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - name: Install Toolchain
@@ -22,8 +25,11 @@ jobs:
           rustup update stable && rustup default stable
       - uses: taiki-e/install-action@sccache
       - uses: taiki-e/install-action@nextest
+      - uses: taiki-e/install-action@nextest
       - name: Run Tests
         run: cargo nextest run --no-fail-fast --release
+      - name: Doc-tests
+        run: cargo test --doc --all-features --release
 
   check:
     name: Check
