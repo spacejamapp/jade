@@ -9,7 +9,7 @@ use service::{
         ValidatorData,
     },
     service::{
-        Privileges, RefineLoad, ServiceAccount, WorkExecResult, WorkPackage, WorkResult,
+        Privileges, RefineLoad, ServiceAccount, WorkDigest, WorkExecResult, WorkPackage,
         result::Executed,
     },
     vm::Operand,
@@ -88,7 +88,7 @@ impl Jam {
     ///
     /// NOTE: run refine for all work items
     #[tracing::instrument(name = "refine", skip_all)]
-    pub fn refine(&mut self, work: &WorkPackage) -> Result<Vec<WorkResult>> {
+    pub fn refine(&mut self, work: &WorkPackage) -> Result<Vec<WorkDigest>> {
         tracing::debug!("package: items={}", work.items.len());
         if work.items.is_empty() {
             anyhow::bail!("no work items");
@@ -114,7 +114,7 @@ impl Jam {
                 ));
             }
 
-            result.push(WorkResult {
+            result.push(WorkDigest {
                 service_id: item.service,
                 code_hash: item.code_hash,
                 payload_hash: Default::default(),
@@ -139,7 +139,7 @@ impl Jam {
     /// 2. run accumulate for all work items
     /// 3. return the accumulated result
     #[tracing::instrument(name = "accumulate", skip_all)]
-    pub fn accumulate(&mut self, results: Vec<WorkResult>) -> Result<Vec<Accumulated>> {
+    pub fn accumulate(&mut self, results: Vec<WorkDigest>) -> Result<Vec<Accumulated>> {
         tracing::debug!("work: items={}", results.len());
         if results.is_empty() {
             anyhow::bail!("no results");

@@ -135,7 +135,7 @@ checksum = "2fd1289c04a9ea8cb22300a459a72a385d7c73d3259e2ed7dcb2af674838cfa9"
 
 [[package]]
 name = "cjam"
-version = "0.0.13"
+version = "0.0.15-pre.1"
 dependencies = [
  "anyhow",
  "clap",
@@ -391,7 +391,7 @@ checksum = "4a5f13b858c8d314ee3e8f639011f7ccefe71f97f96e50151fb991f267928e2c"
 
 [[package]]
 name = "jade"
-version = "0.0.13"
+version = "0.0.15-pre.1"
 dependencies = [
  "anyhow",
  "cjam",
@@ -405,7 +405,7 @@ dependencies = [
 
 [[package]]
 name = "jade-derive"
-version = "0.0.13"
+version = "0.0.15-pre.1"
 dependencies = [
  "polkavm-derive-impl",
  "proc-macro2",
@@ -415,7 +415,7 @@ dependencies = [
 
 [[package]]
 name = "jade-testing"
-version = "0.0.13"
+version = "0.0.15-pre.1"
 dependencies = [
  "anyhow",
  "cjam",
@@ -522,7 +522,7 @@ checksum = "32a282da65faaf38286cf3be983213fcf1d2e2a58700e808f83f4ea9a4804bc0"
 
 [[package]]
 name = "nauth"
-version = "0.0.13"
+version = "0.0.15-pre.1"
 dependencies = [
  "cjam",
  "jade",
@@ -777,9 +777,9 @@ dependencies = [
 
 [[package]]
 name = "serde-jam"
-version = "0.0.13"
+version = "0.0.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "898d2c5713cad74d319eae03319eaaf024b53683be8db823f91ac81e35385897"
+checksum = "cb71b2f9b7d3565f429afe8ab1741dd795c9e0b7b1bd8d69d5a20091592bd2d3"
 dependencies = [
  "anyhow",
  "serde",
@@ -850,9 +850,9 @@ checksum = "67b1b7a3b5fe4f1376887184045fcf45c69e92af734b7aaddc05fb777b6fbd03"
 
 [[package]]
 name = "spacejam-service"
-version = "0.0.13"
+version = "0.0.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4537ded3f33d4bd089dfb76a54ad1f824d9324ff7da5310775e6bad7046b88ee"
+checksum = "24556f78f817dd125ce274bc43fd3b02d3a806921b06d95474e413947198e96f"
 dependencies = [
  "anyhow",
  "blake2",
@@ -865,9 +865,9 @@ dependencies = [
 
 [[package]]
 name = "spacejson"
-version = "0.0.13"
+version = "0.0.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "428fd09eab6995f5598ae62a9176599a189ccbd76c64d59ff936563efe936c2e"
+checksum = "6750510bd2dd32baab2e2bb393702c1b08b1eeb3aa5c36d37ba330f4143d4c2f"
 dependencies = [
  "anyhow",
  "hex",
@@ -877,9 +877,9 @@ dependencies = [
 
 [[package]]
 name = "spacejson-derive"
-version = "0.0.13"
+version = "0.0.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b335da6a78a99eb68bb3b1df2568b6a24b4addc132fd048406e9f6299a68b21d"
+checksum = "796b5d679e927d0e18f5c005350ae5692832be9d54c1f4d6fe79e178016dfc18"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -888,7 +888,7 @@ dependencies = [
 
 [[package]]
 name = "spacevm-sys"
-version = "0.0.13"
+version = "0.0.15-pre.1"
 dependencies = [
  "anyhow",
  "serde-jam",
@@ -903,7 +903,7 @@ checksum = "a8f112729512f8e442d81f95a8a7ddf2b7c6b8a1a6f509a95864142b30cab2d3"
 
 [[package]]
 name = "stoken"
-version = "0.0.13"
+version = "0.0.15-pre.1"
 dependencies = [
  "cjam",
  "jade",

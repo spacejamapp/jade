@@ -4,7 +4,11 @@ use crate::{Holders, Instruction};
 use jade::{
     error, info,
     prelude::Vec,
-    service::{OpaqueHash, service::WorkExecResult, vm::Operand},
+    service::{
+        OpaqueHash,
+        service::WorkExecResult,
+        vm::{AccumulateItem, Operand},
+    },
 };
 
 #[jade::refine]
@@ -32,11 +36,15 @@ fn refine(
 }
 
 #[jade::accumulate]
-fn accumulate(_now: u32, _id: u32, results: Vec<Operand>) -> Option<OpaqueHash> {
-    info!("accumulate items: {}", results.len());
+fn accumulate(_now: u32, _id: u32, items: Vec<AccumulateItem>) -> Option<OpaqueHash> {
+    info!("accumulate items: {}", items.len());
     let mut holders = Holders::get();
-    for raw_instructions in results.into_iter().filter_map(|x| {
-        if let WorkExecResult::Ok(data) = x.data {
+    for raw_instructions in items.into_iter().filter_map(|x| {
+        if let AccumulateItem::Operand(Operand {
+            data: WorkExecResult::Ok(data),
+            ..
+        }) = x
+        {
             Some(data)
         } else {
             None

@@ -22,7 +22,6 @@ jobs:
           rustup update stable && rustup default stable
       - uses: taiki-e/install-action@sccache
       - uses: taiki-e/install-action@nextest
-      - uses: taiki-e/install-action@nextest
       - name: Run Tests
         run: cargo nextest run --no-fail-fast --release
       - name: Doc-tests
@@ -45,3 +44,23 @@ jobs:
         run: cargo fmt --check
       - name: Clippy
         run: cargo clippy --all -- -D warnings
+
+  template:
+    name: Template
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Toolchain
+        run: rustup update stable && rustup default stable
+      - uses: taiki-e/install-action@sccache
+      - name: Test template service
+        run: |
+          cargo install --path crates/jade && cd
+          jade new my-service
+          cd my-service
+          cargo build
+          cargo test
+          ls target/jam

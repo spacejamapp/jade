@@ -8,8 +8,8 @@ use std::{
     process::{Command, Stdio},
 };
 
-const LIB_BASE: &str = "https://github.com/spacejamapp/specjam/releases/download/0.7.0-pre.9";
-const LIB_NAME: &str = "spacevm-0.7.0";
+const LIB_BASE: &str = "https://github.com/spacejamapp/specjam/releases/download/0.7.1-pre.1";
+const LIB_NAME: &str = "spacevm-0.7.1";
 const PLATFORMS: [&str; 4] = ["linux-amd64", "linux-arm64", "macos-amd64", "macos-arm64"];
 
 fn main() -> std::io::Result<()> {

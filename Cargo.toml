@@ -3,7 +3,7 @@ members = ["crates/*", "crates/jade/derive", "services/*"]
 resolver = "2"
 
 [workspace.package]
-version = "0.0.13"
+version = "0.0.15-pre.1"
 edition = "2024"
 authors = ["clearloop <tianyi.gc@gmail.com>"]
 license = "GPL-3.0"
@@ -11,19 +11,19 @@ homepage = "https://spacejam.app"
 repository = "https://github.com/spacejamapp/jade"
 
 [workspace.dependencies]
-cjam = { path = "crates/cli", version = "0.0.13" }
-jade = { path = "crates/jade", default-features = false, version = "0.0.13" }
-jade-derive = { path = "crates/jade/derive", version = "0.0.13" }
-spacevm = { path = "crates/sys", package = "spacevm-sys", version = "0.0.13" }
-testing = { path = "crates/testing", package = "jade-testing", version = "0.0.13" }
+cjam = { path = "crates/cli", version = "0.0.15-pre.1" }
+jade = { path = "crates/jade", default-features = false, version = "0.0.15-pre.1" }
+jade-derive = { path = "crates/jade/derive", version = "0.0.15-pre.1" }
+spacevm = { path = "crates/sys", package = "spacevm-sys", version = "0.0.15-pre.1" }
+testing = { path = "crates/testing", package = "jade-testing", version = "0.0.15-pre.1" }
 
 # services
 nauth = { path = "services/nauth" }
 stoken = { path = "services/stoken" }
 
 # spacejam dependencies
-codec = { package = "serde-jam", version = "0.0.13", default-features = false }
-service = { package = "spacejam-service", version = "0.0.13", default-features = false }
+codec = { package = "serde-jam", version = "0.0.14", default-features = false }
+service = { package = "spacejam-service", version = "0.0.14", default-features = false }
 
 # crates.io
 anyhow = { version = "1.0.93", default-features = false }
