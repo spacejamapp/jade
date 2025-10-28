@@ -27,6 +27,7 @@ pub mod fetch {
 /// Storage operations
 pub mod storage {
     use super::*;
+    use crate::prelude::Vec;
     use anyhow::Result;
 
     /// Read a value from the storage
@@ -74,5 +75,30 @@ pub mod storage {
         };
 
         Ok(())
+    }
+
+    /// Lookup a preimage by its hash within the current service.
+    pub fn lookup(hash: impl AsRef<[u8]>) -> Option<Vec<u8>> {
+        lookup_at(u64::MAX, hash)
+    }
+
+    /// Lookup a preimage by its hash stored under a specific service.
+    pub fn lookup_at(service: u64, hash: impl AsRef<[u8]>) -> Option<Vec<u8>> {
+        let hash = hash.as_ref();
+        debug_assert!(!hash.is_empty(), "preimage hash must not be empty");
+        let len = unsafe { import::lookup(service, hash.as_ptr(), core::ptr::null_mut(), 0, 0) };
+
+        if len == u64::MAX || len == 0 {
+            return None;
+        }
+
+        if len > usize::MAX as u64 {
+            return None;
+        }
+
+        let ptr = unsafe { import::lookup(service, hash.as_ptr(), core::ptr::null_mut(), 0, len) };
+
+        let data = unsafe { core::slice::from_raw_parts(ptr as *const u8, len as usize) };
+        Some(data.to_vec())
     }
 }

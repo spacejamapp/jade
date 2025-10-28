@@ -506,6 +506,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "34080505efa8e45a4b816c349525ebe327ceaa8559756f0356cba97ef3bf7432"
 
 [[package]]
+name = "lookup"
+version = "0.0.15-pre.1"
+dependencies = [
+ "cjam",
+ "jade",
+ "nauth",
+ "serde",
+ "serde-jam",
+]
+
+[[package]]
 name = "matchers"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
