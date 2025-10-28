@@ -20,6 +20,16 @@ extern "C" {
     #[polkavm_import(index = 1)]
     pub fn fetch(buffer: *mut u8, offset: u64, buffer_len: u64, kind: u64, a: u64, b: u64) -> u64;
 
+    /// Retrieve a preimage by hash.
+    #[polkavm_import(index = 2)]
+    pub fn lookup(
+        service: u64,
+        hash_ptr: *const u8,
+        out: *mut u8,
+        offset: u64,
+        out_len: u64,
+    ) -> u64;
+
     /// Read a value from the storage
     #[polkavm_import(index = 3)]
     pub fn read(
