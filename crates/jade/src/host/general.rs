@@ -76,3 +76,28 @@ pub mod storage {
         Ok(())
     }
 }
+
+/// Service info operations
+pub mod info {
+    use super::*;
+    use crate::prelude::vec;
+    use anyhow::Result;
+    use serde::de::DeserializeOwned;
+
+    /// Get the info of the service
+    pub fn get<R: DeserializeOwned>(service_id: u64) -> Result<R> {
+        // first call to get the length of the service info
+        let len = unsafe { import::info(service_id, ptr::null_mut()) };
+
+        if len == 0 {
+            return codec::decode(&[]).map_err(Into::into);
+        }
+
+        let mut target = vec![0; len as usize];
+        // second call to fill the buffer with service info
+        let _ = unsafe { import::info(service_id, target.as_mut_ptr()) };
+
+        // deserialize the bytes into the requested type R
+        codec::decode(target.as_slice()).map_err(Into::into)
+    }
+}
